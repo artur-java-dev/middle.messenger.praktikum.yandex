@@ -12,3 +12,7 @@
 
 Ссылка на прототип в Figma
     https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link
+
+
+Ссылка Netlify
+    https://dancing-melomakarona-733152.netlify.app/
