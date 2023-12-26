@@ -1,0 +1,7 @@
+.img-block {
+    display: flex;
+}
+
+.img-block img {
+    margin: auto;
+}

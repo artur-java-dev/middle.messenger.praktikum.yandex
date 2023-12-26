@@ -1,0 +1,21 @@
+<div class="profile-form">
+    <form>
+        <h1>Профиль пользователя</h1>
+
+        <div class="links">
+            {{> PageLink title="Выйти" href="" }}
+            {{> PageLink title="Изменить пароль" href="" }}
+        </div>
+
+        {{> ImageSelectElement imagePath=avatar elementName="avatar" }}
+        {{> InputElement label="Имя" elementName="first_name" }}
+        {{> InputElement label="Фамилия" elementName="second_name" }}
+        {{> InputElement label="Имя в чате" elementName="display_name" }}
+        {{> InputElement label="Логин" elementName="login" }}
+        {{> InputElement label="Адрес почты" elementName="email" }}
+        {{> InputElement label="Номер телефона" elementName="phone" }}
+
+        {{> ButtonElement label="Сохранить" type="submit" }}
+
+    </form>
+</div>

@@ -1,0 +1,44 @@
+@import "./components/ButtonElement/styles.css";
+@import "./components/ImgButtonElement/styles.css";
+@import "./components/InputElement/styles.css";
+@import "./components/ImageSelectElement/styles.css";
+@import "./components/PageLink/styles.css";
+@import "./components/Search/styles.css";
+@import "./components/ChatList/styles.css";
+@import "./components/Conversation/styles.css";
+
+
+@import "./pages/ChangePassword/styles.css";
+@import "./pages/Chats/styles.css";
+@import "./pages/Error404/styles.css";
+@import "./pages/Error500/styles.css";
+@import "./pages/Login/styles.css";
+@import "./pages/Profile/styles.css";
+@import "./pages/Registration/styles.css";
+
+
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Verdana;
+}
+
+h1 {
+    font-size: 250%;
+    font-weight: 400;
+    font-variant: small-caps;
+    text-align: center;
+}
+
+#app {
+    display: flex;
+    justify-content: space-evenly;
+}

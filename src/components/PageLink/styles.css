@@ -1,0 +1,8 @@
+.link-block {
+    display: flex;
+}
+
+.link-block a {
+    text-decoration: none;
+    margin: auto;
+}
