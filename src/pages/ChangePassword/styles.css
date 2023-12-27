@@ -1,0 +1,19 @@
+.new-password-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40em;
+}
+
+.new-password-form h1 {
+    margin: 3rem auto;
+}
+
+.new-password-form div {
+    margin: 1rem auto;
+}
+
+.new-password-form button {
+    margin-top: 3rem;
+}

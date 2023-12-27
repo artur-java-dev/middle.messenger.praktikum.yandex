@@ -1,0 +1,12 @@
+.input-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-block input {
+    min-width: 20em;
+    min-height: 2em;
+    font-size: 1em;
+    border: thin solid blueviolet;
+    border-radius: 4px;
+}

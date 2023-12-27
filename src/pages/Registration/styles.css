@@ -1,0 +1,21 @@
+.reg-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40em;
+}
+
+.reg-form h1 {
+    margin: 3rem auto;
+}
+
+
+.reg-form div {
+    margin: 1rem auto;
+}
+
+
+.reg-form button {
+    margin-top: 3rem;
+}
