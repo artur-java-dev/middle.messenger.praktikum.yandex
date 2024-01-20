@@ -9,5 +9,6 @@
       2,
       3
     ]
-  }
+  },
+  "parser": "@typescript-eslint/parser"
 }
