@@ -13,6 +13,7 @@ import avatar from "/static/assets/no-avatar.png";
 class UserProfile extends CompositeBlock {
 
   constructor(props: object = {}, components: Components = {}) {
+
     super(props, {
       ...components,
       title: title,
@@ -26,36 +27,46 @@ class UserProfile extends CompositeBlock {
       emailInput: email,
       phoneInput: phone,
       button: btn,
-    },
-      {
-        submit: (event) => {
-          event.preventDefault();
-          this.preSubmit();
-          firstName.validate();
-          secondName.validate();
-          login.validate();
-          email.validate();
-          phone.validate();
-        }
-      });
+    }, {
+      submit: (event) => {
+
+        event.preventDefault();
+        this.preSubmit();
+        firstName.validate();
+        secondName.validate();
+        login.validate();
+        email.validate();
+        phone.validate();
+
+      }
+    });
+
   }
 
 
   private get form() {
+
     return this.element as HTMLFormElement;
+
   }
 
   private preSubmit() {
+
     console.log(collectValuesToObj(this.form));
+
   }
 
   protected override wasUpdate(_oldProps: object, _newProps: object) {
+
     return false;
+
   }
 
 
   protected override template() {
+
     return template;
+
   }
 
 }

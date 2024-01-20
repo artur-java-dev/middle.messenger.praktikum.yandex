@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "eslint": "eslint --fix",
+        "eslint": "eslint . --ext .ts",
         "stylelint": "stylelint \"**/*.css\" --fix",
         "typescheck": "tsc --noEmit",
         "lint": "npm run eslint && npm run stylelint && npm run typescheck",
@@ -20,9 +20,10 @@
     },
     "devDependencies": {
         "@types/uuid": "^9.0.7",
+        "@typescript-eslint/eslint-plugin": "^6.19.0",
+        "@typescript-eslint/parser": "^6.19.0",
         "eslint": "8.56.0",
         "eslint-config-airbnb": "19.0.4",
-        "@typescript-eslint/parser": "^6.19.0",
         "express": "4.18.2",
         "handlebars": "4.7.8",
         "stylelint": "^16.1.0",

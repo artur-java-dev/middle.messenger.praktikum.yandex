@@ -10,6 +10,7 @@ import template from "./tmpl.hbs?raw";
 class PasswordSetting extends CompositeBlock {
 
   constructor(props: object = {}, components: Components = {}) {
+
     super(props, {
       ...components,
       title: title,
@@ -17,38 +18,48 @@ class PasswordSetting extends CompositeBlock {
       passwordSet: passwordSet,
       passwordSetRepeat: passwordSetRepeat,
       button: new Button({ label: "Сохранить", type: "submit" }),
-    },
-      {
-        submit: (event) => {
-          event.preventDefault();
-          this.preSubmit();
-          passwordSet.validate();
-          isPasswordRepeated(passwordSet, passwordSetRepeat);
-        }
-      });
+    }, {
+      submit: (event) => {
+
+        event.preventDefault();
+        this.preSubmit();
+        passwordSet.validate();
+        isPasswordRepeated(passwordSet, passwordSetRepeat);
+
+      }
+    });
+
   }
 
 
   private get form() {
+
     return this.element as HTMLFormElement;
+
   }
 
   private preSubmit() {
+
     if (isEmpty(passwordCurrent.value))
       return;
 
     const obj = collectValuesToObj(this.form);
     console.log(obj);
+
   }
 
 
   protected override template() {
+
     return template;
+
   }
 
 
   protected override wasUpdate(_oldProps: object, _newProps: object) {
+
     return false;
+
   }
 
 }
@@ -75,13 +86,17 @@ const passwordSetRepeat = new Input({
 });
 
 function isPasswordRepeated(in1: Input, in2: Input) {
+
   if (in1.value !== in2.value) {
+
     in2.error = "необходимо повторить пароль";
     return false;
+
   }
 
   in2.errorClear();
   return true;
+
 }
 
 

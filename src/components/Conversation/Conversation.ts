@@ -11,6 +11,7 @@ import template from "./tmpl.hbs?raw";
 class Conversation extends CompositeBlock {
 
   constructor(props: Obj = {}, components: Components = {}) {
+
     super(props, {
       ...components,
       messageBand: new MessageBand({ messages: props.messages }),
@@ -18,16 +19,21 @@ class Conversation extends CompositeBlock {
       messageInput: new TextInput({ elementName: "message", placeholder: "Сообщение" }),
       sendMsgButton: new ImageButton({ imagePath: sendIcon, type: "submit" }),
     });
+
   }
 
 
   protected template() {
+
     return template;
+
   }
 
 
   protected wasUpdate(_oldProps: object, _newProps: object) {
+
     return false;
+
   }
 
 }

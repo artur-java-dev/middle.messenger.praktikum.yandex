@@ -11,6 +11,7 @@ import template from "./tmpl.hbs?raw";
 class RegistrationPage extends CompositeBlock {
 
   constructor(props: object = {}, components: Components = {}) {
+
     super(props, {
       ...components,
       title: title,
@@ -22,39 +23,49 @@ class RegistrationPage extends CompositeBlock {
       passwordInput: password,
       password2Input: password2,
       button: btn,
-    },
-      {
-        submit: (event) => {
-          event.preventDefault();
-          this.preSubmit();
-          firstName.validate();
-          secondName.validate();
-          login.validate();
-          email.validate();
-          phone.validate();
-          password.validate();
-          isPasswordRepeated(password, password2);
-        }
-      });
+    }, {
+      submit: (event) => {
+
+        event.preventDefault();
+        this.preSubmit();
+        firstName.validate();
+        secondName.validate();
+        login.validate();
+        email.validate();
+        phone.validate();
+        password.validate();
+        isPasswordRepeated(password, password2);
+
+      }
+    });
+
   }
 
 
   private get form() {
+
     return this.element as HTMLFormElement;
+
   }
 
   private preSubmit() {
+
     console.log(collectValuesToObj(this.form));
+
   }
 
 
   protected override template() {
+
     return template;
+
   }
 
 
   protected override wasUpdate(_oldProps: object, _newProps: object) {
+
     return false;
+
   }
 
 }
@@ -77,12 +88,10 @@ const phone = new Input({
   label: "Номер телефона", elementName: "phone", validate: SpecialChecks.isValidPhone
 });
 const password = new Input({
-  type: "password",
-  label: "Пароль", elementName: "password", validate: SpecialChecks.isValidPassword
+  type: "password", label: "Пароль", elementName: "password", validate: SpecialChecks.isValidPassword
 });
 const password2 = new Input({
-  type: "password",
-  label: "Пароль (повтор)", elementName: "password_repeat"
+  type: "password", label: "Пароль (повтор)", elementName: "password_repeat"
 });
 
 const btn = new Button({ label: "Создать аккаунт", type: "submit" });

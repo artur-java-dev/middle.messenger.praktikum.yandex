@@ -9,6 +9,7 @@ import img from "/static/assets/err-404.png";
 class Page404 extends CompositeBlock {
 
   constructor(props: object = {}, components: Components = {}) {
+
     super(props, {
       ...components,
       image: new ImageElement({ path: img }),
@@ -16,10 +17,12 @@ class Page404 extends CompositeBlock {
       header: new Header({ text: "такой страницы не существует" }),
       returnLink: new PageLink({ title: "Вернуться назад", href: "" }),
     });
+
   }
 
 
   protected override template() {
+
     return `
     <div class="container-404">
 
@@ -30,11 +33,14 @@ class Page404 extends CompositeBlock {
 
     </div>
     `;
+
   }
 
 
   protected override wasUpdate(_oldProps: object, _newProps: object) {
+
     return false;
+
   }
 
 }

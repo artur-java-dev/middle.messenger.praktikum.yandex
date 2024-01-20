@@ -11,28 +11,31 @@ import { registerComponent } from "./utils/ui-utils";
 import { ChatCard } from "./components/ChatCard/ChatCard";
 
 
-
 registerComponent("ChatCard", ChatCard);
 
 
 const pages: { [k: string]: CompositeBlock } = {
-    "Login": new LoginPage(),
-    "Registration": new RegistrationPage(),
-    "Chats": new ChatsPage(),
-    "Profile": new UserProfile(),
-    "ChangePassword": new PasswordSetting(),
-    "Error404": new Page404(),
-    "Error500": new Page500(),
+  Login: new LoginPage(),
+  Registration: new RegistrationPage(),
+  Chats: new ChatsPage(),
+  Profile: new UserProfile(),
+  ChangePassword: new PasswordSetting(),
+  Error404: new Page404(),
+  Error500: new Page500(),
 };
 
 
 document.querySelector("nav")!.addEventListener("click",
-    e => {
-        const elem = e.target as HTMLElement;
-        if (elem.tagName === "A") {
-            const attr = elem.getAttribute("href");
-            navigateTo(pages[attr!.substring(1)]);
-        }
-    });
+  e => {
 
-document.addEventListener("DOMContentLoaded", () => navigateTo(pages["Login"]));
+    const elem = e.target as HTMLElement;
+    if (elem.tagName === "A") {
+
+      const attr = elem.getAttribute("href");
+      navigateTo(pages[attr!.substring(1)]);
+
+    }
+
+  });
+
+document.addEventListener("DOMContentLoaded", () => navigateTo(pages.Login));

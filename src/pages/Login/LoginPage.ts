@@ -11,6 +11,7 @@ import template from "./tmpl.hbs?raw";
 class LoginPage extends CompositeBlock {
 
   constructor(props: object = {}, components: Components = {}) {
+
     super(props,
       {
         ...components,
@@ -24,24 +25,32 @@ class LoginPage extends CompositeBlock {
       },
       {
         submit: (event) => {
+
           event.preventDefault();
           this.preSubmit();
           login.validate();
           password.validate();
+
         }
       });
+
   }
 
 
   protected override doInit() {
+
     const self = this;
     this.children.button.addEventHandler("click", (event) => {
+
       event.preventDefault();
       self.preSubmit();
+
     });
+
   }
 
   private preSubmit() {
+
     if (isEmpty(login.value))
       return;
 
@@ -52,16 +61,22 @@ class LoginPage extends CompositeBlock {
 
 
   private get form() {
+
     return this.element as HTMLFormElement;
+
   }
 
   protected override template() {
+
     return template;
+
   }
 
 
   protected override wasUpdate(_oldProps: object, _newProps: object) {
+
     return false;
+
   }
 
 }
