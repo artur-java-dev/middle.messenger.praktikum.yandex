@@ -10,16 +10,11 @@
     margin: 1rem auto;
 }
 
-.profile-form .links {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 .profile-form div {
-    margin: 0.7rem auto;
+    display: flex;
+    margin: 0.2rem auto;
 }
 
-.profile-form button {
-    margin-top: 1rem;
+.profile-form .button-save {
+    margin: 1.5rem auto;
 }

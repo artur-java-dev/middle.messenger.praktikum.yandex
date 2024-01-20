@@ -1,0 +1,10 @@
+.text-input-block {
+    min-width: 20rem;
+    width: 100%;
+    min-height: 2.5rem;
+    height: 100%;
+    font-size: 1rem;
+    border: 1px solid black;
+    border-radius: 2px;
+    resize: none;
+}

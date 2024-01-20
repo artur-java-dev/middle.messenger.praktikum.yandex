@@ -1,15 +1,17 @@
 <div class="chats-blocks">
 
     <div class="left-block">
-        {{> PageLink title="Профиль" href="" }}
-        {{> Search }}
-        <div class="chat-list">
-            {{> ChatList }}
+        <div class="link">
+            {{{ profileLink }}}
         </div>
+        {{{ search }}}
+        {{{ chats }}}
     </div>
 
+
+
     <div class="right-block">
-        {{> Conversation }}
+        {{{ conversation }}}
     </div>
 
 </div>

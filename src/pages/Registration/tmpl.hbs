@@ -1,16 +1,16 @@
-<div class="reg-form">
-    <form>
-        <h1>Регистрация</h1>
+<form class="reg-form">
+    {{{ title }}}
 
-        {{> InputElement label="Имя" elementName="first_name" }}
-        {{> InputElement label="Фамилия" elementName="second_name" }}
-        {{> InputElement label="Логин" elementName="login" }}
-        {{> InputElement label="Адрес почты" elementName="email" }}
-        {{> InputElement label="Номер телефона" elementName="phone" }}
-        {{> InputElement label="Пароль" elementName="password" }}
-        {{> InputElement label="Пароль (повтор)" elementName="password_repeat" }}
+    {{{ firstNameInput }}}
+    {{{ secondNameInput }}}
+    {{{ loginInput }}}
+    {{{ emailInput }}}
+    {{{ phoneInput }}}
+    {{{ passwordInput }}}
+    {{{ password2Input }}}
 
-        {{> ButtonElement label="Создать аккаунт" type="submit" }}
+    <div class="button-signup">
+        {{{ button }}}
+    </div>
 
-    </form>
-</div>
+</form>
