@@ -1,20 +1,31 @@
-@import "./components/ButtonElement/styles.css";
-@import "./components/ImgButtonElement/styles.css";
+@import "./components/Button/styles.css";
+@import "./components/ImageButton/styles.css";
+@import "./components/Input/styles.css";
 @import "./components/InputElement/styles.css";
-@import "./components/ImageSelectElement/styles.css";
+@import "./components/TextInput/styles.css";
 @import "./components/PageLink/styles.css";
-@import "./components/Search/styles.css";
-@import "./components/ChatList/styles.css";
+@import "./components/ErrorBlock/styles.css";
+@import "./components/ImageSelect/styles.css";
+@import "./components/Header/styles.css";
+@import "./components/PageTitle/styles.css";
+@import "./components/Image/styles.css";
+@import "./components/Message/styles.css";
+@import "./components/MessagesBand/styles.css";
 @import "./components/Conversation/styles.css";
+@import "./components/ChatCard/styles.css";
+@import "./components/ChatList/styles.css";
+@import "./components/Search/styles.css";
 
-
-@import "./pages/ChangePassword/styles.css";
-@import "./pages/Chats/styles.css";
-@import "./pages/Error404/styles.css";
-@import "./pages/Error500/styles.css";
 @import "./pages/Login/styles.css";
-@import "./pages/Profile/styles.css";
 @import "./pages/Registration/styles.css";
+@import "./pages/Profile/styles.css";
+@import "./pages/PasswordSetting/styles.css";
+@import "./pages/404/styles.css";
+@import "./pages/500/styles.css";
+@import "./pages/Chats/styles.css";
+
+
+
 
 
 

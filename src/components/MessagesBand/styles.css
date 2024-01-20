@@ -1,0 +1,11 @@
+.messages-block {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(0 0% 50%);
+    scrollbar-gutter: stable;
+    overscroll-behavior: contain;
+}

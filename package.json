@@ -3,18 +3,26 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
+        "eslint": "eslint --fix",
         "dev": "vite",
-        "build": "vite build",
-        "start": "vite build && vite preview --port=3000"
+        "prebuild": "tsc --noEmit",
+        "build": "npm run prebuild && vite build",
+        "start": "npm run build && vite preview --port=3000"
     },
     "engines": {
         "node": ">=18.0.0 <19.0.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "uuid": "^9.0.1"
+    },
     "devDependencies": {
-        "typescript": "5.3.3",
+        "@types/uuid": "^9.0.7",
+        "eslint": "8.56.0",
+        "eslint-config-airbnb": "19.0.4",
         "express": "4.18.2",
         "handlebars": "4.7.8",
+        "stylelint": "16.1.0",
+        "typescript": "5.3.3",
         "vite": "5.0.10"
     }
 }

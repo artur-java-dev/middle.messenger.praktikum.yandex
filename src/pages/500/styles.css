@@ -1,0 +1,17 @@
+.container-500 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-500>h1.err-code {
+    margin-top: 0;
+    font-family: Impact;
+    font-size: 550%;
+    font-weight: 500;
+    color: rgb(100, 150, 100);
+}
+
+.container-500>div {
+    margin-top: 4rem;
+}

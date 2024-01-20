@@ -6,16 +6,12 @@
     width: 40em;
 }
 
-.reg-form h1 {
-    margin: 3rem auto;
-}
-
 
 .reg-form div {
-    margin: 1rem auto;
+    display: flex;
+    margin: 0.5rem auto;
 }
 
-
-.reg-form button {
-    margin-top: 3rem;
+.reg-form .button-signup {
+    margin: 2rem auto;
 }

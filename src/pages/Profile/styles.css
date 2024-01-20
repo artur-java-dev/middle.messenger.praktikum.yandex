@@ -12,14 +12,18 @@
 
 .profile-form .links {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
 }
 
-.profile-form div {
-    margin: 0.7rem auto;
+.profile-form .links div {
+    margin: 0;
 }
 
-.profile-form button {
-    margin-top: 1rem;
+.profile-form div {
+    display: flex;
+    margin: 0.4rem auto;
+}
+
+.profile-form .button-save {
+    margin: 1.5rem auto;
 }

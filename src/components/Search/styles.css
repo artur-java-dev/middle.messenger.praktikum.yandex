@@ -3,11 +3,3 @@
     justify-content: stretch;
     align-items: center;
 }
-
-.search-block input[type="text"] {
-    height: 2rem;
-}
-
-.search-block input {
-    height: 2.5rem;
-}
