@@ -4,7 +4,7 @@
     "target": "es2017",
     "lib": [
       "es2021",
-      "dom",
+      "dom"
     ],
     "declaration": false,
     "module": "es2015",
@@ -24,6 +24,6 @@
     "allowSyntheticDefaultImports": true,
   },
   "include": [
-    "src",
+    "src"
   ]
 }
