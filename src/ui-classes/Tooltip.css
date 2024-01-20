@@ -4,7 +4,7 @@
   border: 1px solid black;
 }
 
-.tooltip.tooltip_active {
+.tooltip.tooltip-active {
   display: block;
   position: absolute;
 }

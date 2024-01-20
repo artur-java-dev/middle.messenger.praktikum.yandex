@@ -11,7 +11,7 @@
     flex-direction: column;
     flex: 1;
     border: thin solid;
-    background: rgb(170, 170, 170);
+    background: hsl(0deg, 0%, 67%);
     margin: 0;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .left-block>.link a {
-    color: rgb(40, 40, 40);
+    color: hsl(0deg, 0%, 16%);
 }
 
 .left-block>div input[type="image"] {
@@ -41,5 +41,5 @@
 }
 
 .left-block>div input[type="text"] {
-    background: rgba(222, 222, 222, 0.88);
+    background: hsla(0deg, 0%, 87%, 88%);
 }

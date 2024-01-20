@@ -16,7 +16,7 @@ class Tooltip {
   }
 
   get classShow() {
-    return "tooltip_active";
+    return "tooltip-active";
   }
 
   get attrWithText() {

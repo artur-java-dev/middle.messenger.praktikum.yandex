@@ -4,6 +4,9 @@
     "type": "module",
     "scripts": {
         "eslint": "eslint --fix",
+        "stylelint": "stylelint \"**/*.css\" --fix",
+        "typescheck": "tsc --noEmit",
+        "lint": "npm run eslint && npm run stylelint && npm run typescheck",
         "dev": "vite",
         "prebuild": "tsc --noEmit",
         "build": "npm run prebuild && vite build",
@@ -22,6 +25,7 @@
         "express": "4.18.2",
         "handlebars": "4.7.8",
         "stylelint": "16.1.0",
+        "stylelint-config-standard": "^36.0.0",
         "typescript": "5.3.3",
         "vite": "5.0.10"
     }

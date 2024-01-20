@@ -6,10 +6,10 @@
 
 .container-500>h1.err-code {
     margin-top: 0;
-    font-family: Impact;
+    font-family: Impact, sans-serif;
     font-size: 550%;
     font-weight: 500;
-    color: rgb(100, 150, 100);
+    color: hsl(120deg, 20%, 49%);
 }
 
 .container-500>div {

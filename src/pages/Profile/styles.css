@@ -15,13 +15,13 @@
     justify-content: space-between;
 }
 
-.profile-form .links div {
-    margin: 0;
-}
-
 .profile-form div {
     display: flex;
     margin: 0.4rem auto;
+}
+
+.profile-form .links div {
+    margin: 0;
 }
 
 .profile-form .button-save {

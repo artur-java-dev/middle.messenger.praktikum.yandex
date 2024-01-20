@@ -5,7 +5,7 @@
     background: linear-gradient(silver, #9198e5);
     overflow: auto;
     scrollbar-width: thin;
-    scrollbar-color: hsl(0 0% 50%);
+    scrollbar-color: hsl(0deg, 0%, 50%);
     scrollbar-gutter: stable;
     overscroll-behavior: contain;
 }
