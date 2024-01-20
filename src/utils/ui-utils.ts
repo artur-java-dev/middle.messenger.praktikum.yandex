@@ -8,7 +8,7 @@ function registerComponent(name: string, Component: typeof Block) {
     throw `The ${name} component is already registered!`;
 
   Handlebars.registerHelper(name,
-    function (this: unknown, { hash, data, fn }: HelperOptions) {
+    function (this: unknown, { hash }: HelperOptions) {
       const component = new Component(hash);
       return component.content.outerHTML;
     });

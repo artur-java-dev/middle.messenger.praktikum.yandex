@@ -19,9 +19,13 @@ abstract class CompositeBlock extends Block {
 
 
   protected override init() {
-    if (this.children)
+    if (this.children) {
+      this.doInit();
       this.eventBus.emit(EVENT.FlowRender);
+    }
   }
+
+  protected doInit(): void { }
 
 
   protected override compiledTmpl() {

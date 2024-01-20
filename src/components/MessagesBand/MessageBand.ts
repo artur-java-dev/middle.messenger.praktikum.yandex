@@ -15,7 +15,7 @@ class MessageBand extends CompositeBlock {
   }
 
 
-  protected wasUpdate(oldProps: object, newProps: object) {
+  protected wasUpdate(_oldProps: object, _newProps: object) {
     return false;
   }
 

@@ -9,7 +9,7 @@
 
 .login-form div {
     display: flex;
-    margin: 0.5rem auto;
+    margin: 0 auto;
 }
 
 .login-form .button-signin {

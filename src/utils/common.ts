@@ -1,5 +1,3 @@
-console.log(namespace('a.b.c.d.e')) // {a:{b:{c:{d:{e:{}}}}}}
-
 type NameSpace = { [k: string]: NameSpace };
 type Obj = { [k: string]: unknown };
 

@@ -3,6 +3,7 @@ import { ImageSelect } from "../../components/ImageSelect/ImageSelect";
 import { Input } from "../../components/Input/Input";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks } from "../../utils/validators-func";
 import { CompositeBlock, Components } from "../../view-base/CompositeBlock";
 import template from "./tmpl.hbs?raw";
@@ -25,10 +26,30 @@ class UserProfile extends CompositeBlock {
       emailInput: email,
       phoneInput: phone,
       button: btn,
-    });
+    },
+      {
+        submit: (event) => {
+          event.preventDefault();
+          this.preSubmit();
+          firstName.validate();
+          secondName.validate();
+          login.validate();
+          email.validate();
+          phone.validate();
+        }
+      });
   }
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+
+  private get form() {
+    return this.element as HTMLFormElement;
+  }
+
+  private preSubmit() {
+    console.log(collectValuesToObj(this.form));
+  }
+
+  protected override wasUpdate(_oldProps: object, _newProps: object) {
     return false;
   }
 

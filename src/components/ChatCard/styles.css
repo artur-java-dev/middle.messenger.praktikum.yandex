@@ -1,5 +1,5 @@
 :root {
-    --accent-info-color: blueviolet;
+    --accent-info-color: hsl(271deg, 76%, 53%);
     --accent-info-text-color: white;
 }
 
@@ -12,8 +12,8 @@
 }
 
 .chat-block:hover {
-    border-top: 1px solid #2f3684;
-    background: linear-gradient(#7a84f2, #9198e5);
+    border-top: 1px solid var(--accent-info-color);
+    background: linear-gradient(hsl(271deg, 76%, 53%, 50%), #9198e5);
 }
 
 .chat-block .chat-info-1 {

@@ -1,8 +1,10 @@
 import { Button } from "../../components/Button/Button";
 import { Input } from "../../components/Input/Input";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
+import { isPasswordRepeated } from "../PasswordSetting/PasswordSetting";
 import template from "./tmpl.hbs?raw";
 
 
@@ -20,7 +22,29 @@ class RegistrationPage extends CompositeBlock {
       passwordInput: password,
       password2Input: password2,
       button: btn,
-    });
+    },
+      {
+        submit: (event) => {
+          event.preventDefault();
+          this.preSubmit();
+          firstName.validate();
+          secondName.validate();
+          login.validate();
+          email.validate();
+          phone.validate();
+          password.validate();
+          isPasswordRepeated(password, password2);
+        }
+      });
+  }
+
+
+  private get form() {
+    return this.element as HTMLFormElement;
+  }
+
+  private preSubmit() {
+    console.log(collectValuesToObj(this.form));
   }
 
 
@@ -29,7 +53,7 @@ class RegistrationPage extends CompositeBlock {
   }
 
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+  protected override wasUpdate(_oldProps: object, _newProps: object) {
     return false;
   }
 
@@ -53,10 +77,12 @@ const phone = new Input({
   label: "Номер телефона", elementName: "phone", validate: SpecialChecks.isValidPhone
 });
 const password = new Input({
+  type: "password",
   label: "Пароль", elementName: "password", validate: SpecialChecks.isValidPassword
 });
 const password2 = new Input({
-  label: "Пароль (повтор)", elementName: "password_repeat", validate: SpecialChecks.isValidPassword
+  type: "password",
+  label: "Пароль (повтор)", elementName: "password_repeat"
 });
 
 const btn = new Button({ label: "Создать аккаунт", type: "submit" });

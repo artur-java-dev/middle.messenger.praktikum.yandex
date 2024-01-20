@@ -13,17 +13,23 @@ class InputElement extends Block {
   }
 
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+  protected override wasUpdate(_oldProps: object, _newProps: object) {
     return false;
   }
 
 
   protected override template() {
     return `
-    <input class="input-block" type="text"
-     name="{{elementName}}"
-     placeholder="{{placeholder}}"
-    />
+    <input class="input-block"
+
+    {{#if type}}
+       type="{{type}}"
+    {{else}}
+       type="text"
+    {{/if}}
+
+    name="{{elementName}}"
+    placeholder="{{placeholder}}" />
     `;
   }
 

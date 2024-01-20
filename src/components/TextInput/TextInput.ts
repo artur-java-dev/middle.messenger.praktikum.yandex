@@ -13,7 +13,7 @@ class TextInput extends Block {
   }
 
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+  protected override wasUpdate(_oldProps: object, _newProps: object) {
     return false;
   }
 

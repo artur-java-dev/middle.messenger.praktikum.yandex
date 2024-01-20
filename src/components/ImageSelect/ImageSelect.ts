@@ -15,7 +15,7 @@ class ImageSelect extends CompositeBlock {
   }
 
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+  protected override wasUpdate(_oldProps: object, _newProps: object) {
     return false;
   }
 

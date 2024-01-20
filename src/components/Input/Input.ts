@@ -1,4 +1,4 @@
-import { getProp } from "../../utils/common";
+import { Obj, getProp } from "../../utils/common";
 import { EventsObj } from "../../view-base/Block";
 import { CompositeBlock } from "../../view-base/CompositeBlock";
 import { ErrorBlock } from "../ErrorBlock/ErrorBlock";
@@ -7,10 +7,10 @@ import { InputElement } from "../InputElement/InputElement";
 
 class Input extends CompositeBlock {
 
-  constructor(props: object, events: EventsObj = {}) {
+  constructor(props: Obj, events: EventsObj = {}) {
     super(props, {
 
-      input: new InputElement({ elementName: getProp(props, "elementName") },
+      input: new InputElement({ elementName: props.elementName, type: props.type },
         {
           ...events,
           "blur": () => this.validate(),
@@ -48,7 +48,7 @@ class Input extends CompositeBlock {
   }
 
 
-  private validate() {
+  validate() {
 
     const f = this.validateFunc;
 

@@ -88,9 +88,9 @@ class Block {
 
   protected compiledTmpl(): string { return ""; }
 
-  protected processCompiledTmpl(tmpl: HTMLTemplateElement) { }
+  protected processCompiledTmpl(_tmpl: HTMLTemplateElement) { }
 
-  protected mount(oldProps: object): void {
+  protected mount(_oldProps: object): void {
   }
 
 
@@ -99,7 +99,7 @@ class Block {
       this.eventBus.emit(EVENT.FlowRender);
   }
 
-  protected wasUpdate(oldProps: object, newProps: object): boolean { return false; }
+  protected wasUpdate(_oldProps: object, _newProps: object): boolean { return false; }
 
 
   private makeProxy(props: object): object {
