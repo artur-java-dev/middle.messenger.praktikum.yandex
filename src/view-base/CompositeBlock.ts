@@ -9,7 +9,7 @@ abstract class CompositeBlock<Props extends TProps = TProps> extends Block<Props
   protected children: Components;
 
 
-  constructor(props: Props = {} as Props, components: Components) {
+  constructor(props: Props, components: Components) {
 
     super(props);
 

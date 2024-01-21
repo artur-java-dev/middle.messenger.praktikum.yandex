@@ -43,7 +43,7 @@ class ErrorBlock extends Block {
 
   protected override template() {
 
-    return `<div class="error-block">{{{errMessage}}}</div>`;
+    return "<div class=\"error-block\">{{{errMessage}}}</div>";
 
   }
 

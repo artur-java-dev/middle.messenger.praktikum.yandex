@@ -24,16 +24,16 @@ class LoginPage extends CompositeBlock {
         }
       }
     },
-      {
-        ...components,
-        title: title,
-        loginInput: login,
-        passwordInput: password,
+    {
+      ...components,
+      title: title,
+      loginInput: login,
+      passwordInput: password,
 
-        button: new Button({ label: "Войти", type: "submit" }),
+      button: new Button({ label: "Войти", type: "submit" }),
 
-        regLink: link,
-      });
+      regLink: link,
+    });
 
   }
 

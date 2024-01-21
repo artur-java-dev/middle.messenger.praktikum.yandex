@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "eslint": "eslint . --ext .ts",
+        "eslint-fix": "eslint . --ext .ts --fix",
         "stylelint": "stylelint \"**/*.css\" --fix",
         "typescheck": "tsc --noEmit",
         "lint": "npm run eslint && npm run stylelint && npm run typescheck",

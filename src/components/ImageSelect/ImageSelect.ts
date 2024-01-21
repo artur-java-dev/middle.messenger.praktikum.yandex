@@ -27,7 +27,9 @@ class ImageSelect extends Block {
   }
 
   protected compiledTmpl(): string {
+
     return compileBlock(this.template(), this.props);
+
   }
 
 

@@ -31,7 +31,7 @@ class PageTitle extends Block {
 
   protected override template() {
 
-    return `<h1 class="page-title">{{text}}</h1>`;
+    return "<h1 class=\"page-title\">{{text}}</h1>";
 
   }
 
