@@ -1,31 +1,49 @@
-import { Obj, getProp } from "../../utils/common";
-import { EventsObj } from "../../view-base/Block";
+import { getProp } from "../../utils/common";
 import { CompositeBlock } from "../../view-base/CompositeBlock";
 import { ErrorBlock } from "../ErrorBlock/ErrorBlock";
 import { InputElement } from "../InputElement/InputElement";
 
 
+type IProps = {
+  type?: string,
+  elementName: string,
+  label: string,
+  validate?: ValidateFunc,
+}
+
 class Input extends CompositeBlock {
 
-  constructor(props: Obj, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
     super(props, {
 
-      input: new InputElement({ elementName: props.elementName, type: props.type },
-        {
-          ...events,
-          blur: () => this.validate(),
-        }),
+      input: new InputElement({
+        elementName: props.elementName,
+        type: props.type,
+        events: {
+          blur: () => this.validate()
+        }
+      }),
 
       error: new ErrorBlock(),
-    }, events);
+    });
 
   }
 
 
-  public override addEventHandler(event: string, f: EventListenerOrEventListenerObject) {
+  protected override template() {
 
-    this.children.input.addEventHandler(event, f);
+    return `
+    <div class="input-composite-block">
+
+      <div class="input-label-block">
+        <label>{{label}}</label>
+        {{{ input }}}
+      </div>
+
+      {{{ error }}}
+    </div>
+    `;
 
   }
 
@@ -87,23 +105,6 @@ class Input extends CompositeBlock {
   protected override wasUpdate(oldProps: object, newProps: object) {
 
     return getProp(newProps, "label") !== getProp(oldProps, "label");
-
-  }
-
-
-  protected override template() {
-
-    return `
-    <div class="input-composite-block">
-
-      <div class="input-label-block">
-        <label>{{label}}</label>
-        {{{ input }}}
-      </div>
-
-      {{{ error }}}
-    </div>
-    `;
 
   }
 

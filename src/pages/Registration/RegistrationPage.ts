@@ -10,9 +10,25 @@ import template from "./tmpl.hbs?raw";
 
 class RegistrationPage extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props, {
+    super({
+      events: {
+        submit: (event: Event) => {
+
+          event.preventDefault();
+          this.preSubmit();
+          firstName.validate();
+          secondName.validate();
+          login.validate();
+          email.validate();
+          phone.validate();
+          password.validate();
+          isPasswordRepeated(password, password2);
+
+        }
+      }
+    }, {
       ...components,
       title: title,
       firstNameInput: firstName,
@@ -23,20 +39,6 @@ class RegistrationPage extends CompositeBlock {
       passwordInput: password,
       password2Input: password2,
       button: btn,
-    }, {
-      submit: (event) => {
-
-        event.preventDefault();
-        this.preSubmit();
-        firstName.validate();
-        secondName.validate();
-        login.validate();
-        email.validate();
-        phone.validate();
-        password.validate();
-        isPasswordRepeated(password, password2);
-
-      }
     });
 
   }

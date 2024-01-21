@@ -1,13 +1,17 @@
-import { EventsObj } from "../../view-base/Block";
 import { CompositeBlock } from "../../view-base/CompositeBlock";
+import { MessageInfo } from "../Message/Message";
 import template from "./tmpl.hbs?raw";
 
 
+type IProps = {
+  messages: MessageInfo[],
+}
+
 class MessageBand extends CompositeBlock {
 
-  constructor(props: object, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, {}, events);
+    super(props, {});
 
   }
 

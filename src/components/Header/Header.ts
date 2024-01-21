@@ -1,12 +1,16 @@
 import { getProp } from "../../utils/common";
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = {
+  text: string,
+}
 
 class Header extends Block {
 
-  constructor(props: object, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 
@@ -27,7 +31,7 @@ class Header extends Block {
 
   protected override template() {
 
-    return "<h2 class=\"header\">{{text}}</h2>";
+    return `<h2 class="header">{{text}}</h2>`;
 
   }
 

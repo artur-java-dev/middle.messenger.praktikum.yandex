@@ -1,21 +1,33 @@
-import { EventsObj } from "../../view-base/Block";
-import { CompositeBlock } from "../../view-base/CompositeBlock";
-import template from "./tmpl.hbs?raw";
+import { Block, compileBlock } from "../../view-base/Block";
 
 
-class ImageSelect extends CompositeBlock {
+type IProps = {
+  imagePath: string,
+  elementName: string,
+}
 
-  constructor(props: object, events: EventsObj = {}) {
+class ImageSelect extends Block {
 
-    super(props, {}, events);
+  constructor(props: IProps) {
+
+    super(props);
 
   }
 
 
   protected override template() {
 
-    return template;
+    return `
+    <div class="img-select-block">
+      <input type="image" class="image-button" src="{{imagePath}}" />
+      <input type="file" class="file-select" name="{{elementName}}" accept="image/jpeg,image/png" />
+    </div>
+    `;
 
+  }
+
+  protected compiledTmpl(): string {
+    return compileBlock(this.template(), this.props);
   }
 
 

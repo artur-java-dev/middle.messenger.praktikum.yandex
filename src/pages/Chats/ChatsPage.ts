@@ -1,3 +1,4 @@
+import { ChatInfo } from "../../components/ChatCard/ChatCard";
 import { ChatList } from "../../components/ChatList/ChatList";
 import { Conversation } from "../../components/Conversation/Conversation";
 import { PageLink } from "../../components/PageLink/PageLink";
@@ -10,9 +11,9 @@ import avatar from "/static/assets/no-avatar.png";
 
 class ChatsPage extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props, {
+    super({}, {
       ...components,
       profileLink: new PageLink({ title: "Профиль", href: "" }),
       search: new Search(),
@@ -37,7 +38,7 @@ class ChatsPage extends CompositeBlock {
   }
 
 }
-const chats = [
+const chats: ChatInfo[] = [
   { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00", unreadedMessages: 2 },
   { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
   { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },

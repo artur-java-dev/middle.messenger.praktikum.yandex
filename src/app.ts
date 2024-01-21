@@ -7,11 +7,13 @@ import { Page404 } from "./pages/404/Page404";
 import { Page500 } from "./pages/500/Page500";
 import { CompositeBlock } from "./view-base/CompositeBlock";
 import { ChatsPage } from "./pages/Chats/ChatsPage";
-import { registerComponent } from "./utils/ui-utils";
+import { BlockConstructable, registerComponent } from "./utils/ui-utils";
 import { ChatCard } from "./components/ChatCard/ChatCard";
+import { Message } from "./components/Message/Message";
 
 
-registerComponent("ChatCard", ChatCard);
+registerComponent("ChatCard", ChatCard as BlockConstructable);
+registerComponent("Message", Message as BlockConstructable);
 
 
 const pages: { [k: string]: CompositeBlock } = {

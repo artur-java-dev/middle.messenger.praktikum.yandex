@@ -1,13 +1,17 @@
-import { Block, EVENT, EventsObj, PropertiesObj, compileBlock } from "./Block";
+import { Block, EVENT, TProps, compileBlock } from "./Block";
 
 
-abstract class CompositeBlock extends Block {
+type Components = { [k: string]: Block };
+
+
+abstract class CompositeBlock<Props extends TProps = TProps> extends Block<Props> {
 
   protected children: Components;
 
-  constructor(props: object = {}, components: Components = {}, events: EventsObj = {}) {
 
-    super(props, events);
+  constructor(props: Props = {} as Props, components: Components) {
+
+    super(props);
 
     this.children = components;
     this.eventBus.emit(EVENT.Init);
@@ -52,7 +56,7 @@ abstract class CompositeBlock extends Block {
 
   private compile(template: string) {
 
-    const propsWithStubs: PropertiesObj = { ...this.props };
+    const propsWithStubs = { ...this.props } as Record<string, unknown>;
 
     Object.entries(this.children).forEach(
       ([key, child]) => {
@@ -93,9 +97,6 @@ abstract class CompositeBlock extends Block {
   }
 
 }
-
-
-type Components = { [k: string]: Block };
 
 
 export { CompositeBlock, Components };

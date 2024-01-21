@@ -1,8 +1,12 @@
-import { Block } from "../view-base/Block";
+import { Block, Events, TProps } from "../view-base/Block";
 import Handlebars, { HelperOptions } from "handlebars";
 
 
-function registerComponent(name: string, Component: typeof Block) {
+interface BlockConstructable {
+  new <Props extends TProps & Events>(props: Props): Block<Props>
+}
+
+function registerComponent(name: string, Component: BlockConstructable) {
 
   if (name in Handlebars.helpers)
     throw Error(`The ${name} component is already registered!`);
@@ -18,4 +22,4 @@ function registerComponent(name: string, Component: typeof Block) {
 }
 
 
-export { registerComponent };
+export { registerComponent, BlockConstructable };

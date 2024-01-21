@@ -6,9 +6,9 @@ import icon from "/static/assets/search.png";
 
 class Search extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props, {
+    super({}, {
       ...components,
       input: input,
       button: btn,

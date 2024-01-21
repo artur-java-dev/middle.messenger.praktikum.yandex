@@ -1,12 +1,16 @@
 import { getProp, isEmpty } from "../../utils/common";
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = {
+  errMessage?: string,
+}
 
 class ErrorBlock extends Block {
 
-  constructor(props: object = {}, events: EventsObj = {}) {
+  constructor(props: IProps = {}) {
 
-    super(props, events);
+    super(props);
 
   }
 
@@ -39,7 +43,7 @@ class ErrorBlock extends Block {
 
   protected override template() {
 
-    return "<div class=\"error-block\">{{{errMessage}}}</div>";
+    return `<div class="error-block">{{{errMessage}}}</div>`;
 
   }
 

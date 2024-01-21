@@ -9,24 +9,26 @@ import template from "./tmpl.hbs?raw";
 
 class PasswordSetting extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props, {
+    super({
+      events: {
+        submit: (event: Event) => {
+
+          event.preventDefault();
+          this.preSubmit();
+          passwordSet.validate();
+          isPasswordRepeated(passwordSet, passwordSetRepeat);
+
+        }
+      }
+    }, {
       ...components,
       title: title,
       passwordCurrent: passwordCurrent,
       passwordSet: passwordSet,
       passwordSetRepeat: passwordSetRepeat,
       button: new Button({ label: "Сохранить", type: "submit" }),
-    }, {
-      submit: (event) => {
-
-        event.preventDefault();
-        this.preSubmit();
-        passwordSet.validate();
-        isPasswordRepeated(passwordSet, passwordSetRepeat);
-
-      }
     });
 
   }

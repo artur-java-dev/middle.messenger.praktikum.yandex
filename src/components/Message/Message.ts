@@ -1,12 +1,19 @@
 import { getProp } from "../../utils/common";
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = MessageInfo
+
+type MessageInfo = {
+  text: string,
+  time: string,
+}
 
 class Message extends Block {
 
-  constructor(props: object = {}, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 
@@ -39,4 +46,4 @@ class Message extends Block {
 }
 
 
-export { Message };
+export { Message, MessageInfo };

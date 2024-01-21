@@ -10,9 +10,20 @@ import template from "./tmpl.hbs?raw";
 
 class LoginPage extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props,
+    super({
+      events: {
+        submit: (event: Event) => {
+
+          event.preventDefault();
+          this.preSubmit();
+          login.validate();
+          password.validate();
+
+        }
+      }
+    },
       {
         ...components,
         title: title,
@@ -22,30 +33,7 @@ class LoginPage extends CompositeBlock {
         button: new Button({ label: "Войти", type: "submit" }),
 
         regLink: link,
-      },
-      {
-        submit: (event) => {
-
-          event.preventDefault();
-          this.preSubmit();
-          login.validate();
-          password.validate();
-
-        }
       });
-
-  }
-
-
-  protected override doInit() {
-
-    const self = this;
-    this.children.button.addEventHandler("click", (event) => {
-
-      event.preventDefault();
-      self.preSubmit();
-
-    });
 
   }
 

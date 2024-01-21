@@ -1,11 +1,16 @@
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = {
+  elementName: string,
+  placeholder: string,
+}
 
 class TextInput extends Block {
 
-  constructor(props: object, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 

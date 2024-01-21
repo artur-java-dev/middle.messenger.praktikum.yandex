@@ -1,11 +1,23 @@
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = {
+  info: ChatInfo,
+}
+
+type ChatInfo = {
+  avatarPath?: string,
+  chatName: string,
+  lastMessage?: string,
+  lastMessageTime?: string,
+  unreadedMessages?: number,
+}
 
 class ChatCard extends Block {
 
-  constructor(props: object = {}, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 
@@ -53,4 +65,4 @@ class ChatCard extends Block {
 }
 
 
-export { ChatCard };
+export { ChatCard, ChatInfo };

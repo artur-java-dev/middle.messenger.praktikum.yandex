@@ -1,12 +1,17 @@
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
+import { ChatInfo } from "../ChatCard/ChatCard";
 import template from "./tmpl.hbs?raw";
 
 
+type IProps = {
+  chats: ChatInfo[],
+}
+
 class ChatList extends Block {
 
-  constructor(props: object = {}, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 
