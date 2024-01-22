@@ -1,12 +1,13 @@
-<div class="login-form">
-    <form>
-        <h1>Вход в аккаунт</h1>
+<form class="login-form">
+    {{{ title }}}
 
-        {{> InputElement label="Логин" elementName="login" }}
-        {{> InputElement label="Пароль" elementName="password" }}
+    {{{ loginInput }}}
+    {{{ passwordInput }}}
 
-        {{> ButtonElement label="Войти" type="submit" }}
-        {{> PageLink title="Создать аккаунт" href="" }}
+    <div class="button-signin">
+        {{{ button }}}
+    </div>
 
-    </form>
-</div>
+    {{{ regLink }}}
+
+</form>

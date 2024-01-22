@@ -1,0 +1,19 @@
+.img-button {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: auto;
+    padding: 0;
+    border: 1px solid hsl(0deg, 0%, 75%, 0%);
+    border-radius: 8%;
+    background-color: hsl(0deg, 0%, 75%, 0%);
+}
+
+.img-button>img {
+    width: 2.3rem;
+    height: 2.3rem;
+    margin: 0;
+}
+
+.img-button>img:hover {
+    opacity: 0.8;
+}

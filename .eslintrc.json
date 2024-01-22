@@ -1,0 +1,115 @@
+{
+  "extends": "airbnb",
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx",
+          ".d.ts"
+        ]
+      }
+    }
+  },
+  "rules": {
+    "linebreak-style": 0,
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+        "maxEOF": 1
+      }
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "padded-blocks": [
+      "error",
+      "always"
+    ],
+    "curly": "off",
+    "new-parens": "off",
+    "comma-dangle": [
+      "error",
+      "only-multiline"
+    ],
+    "object-curly-newline": "off",
+    "prefer-destructuring": "off",
+    "import/order": "off",
+    "prefer-arrow-callback": "off",
+    "lines-between-class-members": "off",
+    "nonblock-statement-body-position": "off",
+    "function-paren-newline": "off",
+    "arrow-parens": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "import/no-absolute-path": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/no-unresolved": [
+      2,
+      {
+        "ignore": [
+          "\\?raw$",
+          "\\.(png|webp|jpg|$)"
+        ]
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "class-methods-use-this": "warn",
+    "object-shorthand": "off",
+    "no-useless-constructor": "off",
+    "no-use-before-define": "off",
+    "no-unused-vars": "off",
+    "no-undef": "warn",
+    "no-shadow": "warn",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-restricted-syntax": [
+      "error",
+      "WithStatement"
+    ],
+    "max-len": [
+      2,
+      128
+    ],
+    "max-params": [
+      2,
+      3
+    ]
+  }
+}

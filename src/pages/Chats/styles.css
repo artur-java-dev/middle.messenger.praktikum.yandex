@@ -11,7 +11,7 @@
     flex-direction: column;
     flex: 1;
     border: thin solid;
-    background-color: silver;
+    background: hsl(0deg, 0%, 67%);
     margin: 0;
 }
 
@@ -28,12 +28,18 @@
     margin-top: 0.4rem;
 }
 
-.left-block .chat-list {
-    margin-top: 1rem;
-    border-bottom: thin solid;
-    overflow: auto;
-    scrollbar-width: thin;
-    scrollbar-color: hsl(0 0% 50%);
-    scrollbar-gutter: stable;
-    overscroll-behavior: contain;
+.left-block>.link {
+    width: 0;
+}
+
+.left-block>.link a {
+    color: hsl(0deg, 0%, 16%);
+}
+
+.left-block>div input[type="image"] {
+    opacity: 0.5;
+}
+
+.left-block>div input[type="text"] {
+    background: hsl(0deg, 0%, 87%, 88%);
 }

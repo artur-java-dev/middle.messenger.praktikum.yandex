@@ -1,22 +1,5 @@
-{{#each (chats) }}
-
-<div class="chat-block">
-
-    <div class="chat-info-1">
-        <img src="{{avatarPath}}" />
-        <div>
-            <h3>{{chatName}}</h3>
-            <p>{{lastMessage}}</p>
-        </div>
-    </div>
-
-    <div class="chat-info-2">
-        <div>{{lastMessageTime}}</div>
-        {{#if unreadedMessages}}
-        <div class="unreaded">{{unreadedMessages}}</div>
-        {{/if}}
-    </div>
-
+<div class="chat-list">
+    {{#each chats }}
+    {{{ ChatCard info=this }}}
+    {{/each }}
 </div>
-
-{{/each }}

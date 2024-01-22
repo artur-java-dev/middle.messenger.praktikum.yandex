@@ -3,18 +3,33 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
+        "eslint": "eslint . --ext .ts",
+        "eslint-fix": "eslint . --ext .ts --fix",
+        "stylelint": "stylelint \"**/*.css\" --fix",
+        "typescheck": "tsc --noEmit",
+        "lint": "npm run eslint && npm run stylelint && npm run typescheck",
         "dev": "vite",
-        "build": "vite build",
-        "start": "vite build && vite preview --port=3000"
+        "prebuild": "tsc --noEmit",
+        "build": "npm run prebuild && vite build",
+        "start": "npm run build && vite preview --port=3000"
     },
     "engines": {
         "node": ">=18.0.0 <19.0.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "uuid": "^9.0.1"
+    },
     "devDependencies": {
-        "typescript": "5.3.3",
+        "@types/uuid": "^9.0.7",
+        "@typescript-eslint/eslint-plugin": "^6.19.0",
+        "@typescript-eslint/parser": "^6.19.0",
+        "eslint": "8.56.0",
+        "eslint-config-airbnb": "19.0.4",
         "express": "4.18.2",
         "handlebars": "4.7.8",
+        "stylelint": "^16.1.0",
+        "stylelint-config-standard": "^36.0.0",
+        "typescript": "5.3.3",
         "vite": "5.0.10"
     }
 }

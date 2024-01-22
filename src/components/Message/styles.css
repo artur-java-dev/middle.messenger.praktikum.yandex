@@ -1,0 +1,6 @@
+.error-block {
+    margin: auto !important;
+    font-size: 0.6rem;
+    word-wrap: break-word;
+    color: red;
+}

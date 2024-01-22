@@ -1,20 +1,30 @@
-@import "./components/ButtonElement/styles.css";
-@import "./components/ImgButtonElement/styles.css";
-@import "./components/InputElement/styles.css";
-@import "./components/ImageSelectElement/styles.css";
-@import "./components/PageLink/styles.css";
-@import "./components/Search/styles.css";
-@import "./components/ChatList/styles.css";
-@import "./components/Conversation/styles.css";
+@import url("./components/Button/styles.css");
+@import url("./components/ImageButton/styles.css");
+@import url("./components/Input/styles.css");
+@import url("./components/InputElement/styles.css");
+@import url("./components/TextInput/styles.css");
+@import url("./components/PageLink/styles.css");
+@import url("./components/ErrorBlock/styles.css");
+@import url("./components/ImageSelect/styles.css");
+@import url("./components/Header/styles.css");
+@import url("./components/PageTitle/styles.css");
+@import url("./components/Image/styles.css");
+@import url("./components/Message/styles.css");
+@import url("./components/MessagesBand/styles.css");
+@import url("./components/Conversation/styles.css");
+@import url("./components/ChatCard/styles.css");
+@import url("./components/ChatList/styles.css");
+@import url("./components/Search/styles.css");
+@import url("./pages/Login/styles.css");
+@import url("./pages/Registration/styles.css");
+@import url("./pages/Profile/styles.css");
+@import url("./pages/PasswordSetting/styles.css");
+@import url("./pages/404/styles.css");
+@import url("./pages/500/styles.css");
+@import url("./pages/Chats/styles.css");
 
 
-@import "./pages/ChangePassword/styles.css";
-@import "./pages/Chats/styles.css";
-@import "./pages/Error404/styles.css";
-@import "./pages/Error500/styles.css";
-@import "./pages/Login/styles.css";
-@import "./pages/Profile/styles.css";
-@import "./pages/Registration/styles.css";
+
 
 
 
@@ -28,7 +38,7 @@ html {
 
 body {
     margin: 0;
-    font-family: Verdana;
+    font-family: Verdana, sans-serif;
 }
 
 h1 {

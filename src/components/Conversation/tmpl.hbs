@@ -1,24 +1,11 @@
 <div class="conversation-block">
 
-    <div class="messages-block">
-        {{#each messageList }}
-        <div>
-            <p>{{message}}</p>
-            <span>{{time}}</span>
-        </div>
-        {{/each }}
-    </div>
+    {{{ messageBand }}}
 
-    {{#with (messageInputIcons) }}
     <div class="message-input-block">
-        <button class="attach">
-            <img src="{{attachIcon}}" />
-        </button>
-        <textarea name="message" placeholder="Сообщение"></textarea>
-        <button type="submit" class="send">
-            <img src="{{sendIcon}}" />
-        </button>
+        {{{ attachFileButton }}}
+        {{{ messageInput }}}
+        {{{ sendMsgButton }}}
     </div>
-    {{/with}}
 
 </div>

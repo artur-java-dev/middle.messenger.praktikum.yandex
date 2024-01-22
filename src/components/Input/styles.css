@@ -1,0 +1,12 @@
+.input-composite-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.input-composite-block .input-label-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
