@@ -37,8 +37,15 @@ function removeChars(s: string, chars: string) {
 
 }
 
+function isEqual(lhs: string, rhs: string): boolean {
+
+  return lhs === rhs;
+
+}
+
 
 export {
   getChar, isUpperCase, beginsWithUpperCase,
-  removeSpaces, removeChars, containsUpperCase
+  removeSpaces, removeChars, containsUpperCase,
+  isEqual
 };

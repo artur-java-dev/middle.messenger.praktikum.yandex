@@ -1,4 +1,4 @@
-import { Obj } from "../utils/common";
+import { Obj } from "../utils/common-types";
 import { TProps } from "./Block";
 
 class EventBus<T extends HandlerParam> {

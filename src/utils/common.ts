@@ -1,5 +1,5 @@
-type NameSpace = { [k: string]: NameSpace };
-type Obj = { [k: string]: unknown };
+import { NameSpace } from "./common-types";
+
 
 function namespace(s: string): NameSpace {
 
@@ -103,6 +103,7 @@ function isEmptyObj(obj: object) {
 
 }
 
+
 function hasKey(key: string | number, obj: object) {
 
   return (key in obj);
@@ -122,9 +123,9 @@ function getProp(obj: object, key: string | number): unknown {
 
 }
 
+
 export {
   namespace,
   isEmpty, isEmptyObj,
-  hasKey, getProp,
-  Obj,
+  hasKey, getProp
 };
