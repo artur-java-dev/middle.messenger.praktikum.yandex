@@ -22,9 +22,23 @@ function containsUpperCase(s: string) {
 
 }
 
+
 function removeSpaces(s: string) {
 
   return s.replace(/\s+/g, "");
+
+}
+
+function trim(s: string, chars: string = " ") {
+
+  if (chars === " ")
+    return s.trim();
+
+  const escaped = chars.replace(/\W/g, "\\$&");
+  const beg = new RegExp(`^[${escaped}]+`);
+  const end = new RegExp(`[${escaped}]+$`);
+
+  return s.replace(beg, "").replace(end, "");
 
 }
 
@@ -37,7 +51,7 @@ function removeChars(s: string, chars: string) {
 
 }
 
-function isEqual(lhs: string, rhs: string): boolean {
+function isEqual(lhs: string, rhs: string) {
 
   return lhs === rhs;
 
@@ -45,7 +59,8 @@ function isEqual(lhs: string, rhs: string): boolean {
 
 
 export {
-  getChar, isUpperCase, beginsWithUpperCase,
-  removeSpaces, removeChars, containsUpperCase,
+  getChar, isUpperCase,
+  beginsWithUpperCase, containsUpperCase,
+  removeSpaces, removeChars, trim,
   isEqual
 };

@@ -3,6 +3,8 @@ import { ImageSelect } from "../../components/ImageSelect/ImageSelect";
 import { Input } from "../../components/Input/Input";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { UserController } from "../../controllers/UserController";
+import { Store } from "../../data/Store";
 import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks } from "../../utils/validators-func";
 import { CompositeBlock, Components } from "../../view-base/CompositeBlock";
@@ -42,6 +44,15 @@ class UserProfile extends CompositeBlock {
       phoneInput: phone,
       button: btn,
     });
+
+    UserController.getUser();
+
+    Store.onUpdated(() => {
+
+      this.props = Store.getState();
+
+    },
+    this);
 
   }
 

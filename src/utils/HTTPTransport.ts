@@ -1,41 +1,39 @@
 import { isEmptyObj } from "./common";
 import { objToFormData } from "./form-utils";
 
+
 class HTTPTransport {
 
-  public get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  private urlBase: string;
 
-    return this.request(
-      url,
-      { ...options, method: METHOD.GET },
-    );
+  constructor(urlBase: string) {
 
-  }
-
-  public post(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
-
-    return this.request(
-      url,
-      { ...options, method: METHOD.POST },
-    );
+    this.urlBase = urlBase;
 
   }
 
-  public put(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
 
-    return this.request(
-      url,
-      { ...options, method: METHOD.PUT },
-    );
+  public get(url: string, options: OptionsWithoutMethod = {}) {
+
+    return this.request(url, { ...options, method: METHOD.GET });
 
   }
 
-  public delete(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
+  public post(url: string, options: OptionsWithoutMethod = {}) {
 
-    return this.request(
-      url,
-      { ...options, method: METHOD.DELETE },
-    );
+    return this.request(url, { ...options, method: METHOD.POST });
+
+  }
+
+  public put(url: string, options: OptionsWithoutMethod = {}) {
+
+    return this.request(url, { ...options, method: METHOD.PUT });
+
+  }
+
+  public delete(url: string, options: OptionsWithoutMethod = {}) {
+
+    return this.request(url, { ...options, method: METHOD.DELETE });
 
   }
 
@@ -47,18 +45,14 @@ class HTTPTransport {
     return new Promise((resolve, reject) => {
 
       const req = new XMLHttpRequest();
+
       const urlGet = isGet && typeof data === "object"
-        ? `${url}${this.queryStringify(data)}`
-        : url;
+        ? `${this.urlBase + url}${this.queryStringify(data)}`
+        : this.urlBase + url;
 
       req.open(method, urlGet);
 
-      req.onload = () => {
-
-        resolve(req);
-
-      };
-
+      req.onload = () => resolve(req);
       req.onabort = reject;
       req.onerror = reject;
       req.ontimeout = reject;
@@ -84,15 +78,13 @@ class HTTPTransport {
 
   }
 
-  public fetchWithRetry(url: string, options: Options): Promise<XMLHttpRequest> {
+
+  public fetchWithRetry(url: string, options: Options) {
 
     const { retries } = options;
 
-    if (!retries) {
-
+    if (!retries)
       throw Error("нет свойства 'retries' в параметре 'options'");
-
-    }
 
     let triesLeft = retries;
 
@@ -102,11 +94,9 @@ class HTTPTransport {
 
       return this.get(url, options).catch((e) => {
 
-        if (triesLeft > 0) {
-
+        if (triesLeft > 0)
           return fetch().then((_) => _.response);
 
-        }
         throw e;
 
       });
@@ -117,13 +107,11 @@ class HTTPTransport {
 
   }
 
+
   private queryStringify(data: object) {
 
-    if (isEmptyObj(data)) {
-
+    if (isEmptyObj(data))
       return "";
-
-    }
 
     const keys = Object.keys(data);
     const delim = "?";
@@ -131,8 +119,10 @@ class HTTPTransport {
     return keys.reduce(
       (str, key, idx) => {
 
-        const k = <keyof typeof data>key;
-        return `${str}${key}=${data[k]}${idx < keys.length - 1 ? "&" : ""}`;
+        const k = <keyof object>key;
+        const delimParams = idx < keys.length - 1 ? "&" : "";
+        const param = `${key}=${data[k]}${delimParams}`;
+        return `${str}${param}`;
 
       },
       delim,
@@ -158,4 +148,8 @@ const enum METHOD {
   DELETE = "DELETE"
 }
 
-export { HTTPTransport };
+
+export {
+  HTTPTransport,
+  Options, OptionsWithoutMethod, METHOD
+};

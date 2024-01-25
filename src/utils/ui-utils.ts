@@ -1,10 +1,15 @@
+import { Store } from "../data/Store";
 import { Block, Events, TProps } from "../view-base/Block";
 import Handlebars, { HelperOptions } from "handlebars";
+import { Indexed } from "./common-types";
+import { User } from "../api/entities/User";
+import { isEqual } from "./checks-equal";
 
 
 interface BlockConstructable {
   new <Props extends TProps & Events>(props: Props): Block<Props>
 }
+
 
 function registerComponent(name: string, Component: BlockConstructable) {
 
@@ -22,4 +27,54 @@ function registerComponent(name: string, Component: BlockConstructable) {
 }
 
 
-export { registerComponent, BlockConstructable };
+type MapFunc = (state: Indexed) => Indexed;
+
+
+function connectFunc(mapStateToProps: MapFunc) {
+
+  return function (Component: typeof Block) {
+
+    return class extends Component {
+
+      constructor(props: TProps) {
+
+        let state = mapStateToProps(Store.getState());
+        super({ ...props, ...state });
+
+        Store.onUpdated(() => {
+
+          const newState = mapStateToProps(Store.getState());
+          if (!isEqual(state, newState))
+            this.props = { ...newState };
+          state = newState;
+
+        });
+
+      }
+
+      protected compiledTmpl(): string {
+
+        throw Error("Method not implemented.");
+
+      }
+
+    };
+
+  };
+
+}
+
+const withUser = connectFunc(_ => ({ user: _.user }));
+
+function mapUserToProps(state: Indexed & { user: User }) {
+
+  return {
+    name: state.user.name,
+    avatar: state.user.avatar,
+  };
+
+}
+
+
+export { registerComponent, BlockConstructable, connectFunc, withUser };
+

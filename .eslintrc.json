@@ -23,6 +23,10 @@
   },
   "rules": {
     "linebreak-style": 0,
+    "operator-linebreak": [
+      "error",
+      "before"
+    ],
     "no-multiple-empty-lines": [
       "error",
       {
@@ -85,9 +89,11 @@
     "no-useless-constructor": "off",
     "no-use-before-define": "off",
     "no-unused-vars": "off",
-    "no-undef": "warn",
-    "no-shadow": "warn",
     "no-underscore-dangle": "off",
+    "no-prototype-builtins": "off",
+    "no-continue": "warn",
+    "no-shadow": "warn",
+    "no-undef": "warn",
     "no-param-reassign": [
       "error",
       {
