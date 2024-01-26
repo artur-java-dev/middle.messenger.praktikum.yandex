@@ -120,8 +120,8 @@ class HTTPTransport {
       (str, key, idx) => {
 
         const k = <keyof object>key;
-        const delimParams = idx < keys.length - 1 ? "&" : "";
-        const param = `${key}=${data[k]}${delimParams}`;
+        const sep = idx < keys.length - 1 ? "&" : "";
+        const param = `${key}=${data[k]}${sep}`;
         return `${str}${param}`;
 
       },
@@ -153,3 +153,4 @@ export {
   HTTPTransport,
   Options, OptionsWithoutMethod, METHOD
 };
+

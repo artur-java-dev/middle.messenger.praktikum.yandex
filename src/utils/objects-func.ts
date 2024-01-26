@@ -81,13 +81,13 @@ function cloneDeep<T extends object = object>(obj: T): T {
   for (const key in obj) {
     const nested = obj[key] as unknown;
 
-    if (typeof nested === "object") {
-      copy[key] = (nested === null) ? null : cloneDeep(nested);
+    if (Array.isArray(nested)) {
+      copy[key] = cloneArray(nested);
       continue;
     }
 
-    if (Array.isArray(nested)) {
-      copy[key] = cloneArray(nested);
+    if (typeof nested === "object") {
+      copy[key] = (nested === null) ? null : cloneDeep(nested);
       continue;
     }
 
@@ -103,14 +103,14 @@ function cloneArray(a: unknown[]) {
 
   a.forEach((e, i) => {
 
-    if (typeof e === "object")
+    if (Array.isArray(e))
+      copy[i] = cloneArray(e);
+
+    else if (typeof e === "object")
       if (e === null)
         copy[i] = null;
       else
         copy[i] = cloneDeep(e);
-
-    else if (Array.isArray(e))
-      copy[i] = cloneArray(e);
 
     else
       copy[i] = e;

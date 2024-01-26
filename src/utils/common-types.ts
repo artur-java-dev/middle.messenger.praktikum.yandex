@@ -1,5 +1,7 @@
 type Nullable<T> = T | null;
 
+type Primitive = boolean | number | bigint | string;
+
 
 type Obj = {
   [k: string]: unknown;
@@ -17,13 +19,16 @@ type Indexed<T = unknown> = {
 };
 
 
+type StringIndexed = Record<string, any>;
+
+
 type NameSpace = { [k: string]: NameSpace; };
 
 
 export {
-  Nullable,
+  Nullable, Primitive,
   Obj, PlainObject, RecObj,
-  Indexed, ArrayOrObject,
+  Indexed, ArrayOrObject, StringIndexed,
   NameSpace,
 };
 
