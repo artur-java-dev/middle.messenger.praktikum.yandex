@@ -1,10 +1,11 @@
-import { Primitive, StringIndexed } from "./common-types";
+import { isArrayOrObject, isPlainObject } from "./checks-types";
+import { PlainObject } from "./common-types";
 
 
-function queryStringify(data: StringIndexed): string {
+function queryStringify(data: PlainObject): string {
 
-  if (data === null || typeof data !== "object")
-    throw Error('input must be an object');
+  if (!isPlainObject(data))
+    throw Error("параметр data должен быть объектом");
 
   const params: Array<string> = [];
   const keys = Object.keys(data);
@@ -23,7 +24,7 @@ function stringifyNested(data: unknown, key: string) {
     return "";
 
   if (typeof data !== "object")
-    return stringifyPrimitive(key, data as Primitive);
+    return stringifyPrimitive(key, data);
 
   if (data instanceof Array)
     return stringifyArray(data, key);
@@ -32,19 +33,20 @@ function stringifyNested(data: unknown, key: string) {
 }
 
 
-function stringifyPrimitive(key: string, val: Primitive): string {
-  return `${key}=${val}`;
+function stringifyPrimitive(key: string, val: unknown) {
+  return `${key}=${encodeURIComponent(String(val))}`;
 }
 
-function stringifyArray(data: unknown[], key: string): string {
+function stringifyArray(data: unknown[], key: string) {
   const params: string[] = [];
   data.forEach((e, i) =>
-    params.push(stringifyNested(e, `${key}[${i}]`))
+    params.push(
+      stringifyNested(e, `${key}[${i}]`))
   );
   return params.join("&");
 }
 
-function stringifyObj(data: object, key: string): string {
+function stringifyObj(data: object, key: string) {
   const params: string[] = [];
   Object.keys(data).forEach(k =>
     params.push(
@@ -55,4 +57,41 @@ function stringifyObj(data: object, key: string): string {
 }
 
 
-export { queryStringify };
+
+
+function getKey(key: string, parentKey?: string) {
+  return parentKey ?
+    `${parentKey}[${key}]` : key;
+}
+
+function getParams(data: PlainObject | [], parentKey?: string) {
+
+  const result: [string, string][] = [];
+  const kvPairs = Object.entries(data);
+
+  for (const [key, val] of kvPairs) {
+    const k = getKey(key, parentKey);
+    if (isArrayOrObject(val))
+      result.push(...getParams(val, k));
+    else
+      result.push([k, encodeURIComponent(String(val))]);
+  }
+
+  return result;
+}
+
+function queryString(data: PlainObject) {
+
+  if (!isPlainObject(data))
+    throw Error("параметр data должен быть объектом");
+
+  const params = getParams(data);
+
+  return params
+    .map(pair => pair.join('='))
+    .join('&');
+
+}
+
+
+export { queryStringify, queryString };
