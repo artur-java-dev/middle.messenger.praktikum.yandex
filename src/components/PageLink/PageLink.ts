@@ -1,3 +1,4 @@
+import { RouteManagement } from "../../navigation/RouteManagement";
 import { getProp } from "../../utils/common";
 import { Block, compileBlock } from "../../view-base/Block";
 
@@ -13,6 +14,20 @@ class PageLink extends Block {
 
     super(props);
 
+  }
+
+
+  protected render() {
+
+    super.render();
+
+    this.content.querySelector("a")!.addEventListener("click",
+      e => {
+        e.preventDefault();
+        const link = e.target as HTMLLinkElement;
+        const path = link.getAttribute("href")!;
+        RouteManagement.go(path);
+      });
   }
 
 

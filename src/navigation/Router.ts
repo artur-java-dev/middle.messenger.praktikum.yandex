@@ -1,6 +1,7 @@
 import { Nullable } from "../utils/common-types";
-import { Block } from "../view-base/Block";
+import { CompositeBlock } from "../view-base/CompositeBlock";
 import { Route } from "./Route";
+import { Pathname } from "./RouteManagement";
 
 
 class Router {
@@ -44,7 +45,7 @@ class Router {
   }
 
 
-  use(pathname: string, block: typeof Block) {
+  use(pathname: string, block: CompositeBlock) {
 
     const props = { rootQuery: this.rootQuery };
     const route = new Route(pathname, block, props);
@@ -92,7 +93,8 @@ class Router {
 
   getRoute(pathname: string) {
 
-    return this.routes.find(_ => _.match(pathname));
+    return this.routes.find(_ => _.match(pathname)) ??
+      this.routes.find(_ => _.match(Pathname.Err404));
 
   }
 

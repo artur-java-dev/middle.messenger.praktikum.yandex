@@ -50,6 +50,7 @@ class HTTPTransport {
         ? `${this.urlBase + url}${this.queryStringify(data)}`
         : this.urlBase + url;
 
+      req.withCredentials = options.needCookie ?? true;
       req.open(method, urlGet);
 
       req.onload = () => resolve(req);
@@ -64,15 +65,21 @@ class HTTPTransport {
 
       }
 
-      if (data && typeof data === "object") {
-
-        req.send(objToFormData(data));
-
-      } else {
+      if (data instanceof FormData) {
 
         req.send(data);
+        return;
 
       }
+
+      if (typeof data === "object") {
+
+        req.send(objToFormData(data));
+        return;
+
+      }
+
+      req.send(data);
 
     });
 
@@ -134,7 +141,8 @@ class HTTPTransport {
 
 type Options = {
   method: string;
-  data?: Document | XMLHttpRequestBodyInit | object;
+  data?: Document | XMLHttpRequestBodyInit | FormData | object;
+  needCookie?: boolean;
   retries?: number;
 };
 

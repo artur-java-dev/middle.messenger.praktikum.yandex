@@ -1,5 +1,5 @@
 import { LoginAPI } from "../api/LoginAPI";
-import { RouteManagement } from "../navigation/RouteManagement";
+import { Pathname, RouteManagement } from "../navigation/RouteManagement";
 
 
 interface LoginFormModel {
@@ -18,7 +18,7 @@ class UserLoginController {
 
       const userID = LoginAPI.request(prepare(data));
 
-      RouteManagement.go("/chats");
+      RouteManagement.go(Pathname.Chats);
 
       // Останавливаем крутилку
 

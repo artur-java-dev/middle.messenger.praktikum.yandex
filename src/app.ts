@@ -10,34 +10,42 @@ import { ChatsPage } from "./pages/Chats/ChatsPage";
 import { BlockConstructable, registerComponent } from "./utils/ui-utils";
 import { ChatCard } from "./components/ChatCard/ChatCard";
 import { Message } from "./components/Message/Message";
+import { Pathname, RouteManagement } from "./navigation/RouteManagement";
 
 
 registerComponent("ChatCard", ChatCard as BlockConstructable);
 registerComponent("Message", Message as BlockConstructable);
 
 
-const pages: { [k: string]: CompositeBlock } = {
-  Login: new LoginPage(),
-  Registration: new RegistrationPage(),
-  Chats: new ChatsPage(),
-  Profile: new UserProfile(),
-  ChangePassword: new PasswordSetting(),
-  Error404: new Page404(),
-  Error500: new Page500(),
-};
+// const pages: { [k: string]: CompositeBlock } = {
+//   Login: new LoginPage(),
+//   Registration: new RegistrationPage(),
+//   Chats: new ChatsPage(),
+//   Profile: new UserProfile(),
+//   ChangePassword: new PasswordSetting(),
+//   Error404: new Page404(),
+//   Error500: new Page500(),
+// };
 
 
-document.querySelector("nav")!.addEventListener("click",
-  e => {
+// document.querySelector("nav")!.addEventListener("click",
+//   e => {
 
-    const elem = e.target as HTMLElement;
-    if (elem.tagName === "A") {
+//     const elem = e.target as HTMLElement;
+//     if (elem.tagName === "A") {
 
-      const attr = elem.getAttribute("href");
-      navigateTo(pages[attr!.substring(1)]);
+//       const attr = elem.getAttribute("href");
+//       navigateTo(pages[attr!.substring(1)]);
 
-    }
+//     }
 
-  });
+//   });
 
-document.addEventListener("DOMContentLoaded", () => navigateTo(pages.Login));
+RouteManagement.init();
+RouteManagement.go(Pathname.Login)
+
+document.addEventListener("DOMContentLoaded", () => { }
+);
+
+window.addEventListener("load", (e) => {
+});

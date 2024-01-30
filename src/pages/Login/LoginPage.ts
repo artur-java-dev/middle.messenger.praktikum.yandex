@@ -2,6 +2,7 @@ import { Button } from "../../components/Button/Button";
 import { Input } from "../../components/Input/Input";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { Pathname } from "../../navigation/RouteManagement";
 import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks, isEmpty } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
@@ -24,16 +25,16 @@ class LoginPage extends CompositeBlock {
         }
       }
     },
-    {
-      ...components,
-      title: title,
-      loginInput: login,
-      passwordInput: password,
+      {
+        ...components,
+        title: title,
+        loginInput: login,
+        passwordInput: password,
 
-      button: new Button({ label: "Войти", type: "submit" }),
+        button: new Button({ label: "Войти", type: "submit" }),
 
-      regLink: link,
-    });
+        regLink: new PageLink({ title: "Создать аккаунт", href: Pathname.Registration }),
+      });
 
   }
 
@@ -85,7 +86,6 @@ const password = new Input({
   validate: SpecialChecks.isValidPassword
 });
 
-const link = new PageLink({ title: "Создать аккаунт", href: "" });
 
 
 export { LoginPage };

@@ -58,9 +58,27 @@ function isEqual(lhs: string, rhs: string) {
 }
 
 
+const htmlEscapes = {
+  '&': "&amp;",
+  '<': "&lt;",
+  '>': "&gt;",
+  '"': "&quot;",
+  "'": "&#039;"
+};
+
+function escapeHtml(unsafe: string) {
+  return unsafe.replaceAll('&', htmlEscapes['&'])
+    .replaceAll('<', htmlEscapes['<'])
+    .replaceAll('>', htmlEscapes['>'])
+    .replaceAll('"', htmlEscapes['"'])
+    .replaceAll("'", htmlEscapes["'"]);
+}
+
+
+
 export {
   getChar, isUpperCase,
   beginsWithUpperCase, containsUpperCase,
   removeSpaces, removeChars, trim,
-  isEqual
+  isEqual, escapeHtml
 };
