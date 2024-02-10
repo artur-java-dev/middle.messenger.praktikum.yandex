@@ -1,8 +1,7 @@
 import { HTTPTransport } from "../utils/HTTPTransport";
-import { EntityBaseAPI } from "./EntityBaseAPI";
 
 
-class ChatMessagesAPI extends EntityBaseAPI {
+class ChatMessagesAPI /* extends EntityBaseAPI */ {
 
   private readonly endpoint = "api/v1/messages";
   private http = new HTTPTransport(this.endpoint);

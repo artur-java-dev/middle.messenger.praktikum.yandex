@@ -1,6 +1,9 @@
+import { CreateUser } from "../../api/entities/User";
 import { Button } from "../../components/Button/Button";
+import { ErrorBlock } from "../../components/ErrorBlock/ErrorBlock";
 import { Input } from "../../components/Input/Input";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { LoginController } from "../../controllers/LoginController";
 import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
@@ -17,14 +20,17 @@ class RegistrationPage extends CompositeBlock {
         submit: (event: Event) => {
 
           event.preventDefault();
-          this.preSubmit();
-          firstName.validate();
-          secondName.validate();
-          login.validate();
-          email.validate();
-          phone.validate();
-          password.validate();
-          isPasswordRepeated(password, password2);
+
+          const isValid = this.validate();
+
+          if (!isValid)
+            return;
+
+          const data = collectValuesToObj(this.form);
+          console.log(data);
+
+          LoginController.signup(data as CreateUser)
+            .catch((e: Error) => this.outErr(e));
 
         }
       }
@@ -39,8 +45,14 @@ class RegistrationPage extends CompositeBlock {
       passwordInput: password,
       password2Input: password2,
       button: btn,
+      error: new ErrorBlock(),
     });
 
+  }
+
+
+  private outErr(e: Error) {
+    this.children.error.props = { errMessage: e.message };
   }
 
 
@@ -50,12 +62,16 @@ class RegistrationPage extends CompositeBlock {
 
   }
 
-  private preSubmit() {
 
-    console.log(collectValuesToObj(this.form));
-
+  private validate() {
+    return firstName.validate() &&
+      secondName.validate() &&
+      login.validate() &&
+      email.validate() &&
+      phone.validate() &&
+      password.validate() &&
+      isPasswordRepeated(password, password2);
   }
-
 
   protected override template() {
 

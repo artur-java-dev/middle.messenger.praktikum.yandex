@@ -1,12 +1,17 @@
+import { Chat } from "../../api/entities/Chat";
+import { ActionLink } from "../../components/ActionLink/ActionLink";
 import { ChatInfo } from "../../components/ChatCard/ChatCard";
 import { ChatList } from "../../components/ChatList/ChatList";
 import { Conversation } from "../../components/Conversation/Conversation";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { Search } from "../../components/Search/Search";
+import { AppController } from "../../controllers/AppController";
+import { ChatController } from "../../controllers/ChatController";
+import { Pathname } from "../../navigation/RouteManagement";
+import { hasKey } from "../../utils/common";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
+import { NewChatDialog } from "./NewChatDialog";
 import template from "./tmpl.hbs?raw";
-
-import avatar from "/static/assets/no-avatar.png";
 
 
 class ChatsPage extends CompositeBlock {
@@ -15,43 +20,74 @@ class ChatsPage extends CompositeBlock {
 
     super({}, {
       ...components,
-      profileLink: new PageLink({ title: "Профиль", href: "" }),
+      profileLink: new PageLink({ title: "Профиль", href: Pathname.Profile }),
+      newChatLink: newChat,
       search: new Search(),
-      chats: new ChatList({ chats: chats }),
-      conversation: new Conversation(),
+      chats: new ChatList({ chats: [], onSelect: setConnection }),
+      conversation: conversBlock,
+      newChatDialog: NewChatDialog
     });
+
+    window.store.onUpdated(
+      () => this.child("chats").props.chats = getChatsFromStore(),
+      this);
+
+    AppController.initChatPage();
 
   }
 
 
   protected override template() {
-
     return template;
-
-  }
-
-
-  protected override wasUpdate(_oldProps: object, _newProps: object) {
-
-    return false;
-
   }
 
 }
-const chats: ChatInfo[] = [
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00", unreadedMessages: 2 },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00", unreadedMessages: 2 },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00", unreadedMessages: 2 },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-  { avatarPath: avatar, chatName: "User", lastMessage: "message", lastMessageTime: "00:00" },
-];
+
+
+const conversBlock = new Conversation();
+
+const newChat = new ActionLink({
+  label: "Создать чат",
+  onClick: () => {
+    NewChatDialog.open();
+  }
+});
+
+
+function setConnection(chatId: number) {
+  ChatController.createWebSocket(chatId).then(socket =>
+    conversBlock.setConnection(socket)
+  );
+}
+
+
+function getChatsFromStore() {
+  if (!AppController.isAuthorized)
+    return [];
+  const res = (getData<Chat[]>("chats"))?.map(toChatInfo);
+  return res ?? [];
+}
+
+function getData<T extends object = object>(key: string) {
+  const state = window.store.getState();
+
+  if (!hasKey(key, state))
+    return null;
+
+  return state[key] as T;
+}
+
+function toChatInfo(value: Chat): ChatInfo {
+  return {
+    id: value.id,
+    avatarPath: value.avatar ?? undefined,
+    chatName: value.title,
+    lastMessage: value.last_message?.content,
+    lastMessageTime: value.last_message?.time,
+    unreadedMessages: value.unread_count,
+  };
+}
 
 
 export { ChatsPage };
+

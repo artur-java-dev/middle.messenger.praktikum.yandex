@@ -37,7 +37,4 @@ const enum StoreEvent {
   Updated = "updated",
 }
 
-const objStore = new Store();
-
-
-export { objStore as Store };
+export { Store };

@@ -66,6 +66,12 @@ class Input extends CompositeBlock {
 
   }
 
+  public set value(value: string) {
+
+    this.input.value = value;
+
+  }
+
   private get input() {
 
     return this.children.input.content as HTMLInputElement;
@@ -79,7 +85,7 @@ class Input extends CompositeBlock {
   }
 
 
-  validate() {
+  validate(): boolean {
 
     const f = this.validateFunc;
 

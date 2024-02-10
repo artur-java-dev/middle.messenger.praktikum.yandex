@@ -1,14 +1,26 @@
+import { RequestBody } from "../utils/HTTPTransport";
+
+
 abstract class EntityBaseAPI {
 
-  abstract create(data: object): Promise<XMLHttpRequest>
+  abstract create<T extends RequestBody = object>(data: T):
+    Promise<XMLHttpRequest>
 
-  abstract request(urlParams: object): Promise<XMLHttpRequest>
 
-  abstract requestById(id: number): Promise<XMLHttpRequest>
+  abstract request<T extends RequestBody = object>(urlParams?: T):
+    Promise<XMLHttpRequest>
 
-  abstract update(data: object): Promise<XMLHttpRequest>
 
-  abstract delete(data: object): Promise<XMLHttpRequest>
+  abstract requestById(id: number):
+    Promise<XMLHttpRequest>
+
+
+  abstract update<T extends RequestBody = object>(data: T):
+    Promise<XMLHttpRequest>
+
+
+  abstract delete<T extends RequestBody = object>(data: T):
+    Promise<XMLHttpRequest>
 
 }
 

@@ -1,9 +1,13 @@
+import { ChangePasswordRequest } from "../../api/entities/User";
 import { Button } from "../../components/Button/Button";
+import { ErrorBlock } from "../../components/ErrorBlock/ErrorBlock";
 import { Input } from "../../components/Input/Input";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { UserController } from "../../controllers/UserController";
 import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks, isEmpty } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
+import { OnSaveDialog } from "./OnSaveDialog";
 import template from "./tmpl.hbs?raw";
 
 
@@ -16,9 +20,31 @@ class PasswordSetting extends CompositeBlock {
         submit: (event: Event) => {
 
           event.preventDefault();
-          this.preSubmit();
-          passwordSet.validate();
-          isPasswordRepeated(passwordSet, passwordSetRepeat);
+
+          this.outErr(null);
+
+          if (isEmpty(passwordCurrent.value))
+            return;
+
+          if (!passwordSet.validate())
+            return;
+
+          if (!isPasswordRepeated(passwordSet, passwordSetRepeat))
+            return;
+
+          const obj = collectValuesToObj(this.form);
+          console.log(obj);
+
+          UserController.changePassword(obj as ChangePasswordRequest)
+            .then(req => {
+              if (req.status === 200)
+                OnSaveDialog.open();
+              else if (req.status === 400)
+                this.outErr(JSON.parse(req.response).reason)
+              else
+                this.outErr(req.response)
+            })
+            .catch(reason => this.outErr(reason));
 
         }
       }
@@ -29,8 +55,15 @@ class PasswordSetting extends CompositeBlock {
       passwordSet: passwordSet,
       passwordSetRepeat: passwordSetRepeat,
       button: new Button({ label: "Сохранить", type: "submit" }),
+      OnSaveDialog: OnSaveDialog,
+      error: new ErrorBlock(),
     });
 
+  }
+
+
+  private outErr(reason: unknown) {
+    this.children.error.props = { errMessage: reason };
   }
 
 
@@ -40,15 +73,6 @@ class PasswordSetting extends CompositeBlock {
 
   }
 
-  private preSubmit() {
-
-    if (isEmpty(passwordCurrent.value))
-      return;
-
-    const obj = collectValuesToObj(this.form);
-    console.log(obj);
-
-  }
 
 
   protected override template() {

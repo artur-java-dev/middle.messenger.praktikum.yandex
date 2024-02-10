@@ -1,18 +1,28 @@
 import { getProp } from "../../utils/common";
-import { Block, compileBlock } from "../../view-base/Block";
+import { Block, EventHandler, compileBlock } from "../../view-base/Block";
 
 
 type IProps = {
   type?: string,
   label: string,
+  onClick?: EventHandler
 }
+
 
 class Button extends Block {
 
   constructor(props: IProps) {
-
     super(props);
+  }
 
+  protected render() {
+
+    const props = this.props as IProps;
+
+    if (props.onClick)
+      this.addEventHandler("click", props.onClick);
+
+    super.render();
   }
 
 

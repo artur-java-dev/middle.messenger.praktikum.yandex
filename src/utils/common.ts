@@ -126,6 +126,24 @@ function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
 }
 
 
+function isTrue(value: unknown) {
+  if (typeof (value) === 'string')
+    value = value.trim().toLowerCase();
+
+  switch (value) {
+    case true:
+    case "true":
+    case 1:
+    case "1":
+    case "on":
+    case "yes":
+      return true;
+    default:
+      return false;
+  }
+}
+
+
 export {
-  namespace, isEmpty, isEmptyObj, hasKey, getProp, getValue
+  namespace, isEmpty, isEmptyObj, hasKey, getProp, getValue, isTrue
 };

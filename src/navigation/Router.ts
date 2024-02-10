@@ -1,3 +1,4 @@
+import { LoginController } from "../controllers/LoginController";
 import { Nullable } from "../utils/common-types";
 import { CompositeBlock } from "../view-base/CompositeBlock";
 import { Route } from "./Route";
@@ -101,6 +102,15 @@ class Router {
 
   private onRoute(pathname: string) {
 
+    this.redirectOnLogin(pathname)
+      .then(isRedir => {
+        if (!isRedir)
+          this.on(pathname);
+      });
+
+  }
+
+  private on(pathname: string) {
     const route = this.getRoute(pathname);
 
     if (!route)
@@ -114,6 +124,29 @@ class Router {
 
     this.currentRoute = route;
     route.render();
+  }
+
+  private async redirectOnLogin(pathname: string) {
+
+    try {
+      await LoginController.getUser();
+
+      if (pathname === Pathname.Login) {
+        this.on(Pathname.Chats);
+        return true;
+      }
+
+      return false;
+
+    } catch (e) {
+      if (pathname === Pathname.Registration) {
+        this.on(Pathname.Registration);
+        return false;
+      }
+
+      this.on(Pathname.Login);
+      return true;
+    }
 
   }
 

@@ -1,11 +1,12 @@
 import { RouteManagement } from "../../navigation/RouteManagement";
-import { getProp } from "../../utils/common";
-import { Block, compileBlock } from "../../view-base/Block";
+import { getProp, getValue, hasKey } from "../../utils/common";
+import { Block, EventHandler, compileBlock } from "../../view-base/Block";
 
 
 type IProps = {
   href: string,
   title: string,
+  onclick?: EventHandler
 }
 
 class PageLink extends Block {
@@ -18,8 +19,14 @@ class PageLink extends Block {
 
 
   protected render() {
-
     super.render();
+
+    if (hasKey("onclick", this.props)) {
+      const handler = getValue(this.props, "onclick") as EventHandler;
+      const link = this.content.querySelector("a")!;
+      link.addEventListener("click", handler);
+      return;
+    }
 
     this.content.querySelector("a")!.addEventListener("click",
       e => {

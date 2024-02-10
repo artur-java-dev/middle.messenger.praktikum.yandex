@@ -1,6 +1,5 @@
-.error-block {
-    margin: auto !important;
+.message-block {
+    margin: 0.6rem;
     font-size: 0.6rem;
     word-wrap: break-word;
-    color: red;
 }

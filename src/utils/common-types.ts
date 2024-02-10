@@ -19,6 +19,11 @@ type Indexed<T = unknown> = {
 };
 
 
+type NumIndexed<T = unknown> = {
+  [k in number]: T;
+};
+
+
 type StringIndexed = Record<string, any>;
 
 
@@ -28,7 +33,7 @@ type NameSpace = { [k: string]: NameSpace; };
 export {
   Nullable, Primitive,
   Obj, PlainObject, RecObj,
-  Indexed, ArrayOrObject, StringIndexed,
+  Indexed, NumIndexed, ArrayOrObject, StringIndexed,
   NameSpace,
 };
 

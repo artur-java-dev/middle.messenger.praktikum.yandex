@@ -1,4 +1,3 @@
-import { getProp } from "../../utils/common";
 import { Block, compileBlock } from "../../view-base/Block";
 
 
@@ -25,9 +24,9 @@ class Message extends Block {
   }
 
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+  protected override wasUpdate(oldProps: IProps, newProps: IProps) {
 
-    return getProp(newProps, "text") !== getProp(oldProps, "text");
+    return newProps.text !== oldProps.text;
 
   }
 

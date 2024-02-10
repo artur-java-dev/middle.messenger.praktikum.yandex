@@ -23,11 +23,12 @@ class InputElement extends Block {
 
   }
 
+  public get value() {
+    return this.input.value;
+  }
 
-  protected override wasUpdate(_oldProps: object, _newProps: object) {
-
-    return false;
-
+  private get input() {
+    return this.content as HTMLInputElement;
   }
 
 

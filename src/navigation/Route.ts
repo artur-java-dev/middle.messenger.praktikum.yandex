@@ -1,18 +1,17 @@
-import { Nullable } from "../utils/common-types";
 import { isEqual } from "../utils/str-utils";
 import { Block, TProps, renderBlock } from "../view-base/Block";
 import { CompositeBlock } from "../view-base/CompositeBlock";
 
 
-interface BlockConstructable {
-  new(): CompositeBlock
-}
+// interface BlockConstructable {
+//   new(): CompositeBlock
+// }
 
 
 class Route {
 
   private pathname: string;
-  private BlockClass: BlockConstructable;
+  // private BlockClass: BlockConstructable;
   private block: Block;
   private props: TProps;
   private wasRendered = false;
@@ -20,7 +19,7 @@ class Route {
   constructor(pathname: string, view: CompositeBlock, props: TProps) {
 
     this.pathname = pathname;
-    this.BlockClass = view.constructor as BlockConstructable;
+    // this.BlockClass = view.constructor as BlockConstructable;
     this.block = view;
     this.props = props;
 

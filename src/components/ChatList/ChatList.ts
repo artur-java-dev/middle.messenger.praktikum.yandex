@@ -5,14 +5,32 @@ import template from "./tmpl.hbs?raw";
 
 type IProps = {
   chats: ChatInfo[],
+  onSelect: OnSelectFunc
 }
 
+type OnSelectFunc = (chatId: ChatID) => void;
+
+type ChatID = number;
+const NoneChatID = -1;
+
+
 class ChatList extends Block {
+
+  selectedChat: ChatID = NoneChatID;
 
   constructor(props: IProps) {
 
     super(props);
 
+  }
+
+
+  protected doInit() {
+    const func = this.props.onSelect as OnSelectFunc;
+    this.props.onSelect = (chatId: ChatID) => {
+      this.selectedChat = chatId;
+      func(chatId);
+    };
   }
 
 
@@ -30,13 +48,13 @@ class ChatList extends Block {
   }
 
 
-  protected wasUpdate(_oldProps: object, _newProps: object) {
+  protected override wasUpdate(_oldProps: IProps, _newProps: IProps) {
 
-    return false;
+    return _oldProps.chats.length !== _newProps.chats.length;
 
   }
 
 }
 
 
-export { ChatList };
+export { ChatList, ChatID, NoneChatID };

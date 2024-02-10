@@ -1,4 +1,6 @@
-import { isEmptyObj } from "./common";
+import { BaseURL, Protocol } from "../api/constants";
+import { hasKey, isEmptyObj } from "./common";
+import { Indexed } from "./common-types";
 import { objToFormData } from "./form-utils";
 
 
@@ -6,9 +8,9 @@ class HTTPTransport {
 
   private urlBase: string;
 
-  constructor(urlBase: string) {
+  constructor(path: string) {
 
-    this.urlBase = urlBase;
+    this.urlBase = Protocol + BaseURL + path;
 
   }
 
@@ -21,25 +23,29 @@ class HTTPTransport {
 
   public post(url: string, options: OptionsWithoutMethod = {}) {
 
+    setJSONheader(options);
     return this.request(url, { ...options, method: METHOD.POST });
 
   }
 
   public put(url: string, options: OptionsWithoutMethod = {}) {
 
+    setJSONheader(options);
     return this.request(url, { ...options, method: METHOD.PUT });
 
   }
 
   public delete(url: string, options: OptionsWithoutMethod = {}) {
 
+    setJSONheader(options);
     return this.request(url, { ...options, method: METHOD.DELETE });
 
   }
 
-  public request(url: string, options: Options): Promise<XMLHttpRequest> {
 
-    const { method, data } = options;
+  public async request(url: string, options: Options, timeout?: Millisec): Promise<XMLHttpRequest> {
+
+    const { headers = {}, method, data } = options;
     const isGet = method === METHOD.GET;
 
     return new Promise((resolve, reject) => {
@@ -50,17 +56,24 @@ class HTTPTransport {
         ? `${this.urlBase + url}${this.queryStringify(data)}`
         : this.urlBase + url;
 
-      req.withCredentials = options.needCookie ?? true;
       req.open(method, urlGet);
+      req.withCredentials = options.needCookie ?? true;
+      if (timeout)
+        req.timeout = timeout;
+      this.setHeaders(headers, req);
 
-      req.onload = () => resolve(req);
-      req.onabort = reject;
-      req.onerror = reject;
-      req.ontimeout = reject;
+      req.onload = () =>
+        resolve(req);
+      req.onabort = () =>
+        reject("Запрос был прерван");
+      req.onerror = () =>
+        reject("Ошибка соединения");
+      req.ontimeout = () =>
+        reject(`Истекло время ожидания ответа (${timeout})`);
 
       if (method === METHOD.GET || !data) {
 
-        req.send();
+        req.send(null);
         return;
 
       }
@@ -74,7 +87,19 @@ class HTTPTransport {
 
       if (typeof data === "object") {
 
-        req.send(objToFormData(data));
+        const isJSON =
+          headers[ContentTypeHeader]?.includes("application/json") ??
+          false;
+
+        const isFormData =
+          headers[ContentTypeHeader]?.includes("multipart/form-data") ??
+          false;
+
+        if (isJSON)
+          req.send(JSON.stringify(data));
+        else
+          req.send(isFormData ? objToFormData(data) : data.toString());
+
         return;
 
       }
@@ -83,6 +108,14 @@ class HTTPTransport {
 
     });
 
+  }
+
+
+  private setHeaders(headers: Indexed<string>, req: XMLHttpRequest) {
+    Object.keys(headers)
+      .forEach(k =>
+        req.setRequestHeader(k, headers[k])
+      );
   }
 
 
@@ -139,10 +172,16 @@ class HTTPTransport {
 
 }
 
+const ContentTypeHeader = "Content-Type";
+
+type RequestBody = Document | XMLHttpRequestBodyInit | FormData | object | URLSearchParams;
+
 type Options = {
   method: string;
-  data?: Document | XMLHttpRequestBodyInit | FormData | object;
+  headers?: Indexed<string>,
+  data?: RequestBody;
   needCookie?: boolean;
+  withHeaders?: boolean;
   retries?: number;
 };
 
@@ -156,9 +195,23 @@ const enum METHOD {
   DELETE = "DELETE"
 }
 
+type Millisec = number;
+
+
+function setJSONheader(options: OptionsWithoutMethod) {
+  if (!options.data || !(options.withHeaders ?? true))
+    return;
+
+  if (!options.headers)
+    options.headers = {};
+
+  if (!hasKey(ContentTypeHeader, options.headers))
+    options.headers[ContentTypeHeader] = "application/json";
+}
+
 
 export {
   HTTPTransport,
-  Options, OptionsWithoutMethod, METHOD
+  Options, RequestBody, OptionsWithoutMethod, METHOD
 };
 

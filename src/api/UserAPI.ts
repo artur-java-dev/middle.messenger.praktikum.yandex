@@ -1,24 +1,11 @@
-import { HTTPTransport } from "../utils/HTTPTransport";
-import { EntityBaseAPI } from "./EntityBaseAPI";
+import { HTTPTransport, RequestBody } from "../utils/HTTPTransport";
+import { ChangePasswordRequest } from "./entities/User";
 
 
-class UserAPI extends EntityBaseAPI {
+class UserAPI {
 
-  private readonly endpoint = "api/v1/users";
+  private readonly endpoint = "/user";
   private http = new HTTPTransport(this.endpoint);
-
-
-  create(data: object): Promise<XMLHttpRequest> {
-
-    throw new Error("Method not implemented.");
-
-  }
-
-  request(urlParams: object): Promise<XMLHttpRequest> {
-
-    throw new Error("Method not implemented.");
-
-  }
 
   requestById(id: number) {
 
@@ -26,22 +13,28 @@ class UserAPI extends EntityBaseAPI {
 
   }
 
-  update(data: object): Promise<XMLHttpRequest> {
-
-    throw new Error("Method not implemented.");
-
+  update<T extends RequestBody>(userData: T): Promise<XMLHttpRequest> {
+    return this.http.put("/profile",
+      { data: userData });
   }
 
-  delete(data: object): Promise<XMLHttpRequest> {
-
-    throw new Error("Method not implemented.");
-
+  updateAvatar(avatarData: FormData) {
+    return this.http.put("/profile/avatar",
+      {
+        // headers: { "Content-Type": "multipart/form-data" },
+        withHeaders: false,
+        data: avatarData
+      });
   }
 
-  static getUser(id: number) {
+  updatePassword(reqData: ChangePasswordRequest) {
+    return this.http.put("/password",
+      { data: reqData });
+  }
 
-    return api.requestById(id);
-
+  findUsersByLogin(reqData: { login: string; }) {
+    return this.http.post("/search",
+      { data: reqData });
   }
 
 }
@@ -50,4 +43,4 @@ class UserAPI extends EntityBaseAPI {
 const api = new UserAPI;
 
 
-export { UserAPI };
+export { api as UserAPI };

@@ -6,9 +6,20 @@ import attachIcon from "/static/assets/attach.png";
 import sendIcon from "/static/assets/send.png";
 import template from "./tmpl.hbs?raw";
 import { MessageInfo } from "../Message/Message";
+import { Indexed, Nullable } from "../../utils/common-types";
+import { isEmpty } from "../../utils/validators-func";
+import { PingPong, ServerLastMessage, ServerMessage } from "../../api/entities/Message";
+import { isArray } from "../../utils/checks-types";
 
 
 class Conversation extends CompositeBlock {
+
+  private socket: Nullable<WebSocket> = null;
+  private timerIdPing: Nullable<number> = null;
+  private lastMsgNum: number = 0;
+
+  private readonly pingInterval = 100 * 1000;
+  private readonly lastMessagesLimit = 20;
 
   constructor(messages: MessageInfo[] = [], components: Components = {}) {
 
@@ -17,9 +28,110 @@ class Conversation extends CompositeBlock {
       messageBand: new MessageBand({ messages: messages }),
       attachFileButton: new ImageButton({ imagePath: attachIcon }),
       messageInput: new TextInput({ elementName: "message", placeholder: "Сообщение" }),
-      sendMsgButton: new ImageButton({ imagePath: sendIcon, type: "submit" }),
+      sendMsgButton: new ImageButton({ imagePath: sendIcon }),
     });
 
+  }
+
+
+  protected doInit() {
+  }
+
+
+  private get messageBand() {
+    return this.children.messageBand as MessageBand;
+  }
+
+  private get sendButton() {
+    return this.children.sendMsgButton.content as HTMLButtonElement;
+  }
+
+  private get messageInput() {
+    return this.children.messageInput.content as HTMLTextAreaElement;
+  }
+
+
+  public setConnection(socket: WebSocket) {
+
+    this.socket = socket;
+
+    this.doPing(socket);
+
+    socket.addEventListener("close", () => this.stopPing());
+
+    socket.addEventListener("message", event => {
+      const data = JSON.parse(event.data);
+
+      if (isArray(data)) {
+        data.reverse().forEach(msg =>
+          this.handleMessage(msg as ServerLastMessage));
+        return;
+      }
+
+      const msg = data as Indexed;
+
+      if (msg.type === PingPong.Pong)
+        return;
+
+      if (msg.type === "message")
+        this.handleMessage(msg as ServerMessage);
+    });
+
+    this.lastMsgNum = 0;
+    this.getLastMessages(socket);
+  }
+
+
+  private getLastMessages(socket: WebSocket) {
+    socket.send(JSON.stringify({
+      content: String(this.lastMsgNum),
+      type: "get old",
+    }));
+
+    this.lastMsgNum += this.lastMessagesLimit;
+  }
+
+
+  private stopPing() {
+    if (this.timerIdPing !== null)
+      clearInterval(this.timerIdPing);
+  }
+
+  private doPing(socket: WebSocket) {
+    this.timerIdPing = setInterval(
+      () => socket.send(""),
+      this.pingInterval);
+  }
+
+  private handleMessage(msg: ServerMessage | ServerLastMessage) {
+    if (isEmpty(msg.content))
+      return;
+
+    this.messageBand.addMessage(msg);
+  }
+
+
+  protected render() {
+    super.render();
+
+    this.sendButton.addEventListener("click", this.sendMessage);
+  }
+
+  private sendMessage() {
+    if (this.socket === null || this.socket.readyState !== WebSocket.OPEN)
+      return;
+
+    const msg = this.messageInput.value;
+
+    if (isEmpty(msg))
+      return;
+
+    const data = {
+      content: msg,
+      type: "message",
+    };
+
+    this.socket.send(JSON.stringify(data));
   }
 
 

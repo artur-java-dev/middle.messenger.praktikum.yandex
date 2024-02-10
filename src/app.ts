@@ -1,16 +1,9 @@
-import { navigateTo } from "./utils/nav-utils";
-import { LoginPage } from "./pages/Login/LoginPage";
-import { RegistrationPage } from "./pages/Registration/RegistrationPage";
-import { UserProfile } from "./pages/Profile/UserProfile";
-import { PasswordSetting } from "./pages/PasswordSetting/PasswordSetting";
-import { Page404 } from "./pages/404/Page404";
-import { Page500 } from "./pages/500/Page500";
-import { CompositeBlock } from "./view-base/CompositeBlock";
-import { ChatsPage } from "./pages/Chats/ChatsPage";
 import { BlockConstructable, registerComponent } from "./utils/ui-utils";
 import { ChatCard } from "./components/ChatCard/ChatCard";
 import { Message } from "./components/Message/Message";
-import { Pathname, RouteManagement } from "./navigation/RouteManagement";
+import { AppController } from "./controllers/AppController";
+import { Store } from "./data/Store";
+import { isTrue } from "./utils/common";
 
 
 registerComponent("ChatCard", ChatCard as BlockConstructable);
@@ -41,11 +34,29 @@ registerComponent("Message", Message as BlockConstructable);
 
 //   });
 
-RouteManagement.init();
-RouteManagement.go(Pathname.Login)
 
-document.addEventListener("DOMContentLoaded", () => { }
-);
+declare global {
 
-window.addEventListener("load", (e) => {
+  interface Window {
+    store: Store;
+  }
+
+}
+
+
+window.store = new Store();
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // if (isTrue(sessionStorage.getItem("initPerformed"))) {
+  //   return;
+  // }
+
+  AppController.initApp();
+  sessionStorage.setItem("initPerformed", "true");
 });
+
+
+// window.addEventListener("load", e => {
+// });

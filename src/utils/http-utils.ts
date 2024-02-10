@@ -1,4 +1,6 @@
+import { APIError } from "../api/types/types";
 import { isArrayOrObject, isPlainObject } from "./checks-types";
+import { hasKey } from "./common";
 import { PlainObject } from "./common-types";
 
 
@@ -93,5 +95,11 @@ function queryString(data: PlainObject) {
 
 }
 
+function apiHasError(response: unknown): response is APIError {
+  return typeof response === "object" &&
+    response !== null &&
+    hasKey("reason", response);
+}
 
-export { queryStringify, queryString };
+
+export { queryStringify, queryString, apiHasError };

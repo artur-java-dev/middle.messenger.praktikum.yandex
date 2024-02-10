@@ -19,9 +19,9 @@ abstract class CompositeBlock<Props extends TProps = TProps> extends Block<Props
   }
 
 
-  protected child(name: string) {
+  protected child<T extends Block>(name: string): T {
 
-    return this.children[name];
+    return this.children[name] as T;
 
   }
 
@@ -38,6 +38,29 @@ abstract class CompositeBlock<Props extends TProps = TProps> extends Block<Props
   }
 
   protected doInit(): void { }
+
+
+  protected createElem() {
+
+    const fragment = document.createElement("template");
+    fragment.innerHTML = this.compiledTmpl();
+    this.processCompiledTmpl(fragment);
+
+    const childsCount = fragment.content.childElementCount;
+    const newElement = childsCount === 1 ?
+      fragment.content.firstElementChild as HTMLElement :
+      document.createElement("div");
+
+    if (childsCount > 1)
+      newElement.appendChild(fragment.content);
+
+    if (this.element)
+      this.element.replaceWith(newElement);
+
+    this.element = newElement;
+    this.element.setAttribute(this.AttrID, this.uuid);
+
+  }
 
 
   protected override compiledTmpl() {

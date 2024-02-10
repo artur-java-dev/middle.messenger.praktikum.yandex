@@ -1,23 +1,25 @@
-import { HTTPTransport } from "../utils/HTTPTransport";
+import { HTTPTransport, RequestBody } from "../utils/HTTPTransport";
 import { EntityBaseAPI } from "./EntityBaseAPI";
 
 
 class ChatAPI extends EntityBaseAPI {
 
-  private readonly endpoint = "api/v1/chats";
+  private readonly endpoint = "/chats";
   private http = new HTTPTransport(this.endpoint);
 
 
-  create(chatData: object) {
+  create<T extends RequestBody>(chatData: T) {
 
-    return this.http.post("/", { data: chatData });
+    return this.http.post("", { data: chatData });
 
   }
 
-  request(urlParams: object) {
+  request<T extends RequestBody>(urlParams?: T) {
 
-    return this.http.get("/", { data: urlParams });
+    if (urlParams)
+      return this.http.get("", { data: urlParams });
 
+    return this.http.get("");
   }
 
   requestById(id: number) {
@@ -26,19 +28,39 @@ class ChatAPI extends EntityBaseAPI {
 
   }
 
-  update(chatData: object) {
+  update<T extends RequestBody>(chatData: T) {
 
     return this.http.put("/", { data: chatData });
 
   }
 
-  delete(chatData: object) {
+  delete<T extends RequestBody>(chatData: T) {
 
     return this.http.delete("/", { data: chatData });
 
   }
 
+  addUser(req: UsersRequest) {
+    return this.http.put("/users", { data: req });
+  }
+
+  removeUser(req: UsersRequest) {
+    return this.http.delete("/users", { data: req });
+  }
+
+  getToken(chatId: number) {
+    return this.http.post(`/token/${chatId}`);
+  }
+
 }
 
 
-export { ChatAPI };
+type UsersRequest = {
+  users: number[];
+  chatId: number;
+};
+
+const api = new ChatAPI;
+
+
+export { api as ChatAPI };
