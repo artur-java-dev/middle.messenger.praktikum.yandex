@@ -46,7 +46,7 @@ class AuthAPI {
 
 
   async logout() {
-    return this.http.post("/logout");
+    return this.http.post("/logout", { data: "", withHeaders: false });
   }
 
 

@@ -5,9 +5,13 @@ class EventBus<T extends HandlerParam> {
 
   protected listeners: HandlersMap<T>;
 
-  constructor() {
+  constructor(events?: string[]) {
 
     this.listeners = new Map;
+
+    if (events) {
+      events.forEach(e => this.listeners.set(e, new Set));
+    }
 
   }
 

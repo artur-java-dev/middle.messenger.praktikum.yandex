@@ -1,7 +1,8 @@
+import { isArray } from "../utils/checks-types";
 import { Block, EVENT, TProps, compileBlock } from "./Block";
 
 
-type Components = { [k: string]: Block };
+type Components = { [k: string]: Block | Block[] };
 
 
 abstract class CompositeBlock<Props extends TProps = TProps> extends Block<Props> {
@@ -83,11 +84,7 @@ abstract class CompositeBlock<Props extends TProps = TProps> extends Block<Props
 
     Object.entries(this.children).forEach(
       ([key, child]) => {
-
-        propsWithStubs[key] = `
-          <div data-id="${child.id}">
-          </div>`;
-
+        propsWithStubs[key] = this.genStub(child);
       });
 
     return compileBlock(template, propsWithStubs);
@@ -95,27 +92,53 @@ abstract class CompositeBlock<Props extends TProps = TProps> extends Block<Props
   }
 
 
+  private genStub(child: Block | Block[]) {
+    if (isArray(child)) {
+      const arr = child as Block[];
+      return arr.map(block => `<div data-id="${block.id}"></div>`);
+    }
+
+    const block = child as Block;
+
+    return `<div data-id="${block.id}"></div>`;
+  }
+
+
   private replaceStubs(fragment: HTMLTemplateElement) {
 
-    Object.values(this.children).forEach(
-      child => {
-
-        const s = `[data-id="${child.id}"]`;
-        const stub = fragment.content.querySelector(s);
-        stub!.replaceWith(child.content);
-
-      });
+    Object.values(this.children).forEach(child => {
+      this.replaceStub(child, fragment);
+    });
 
   }
 
+
+  private replaceStub(child: Block | Block[], fragment: HTMLTemplateElement) {
+    if (isArray(child)) {
+      const arr = child as Block[];
+      arr.forEach(block => replace(block));
+      return;
+    }
+
+    replace((child as Block));
+
+    function replace(block: Block) {
+      const s = `[data-id="${block.id}"]`;
+      const stub = fragment.content.querySelector(s);
+      stub!.replaceWith(block.content);
+    }
+  }
 
   public dispatchMountEvent() {
 
     super.dispatchMountEvent();
 
-    Object.values(this.children).forEach(
-      b => b.dispatchMountEvent()
-    );
+    Object.values(this.children)
+      .forEach(child =>
+        isArray<Block>(child) ?
+          child.forEach(x => x.dispatchMountEvent()) :
+          child.dispatchMountEvent()
+      );
 
   }
 

@@ -78,13 +78,6 @@ class UserProfile extends CompositeBlock {
   }
 
 
-  protected render() {
-
-    super.render();
-
-  }
-
-
   private outErr(reason: unknown) {
     this.children.error.props = { errMessage: reason };
   }

@@ -1,5 +1,5 @@
-import { Block, compileBlock } from "../../view-base/Block";
-import { ChatInfo } from "../ChatCard/ChatCard";
+import { CompositeBlock } from "../../view-base/CompositeBlock";
+import { ChatCard, ChatInfo } from "../ChatCard/ChatCard";
 import template from "./tmpl.hbs?raw";
 
 
@@ -14,30 +14,32 @@ type ChatID = number;
 const NoneChatID = -1;
 
 
-class ChatList extends Block {
+class ChatList extends CompositeBlock {
 
   selectedChat: ChatID = NoneChatID;
 
   constructor(props: IProps) {
 
-    super(props);
+    super(props, {
+      chatCards: createChatCards(props)
+    });
 
   }
 
 
   protected doInit() {
-    const func = this.props.onSelect as OnSelectFunc;
-    this.props.onSelect = (chatId: ChatID) => {
-      this.selectedChat = chatId;
-      func(chatId);
-    };
+    // const p = this.props as IProps;
+    // this.props.onSelect = (chatId: ChatID) => {
+    //   this.selectedChat = chatId;
+    //   p.onSelect(chatId);
+    // };
   }
 
 
-  protected override compiledTmpl() {
+  protected render() {
+    // this.children.chatCards = createChatCards(this.props as IProps);
 
-    return compileBlock(this.template(), this.props);
-
+    super.render();
   }
 
 
@@ -54,6 +56,14 @@ class ChatList extends Block {
 
   }
 
+}
+
+
+function createChatCards(props: IProps) {
+  const arr = props.chats.map(chat =>
+    new ChatCard({ info: chat, onClick: props.onSelect })
+  );
+  return arr;
 }
 
 

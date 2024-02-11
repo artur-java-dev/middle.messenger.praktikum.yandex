@@ -1,4 +1,3 @@
-import { RouteManagement } from "../navigation/RouteManagement";
 import { ChatController } from "./ChatController";
 import { LoginController } from "./LoginController";
 
@@ -11,7 +10,6 @@ class AppController {
   static async initApp() {
 
     let me = null;
-    RouteManagement.init();
 
     try {
       me = await LoginController.getUser();

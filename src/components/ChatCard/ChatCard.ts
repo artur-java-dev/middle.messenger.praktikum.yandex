@@ -23,12 +23,7 @@ type ChatInfo = {
 class ChatCard extends CompositeBlock {
 
   constructor(props: IProps) {
-    super({
-      ...props,
-      events: {
-        click: () => props.onClick(props.info.id)
-      }
-    }, {
+    super(props, {
 
       chatUsersLink: new ActionLink({
         label: "участники",
@@ -39,6 +34,16 @@ class ChatCard extends CompositeBlock {
 
       chatUsersDialog: new Dialog(new ChatUsersDialog(props.info.id)),
     });
+  }
+
+
+  protected render() {
+    super.render();
+
+    const p = this.props as IProps;
+    this.content.addEventListener("click",
+      () => p.onClick(p.info.id)
+    );
   }
 
 

@@ -6,7 +6,7 @@ import { EventBus } from "../view-base/EventBus";
 class Store {
 
   private state: Indexed = {};
-  private readonly eventBus = new EventBus();
+  private readonly eventBus = new EventBus([StoreEvent.Updated]);
 
 
   public getState() {

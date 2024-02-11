@@ -3,7 +3,7 @@ import { ChatCard } from "./components/ChatCard/ChatCard";
 import { Message } from "./components/Message/Message";
 import { AppController } from "./controllers/AppController";
 import { Store } from "./data/Store";
-import { isTrue } from "./utils/common";
+import { RouteManagement } from "./navigation/RouteManagement";
 
 
 registerComponent("ChatCard", ChatCard as BlockConstructable);
@@ -47,13 +47,14 @@ declare global {
 window.store = new Store();
 
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
   // if (isTrue(sessionStorage.getItem("initPerformed"))) {
   //   return;
   // }
 
-  AppController.initApp();
+  await AppController.initApp();
+  RouteManagement.init();
   sessionStorage.setItem("initPerformed", "true");
 });
 

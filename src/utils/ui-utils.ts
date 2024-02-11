@@ -15,8 +15,9 @@ function registerComponent(name: string, Component: BlockConstructable) {
     throw Error(`The ${name} component is already registered!`);
 
   Handlebars.registerHelper(name,
-    function (this: unknown, { hash }: HelperOptions) {
+    function (this: unknown, options: HelperOptions) {
 
+      const { hash } = options;
       const component = new Component(hash);
       return component.content.outerHTML;
 

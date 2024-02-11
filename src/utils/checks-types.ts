@@ -12,7 +12,7 @@ function isPlainObject(o: unknown): o is PlainObject {
 }
 
 
-function isArray(arr: unknown): arr is [] {
+function isArray<T>(arr: unknown): arr is T[] {
 
   return Array.isArray(arr);
 

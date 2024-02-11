@@ -34,6 +34,11 @@ class Conversation extends CompositeBlock {
   }
 
 
+  public set messages(array: MessageInfo[]) {
+    this.messageBand.props.messages = array;
+  }
+
+
   protected doInit() {
   }
 
@@ -43,11 +48,11 @@ class Conversation extends CompositeBlock {
   }
 
   private get sendButton() {
-    return this.children.sendMsgButton.content as HTMLButtonElement;
+    return this.child<ImageButton>("sendMsgButton").content as HTMLButtonElement;
   }
 
   private get messageInput() {
-    return this.children.messageInput.content as HTMLTextAreaElement;
+    return this.child<TextInput>("messageInput").content as HTMLTextAreaElement;
   }
 
 

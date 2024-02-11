@@ -1,7 +1,7 @@
 import { Chat } from "../../api/entities/Chat";
 import { ActionLink } from "../../components/ActionLink/ActionLink";
 import { ChatInfo } from "../../components/ChatCard/ChatCard";
-import { ChatList } from "../../components/ChatList/ChatList";
+import { ChatID, ChatList } from "../../components/ChatList/ChatList";
 import { Conversation } from "../../components/Conversation/Conversation";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { Search } from "../../components/Search/Search";
@@ -23,7 +23,15 @@ class ChatsPage extends CompositeBlock {
       profileLink: new PageLink({ title: "Профиль", href: Pathname.Profile }),
       newChatLink: newChat,
       search: new Search(),
-      chats: new ChatList({ chats: [], onSelect: setConnection }),
+
+      chats: new ChatList({
+        chats: getChatsFromStore(),
+        onSelect: (chatId: ChatID) => {
+          setConnection(chatId);
+          // conversBlock.messages = ;
+        }
+      }),
+
       conversation: conversBlock,
       newChatDialog: NewChatDialog
     });
@@ -32,8 +40,15 @@ class ChatsPage extends CompositeBlock {
       () => this.child("chats").props.chats = getChatsFromStore(),
       this);
 
-    AppController.initChatPage();
+    // AppController.initChatPage();
 
+  }
+
+
+  protected render() {
+    super.render();
+
+    conversBlock.hide();
   }
 
 
