@@ -46,7 +46,13 @@ class AuthAPI {
 
 
   async logout() {
-    return this.http.post("/logout", { data: "", withHeaders: false });
+    return this.http.post("/logout",
+      {
+        data: "",
+        withHeaders: false
+      })
+      .then(req => req.response)
+      .catch(reason => ({ reason }));
   }
 
 

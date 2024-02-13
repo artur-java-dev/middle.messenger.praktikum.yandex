@@ -3,7 +3,16 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    width: 40em;
+    width: 100%;
+}
+
+.chats-link {
+    display: flex;
+    margin-left: -8rem;
+}
+
+.chats-link a {
+    margin-bottom: 0;
 }
 
 .profile-form h1 {

@@ -57,6 +57,8 @@ class Conversation extends CompositeBlock {
 
 
   public setConnection(socket: WebSocket) {
+    if (socket.readyState === 3)
+      throw Error("Веб-сокет закрыт");
 
     this.socket = socket;
 

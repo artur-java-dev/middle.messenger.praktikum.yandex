@@ -1,13 +1,19 @@
-<form class="profile-form">
-    {{{ title }}}
+<div class="chats-link">
+    {{{ toChatsLink }}}
+</div>
 
-    {{{ logoutLink }}}
-    {{{ changePasswordLink }}}
 
-    {{{ imageSelect }}}
-    <div class="button-save-avatar">
-        {{{ updateAvatarLink }}}
-    </div>
+{{{ title }}}
+{{{ logoutLink }}}
+{{{ changePasswordLink }}}
+
+
+{{{ imageSelect }}}
+<div class="button-save-avatar">
+    {{{ updateAvatarLink }}}
+</div>
+
+<form id="profile-data-form" class="profile-form">
     {{{ firstNameInput }}}
     {{{ secondNameInput }}}
     {{{ displayNameInput }}}
@@ -19,8 +25,6 @@
         {{{ button }}}
     </div>
 
-    <div>
-        {{{ error }}}
-    </div>
+    {{{ error }}}
 
 </form>

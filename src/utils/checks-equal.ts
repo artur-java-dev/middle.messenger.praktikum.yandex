@@ -32,6 +32,18 @@ function isEqualObjects(a: object, b: object): boolean {
 
 }
 
+function isEqualObjectsProp(a: object, b: object, key: string): boolean {
+  if (a === null || b === null)
+    return false;
+
+  if (a === b)
+    return true;
+
+  const k = <keyof typeof a>key;
+  return a[k] === b[k];
+
+}
+
 
 function isEqual(lhs: PlainObject, rhs: PlainObject) {
 
@@ -66,8 +78,8 @@ function isEqualArrays(lhs: [], rhs: []) {
   function is(e: unknown, i: number): boolean {
     return isPlainObject(e) && isPlainObject(rhs[i]) ?
       isEqual(e, rhs[i]) :
-      isArray(e) && isArray(rhs[i]) ?
-        isEqualArrays(e, rhs[i]) :
+      Array.isArray(e) && Array.isArray(rhs[i]) ?
+        isEqualArrays(e as [], rhs[i]) :
         Number.isNaN(e) && Number.isNaN(rhs[i]) ?
           true :
           e === rhs[i];
@@ -80,4 +92,4 @@ function isEqualArrays(lhs: [], rhs: []) {
 }
 
 
-export { isEqual, isEqualArrays, isEqualObjects };
+export { isEqual, isEqualArrays, isEqualObjects, isEqualObjectsProp };

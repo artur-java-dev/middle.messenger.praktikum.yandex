@@ -8,6 +8,7 @@ import { PageLink } from "../../components/PageLink/PageLink";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { LoginController } from "../../controllers/LoginController";
 import { UserController } from "../../controllers/UserController";
+import { getData } from "../../data/Store";
 import { Pathname } from "../../navigation/RouteManagement";
 import { isEmpty } from "../../utils/common";
 import { collectValuesToObj } from "../../utils/form-utils";
@@ -42,6 +43,7 @@ class UserProfile extends CompositeBlock {
       }
     }, {
       ...components,
+      toChatsLink: new PageLink({ title: "< Вернуться", href: Pathname.Chats }),
       title: new PageTitle({ text: "Профиль пользователя" }),
       logoutLink: logoutLink,
       changePasswordLink: new PageLink({ title: "Изменить пароль", href: Pathname.Password }),
@@ -57,29 +59,36 @@ class UserProfile extends CompositeBlock {
     });
 
     window.store.onUpdated(
-      () => {
-        this.props.user = window.store.getState()["user"];
-        const user = this.props.user as User;
-
-        const path = isEmpty(user.avatar) ?
-          avatar :
-          Protocol + BaseURL + "/resources" + user.avatar;
-        imgSelect.props = { imagePath: path };
-
-        firstName.value = user.first_name;
-        secondName.value = user.second_name;
-        displayName.value = user.display_name;
-        login.value = user.login;
-        email.value = user.email;
-        phone.value = user.phone;
-      },
+      () => this.setValues(),
       this);
 
   }
 
 
+  protected doInit() {
+    this.setValues();
+  }
+
+
+  private setValues() {
+    const user = getData<User>("user")!;
+    this.props.user = user;
+
+    const path = isEmpty(user.avatar) ?
+      avatar :
+      Protocol + BaseURL + "/resources" + user.avatar;
+    imgSelect.props = { imagePath: path };
+
+    firstName.value = user.first_name;
+    secondName.value = user.second_name;
+    displayName.value = user.display_name;
+    login.value = user.login;
+    email.value = user.email;
+    phone.value = user.phone;
+  }
+
   private outErr(reason: unknown) {
-    this.children.error.props = { errMessage: reason };
+    this.child("error").props = { errMessage: reason };
   }
 
 
@@ -94,7 +103,7 @@ class UserProfile extends CompositeBlock {
 
   private get form() {
 
-    return this.element as HTMLFormElement;
+    return this.element?.querySelector("#profile-data-form") as HTMLFormElement;
 
   }
 

@@ -1,8 +1,9 @@
 import { ChatAPI } from "../api/ChatAPI";
 import { ProtocolWS, WebSocketURL } from "../api/constants";
 import { Chat } from "../api/entities/Chat";
-import { User } from "../api/entities/User";
+import { ChatUser, User } from "../api/entities/User";
 import { APIError } from "../api/types/types";
+import { getData } from "../data/Store";
 import { hasKey } from "../utils/common";
 import { Indexed, NumIndexed } from "../utils/common-types";
 import { apiHasError } from "../utils/http-utils";
@@ -36,6 +37,14 @@ class ChatController {
   }
 
 
+  static async getChatUsers(chatId: number): Promise<ChatUser[]> {
+    const response = ChatAPI.getUsers(chatId)
+      .then(req => JSON.parse(req.response) as ChatUser[]);
+
+    return response;
+  }
+
+
   static async addUserToChat(chatId: number, userId: number) {
     const response = await ChatAPI.addUser({ users: [userId], chatId: chatId })
       .then(req => req.response)
@@ -45,7 +54,13 @@ class ChatController {
       throw Error(response.reason);
   }
 
+
   static async removeUserFromChat(chatId: number, userId: number) {
+    const user = getData<User>("user")!;
+
+    if (user.id === userId)
+      throw Error("Невозможно удалить из чата текущего пользователя");
+
     const response = await ChatAPI.removeUser({ users: [userId], chatId: chatId })
       .then(req => req.response)
       .catch(reason => ({ reason }));

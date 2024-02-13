@@ -37,7 +37,7 @@ class ChatList extends CompositeBlock {
 
 
   protected render() {
-    // this.children.chatCards = createChatCards(this.props as IProps);
+    this.children.chatCards = createChatCards(this.props as IProps);
 
     super.render();
   }

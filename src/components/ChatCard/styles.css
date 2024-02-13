@@ -59,3 +59,35 @@
     text-align: center;
     vertical-align: middle;
 }
+
+
+.chat-users-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+
+.chat-users-dialog .add-user-block {
+    display: flex;
+}
+
+
+.chat-users-dialog .users-block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0.8rem;
+}
+
+.chat-users-dialog .button {
+    min-width: 8rem;
+    min-height: 2rem;
+    font-size: 0.8rem;
+}
+
+.chat-users-dialog .users-block .button {
+    margin-top: 1rem;
+}

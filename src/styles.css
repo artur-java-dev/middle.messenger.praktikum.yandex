@@ -16,6 +16,9 @@
 @import url("./components/ChatCard/styles.css");
 @import url("./components/ChatList/styles.css");
 @import url("./components/Search/styles.css");
+@import url("./components/Dialog/styles.css");
+@import url("./components/SelectList/styles.css");
+
 @import url("./pages/Login/styles.css");
 @import url("./pages/Registration/styles.css");
 @import url("./pages/Profile/styles.css");

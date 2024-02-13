@@ -1,7 +1,7 @@
 import { CompositeBlock } from "../../view-base/CompositeBlock";
 import { ActionLink } from "../ActionLink/ActionLink";
 import { Dialog } from "../Dialog/Dialog";
-import { ChatUsersDialog } from "./ChatUsersDialog";
+import { ChatUsers } from "./ChatUsersDialog";
 import template from "./tmpl.hbs?raw";
 
 
@@ -32,7 +32,7 @@ class ChatCard extends CompositeBlock {
         }
       }),
 
-      chatUsersDialog: new Dialog(new ChatUsersDialog(props.info.id)),
+      chatUsersDialog: new Dialog(new ChatUsers(props.info.id)),
     });
   }
 

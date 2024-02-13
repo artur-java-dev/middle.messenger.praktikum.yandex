@@ -53,16 +53,15 @@ class LoginController {
 
 
   static async logout() {
-    await AuthAPI.logout()
-      .then(req =>
-        req.response)
-      .catch(reason =>
-        reason);
+    const response = await AuthAPI.logout();
+
+    if (apiHasError(response))
+      throw Error(response.reason);
 
     window.store.set("user", null);
     window.store.set("chats", []);
 
-    // RouteManagement.go(Pathname.Login);
+    RouteManagement.go(Pathname.Login);
   }
 
 }

@@ -7,8 +7,8 @@ import { PageLink } from "../../components/PageLink/PageLink";
 import { Search } from "../../components/Search/Search";
 import { AppController } from "../../controllers/AppController";
 import { ChatController } from "../../controllers/ChatController";
+import { getData } from "../../data/Store";
 import { Pathname } from "../../navigation/RouteManagement";
-import { hasKey } from "../../utils/common";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
 import { NewChatDialog } from "./NewChatDialog";
 import template from "./tmpl.hbs?raw";
@@ -28,7 +28,7 @@ class ChatsPage extends CompositeBlock {
         chats: getChatsFromStore(),
         onSelect: (chatId: ChatID) => {
           setConnection(chatId);
-          // conversBlock.messages = ;
+          conversBlock.messages = [];
         }
       }),
 
@@ -81,15 +81,6 @@ function getChatsFromStore() {
     return [];
   const res = (getData<Chat[]>("chats"))?.map(toChatInfo);
   return res ?? [];
-}
-
-function getData<T extends object = object>(key: string) {
-  const state = window.store.getState();
-
-  if (!hasKey(key, state))
-    return null;
-
-  return state[key] as T;
 }
 
 function toChatInfo(value: Chat): ChatInfo {

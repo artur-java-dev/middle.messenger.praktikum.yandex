@@ -1,6 +1,7 @@
 import { set } from "../utils/objects-func";
 import { Indexed } from "../utils/common-types";
 import { EventBus } from "../view-base/EventBus";
+import { hasKey } from "../utils/common";
 
 
 class Store {
@@ -37,4 +38,14 @@ const enum StoreEvent {
   Updated = "updated",
 }
 
-export { Store };
+function getData<T extends object = object>(key: string) {
+  const state = window.store.getState();
+
+  if (!hasKey(key, state))
+    return null;
+
+  return state[key] as T;
+}
+
+
+export { Store, getData };

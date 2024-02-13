@@ -7,7 +7,7 @@ import { InputElement } from "../InputElement/InputElement";
 type IProps = {
   type?: string,
   elementName: string,
-  label: string,
+  label?: string,
   validate?: ValidateFunc,
 }
 
@@ -37,8 +37,8 @@ class Input extends CompositeBlock {
     <div class="input-composite-block">
 
       <div class="input-label-block">
-        <label>{{label}}</label>
-        {{{ input }}}
+      {{#if label}} <label>{{label}}</label> {{/if}}
+      {{{ input }}}
       </div>
 
       {{{ error }}}
@@ -50,13 +50,13 @@ class Input extends CompositeBlock {
 
   public set error(message: string) {
 
-    this.children.error.props = { errMessage: message };
+    this.child<ErrorBlock>("error").props = { errMessage: message };
 
   }
 
   public errorClear() {
 
-    this.children.error.props = { errMessage: null };
+    this.child<ErrorBlock>("error").props = { errMessage: null };
 
   }
 
@@ -74,7 +74,7 @@ class Input extends CompositeBlock {
 
   private get input() {
 
-    return this.children.input.content as HTMLInputElement;
+    return this.child<InputElement>("input").content as HTMLInputElement;
 
   }
 
@@ -97,12 +97,13 @@ class Input extends CompositeBlock {
     if (!isValid) {
 
       const lines = msg.split("\n").map(_ => _.trim()).join("</br>");
-      this.children.error.props = { errMessage: lines };
+      this.error = lines;
       return false;
 
     }
 
-    this.children.error.props = { errMessage: null };
+    this.errorClear();
+
     return true;
 
   }

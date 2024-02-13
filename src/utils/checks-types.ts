@@ -19,6 +19,13 @@ function isArray<T>(arr: unknown): arr is T[] {
 }
 
 
+function isStrArray(arr: unknown): arr is string[] {
+
+  return Array.isArray(arr) && arr.length > 0 && typeof arr[0] === "string";
+
+}
+
+
 function isArrayOrObject(value: unknown): value is ArrayOrObject {
 
   return isPlainObject(value) || isArray(value);
@@ -26,4 +33,4 @@ function isArrayOrObject(value: unknown): value is ArrayOrObject {
 }
 
 
-export { isPlainObject, isArray, isArrayOrObject };
+export { isPlainObject, isArray, isArrayOrObject, isStrArray };

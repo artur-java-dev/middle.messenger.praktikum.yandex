@@ -31,3 +31,10 @@ export type ChangePasswordRequest = {
 export type UserID = {
   id: number
 };
+
+
+export type ChatUser =
+  Omit<User, 'phone' | 'email'> &
+  {
+    role: string
+  };

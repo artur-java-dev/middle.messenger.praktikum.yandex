@@ -63,7 +63,7 @@ class PasswordSetting extends CompositeBlock {
 
 
   private outErr(reason: unknown) {
-    this.children.error.props = { errMessage: reason };
+    this.child<ErrorBlock>("error").props = { errMessage: reason };
   }
 
 

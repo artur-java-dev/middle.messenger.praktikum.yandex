@@ -104,7 +104,7 @@ function isEmptyObj(obj: object) {
 
 function hasKey(key: string | number, obj: object) {
 
-  return (key in obj);
+  return !obj ? false : (key in obj);
 
 }
 

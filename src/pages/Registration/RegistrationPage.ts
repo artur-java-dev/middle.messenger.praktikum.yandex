@@ -52,7 +52,7 @@ class RegistrationPage extends CompositeBlock {
 
 
   private outErr(e: Error) {
-    this.children.error.props = { errMessage: e.message };
+    this.child<ErrorBlock>("error").props = { errMessage: e.message };
   }
 
 
