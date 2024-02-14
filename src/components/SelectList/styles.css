@@ -4,6 +4,7 @@
     margin: auto;
     border: 1px solid lightgrey;
     border-radius: 2px;
+
     /* background: linear-gradient(white, lightgrey); */
     overflow: auto;
     scrollbar-width: thin;
