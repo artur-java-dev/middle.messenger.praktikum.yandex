@@ -1,0 +1,12 @@
+dialog[open]::backdrop {
+    background: linear-gradient(45deg,
+            rgba(100, 146, 255, 60%) 0%,
+            rgba(148, 199, 126, 60%) 50%,
+            silver 100%);
+    backdrop-filter: blur(2px);
+}
+
+dialog[open] {
+    border: solid thin black;
+    border-radius: 8px;
+}

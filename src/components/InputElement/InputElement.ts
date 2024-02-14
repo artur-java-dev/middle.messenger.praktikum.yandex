@@ -1,11 +1,18 @@
 import { Block, EventsObj, compileBlock } from "../../view-base/Block";
 
 
+type IProps = {
+  type?: string,
+  elementName: string,
+  placeholder?: string,
+  events?: EventsObj
+}
+
 class InputElement extends Block {
 
-  constructor(props: object, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 
@@ -16,10 +23,15 @@ class InputElement extends Block {
 
   }
 
+  public get value() {
 
-  protected override wasUpdate(_oldProps: object, _newProps: object) {
+    return this.input.value;
 
-    return false;
+  }
+
+  private get input() {
+
+    return this.content as HTMLInputElement;
 
   }
 

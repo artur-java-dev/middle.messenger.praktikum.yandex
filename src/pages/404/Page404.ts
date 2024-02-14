@@ -8,9 +8,9 @@ import img from "/static/assets/err-404.png";
 
 class Page404 extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props, {
+    super({}, {
       ...components,
       image: new ImageElement({ path: img }),
       title: new PageTitle({ text: "Ошибка на стороне браузера" }),

@@ -1,70 +1,60 @@
 import { Button } from "../../components/Button/Button";
+import { ErrorBlock } from "../../components/ErrorBlock/ErrorBlock";
 import { Input } from "../../components/Input/Input";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
-import { collectValuesToObj } from "../../utils/form-utils";
-import { SpecialChecks, isEmpty } from "../../utils/validators-func";
+import { LoginController } from "../../controllers/LoginController";
+import { Pathname } from "../../navigation/RouteManagement";
+import { SpecialChecks } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
 import template from "./tmpl.hbs?raw";
 
 
 class LoginPage extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props,
-      {
-        ...components,
-        title: title,
-        loginInput: login,
-        passwordInput: password,
-
-        button: new Button({ label: "Войти", type: "submit" }),
-
-        regLink: link,
-      },
-      {
-        submit: (event) => {
+    super({
+      events: {
+        submit: (event: Event) => {
 
           event.preventDefault();
-          this.preSubmit();
-          login.validate();
-          password.validate();
+
+          const isValid = login.validate() && password.validate();
+
+          if (!isValid)
+            return;
+
+          LoginController.signin({
+            login: login.value,
+            password: password.value
+          }
+          ).catch((e: Error) => this.outErr(e));
 
         }
-      });
+      }
+    },
+    {
+      ...components,
+      title: title,
+      loginInput: login,
+      passwordInput: password,
 
-  }
+      button: new Button({ label: "Войти", type: "submit" }),
 
-
-  protected override doInit() {
-
-    const self = this;
-    this.children.button.addEventHandler("click", (event) => {
-
-      event.preventDefault();
-      self.preSubmit();
-
+      regLink: new PageLink({ title: "Создать аккаунт", href: Pathname.Registration }),
+      error: new ErrorBlock(),
     });
 
   }
 
-  private preSubmit() {
 
-    if (isEmpty(login.value))
-      return;
+  private outErr(e: Error) {
 
-    const obj = collectValuesToObj(this.form);
-    console.log(obj);
+    this.child<ErrorBlock>("error").props = { errMessage: e.message };
 
   }
 
-
-  private get form() {
-
-    return this.element as HTMLFormElement;
-
-  }
 
   protected override template() {
 
@@ -96,8 +86,6 @@ const password = new Input({
   elementName: "password",
   validate: SpecialChecks.isValidPassword
 });
-
-const link = new PageLink({ title: "Создать аккаунт", href: "" });
 
 
 export { LoginPage };

@@ -1,11 +1,16 @@
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = {
+  elementName: string,
+  placeholder: string,
+}
 
 class TextInput extends Block {
 
-  constructor(props: object, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 
@@ -17,9 +22,9 @@ class TextInput extends Block {
   }
 
 
-  protected override wasUpdate(_oldProps: object, _newProps: object) {
+  protected override wasUpdate(_oldProps: IProps, _newProps: IProps) {
 
-    return false;
+    return _oldProps.placeholder !== _newProps.placeholder;
 
   }
 
@@ -27,10 +32,10 @@ class TextInput extends Block {
   protected override template() {
 
     return `
-    <textarea class="text-input-block"
-              name="{{elementName}}"
-              placeholder="{{placeholder}}">
-    </textarea>
+    <textarea
+     class="text-input-block"
+     name="{{elementName}}"
+     placeholder="{{placeholder}}"></textarea>
     `;
 
   }

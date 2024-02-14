@@ -1,0 +1,34 @@
+<div class="chat-block">
+
+    <div class="chat-info-1">
+
+        {{#if info.avatarPath}}
+        <img src="{{info.avatarPath}}" />
+        {{/if}}
+
+        <div>
+            <h3>{{info.chatName}}</h3>
+            {{#if info.lastMessage}}
+            <p>{{info.lastMessage}}</p>
+            {{/if}}
+        </div>
+
+    </div>
+
+
+    <div class="chat-info-2">
+
+        {{#if info.lastMessageTime}}
+        <div>{{formatTime info.lastMessageTime}}</div>
+        {{/if}}
+
+        {{#if info.unreadedMessages}}
+        <div class="unreaded">{{info.unreadedMessages}}</div>
+        {{/if}}
+
+    </div>
+
+    {{{ chatUsersLink }}}
+    {{{ chatUsersDialog }}}
+
+</div>

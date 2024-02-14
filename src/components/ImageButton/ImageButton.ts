@@ -1,12 +1,17 @@
 import { getProp } from "../../utils/common";
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = {
+  type?: string,
+  imagePath: string,
+}
 
 class ImageButton extends Block {
 
-  constructor(props: object, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 

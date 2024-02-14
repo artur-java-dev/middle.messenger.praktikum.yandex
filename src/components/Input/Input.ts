@@ -1,44 +1,62 @@
-import { Obj, getProp } from "../../utils/common";
-import { EventsObj } from "../../view-base/Block";
+import { getProp } from "../../utils/common";
 import { CompositeBlock } from "../../view-base/CompositeBlock";
 import { ErrorBlock } from "../ErrorBlock/ErrorBlock";
 import { InputElement } from "../InputElement/InputElement";
 
 
+type IProps = {
+  type?: string,
+  elementName: string,
+  label?: string,
+  validate?: ValidateFunc,
+}
+
 class Input extends CompositeBlock {
 
-  constructor(props: Obj, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
     super(props, {
 
-      input: new InputElement({ elementName: props.elementName, type: props.type },
-        {
-          ...events,
-          blur: () => this.validate(),
-        }),
+      input: new InputElement({
+        elementName: props.elementName,
+        type: props.type,
+        events: {
+          blur: () => this.validate()
+        }
+      }),
 
       error: new ErrorBlock(),
-    }, events);
+    });
 
   }
 
 
-  public override addEventHandler(event: string, f: EventListenerOrEventListenerObject) {
+  protected override template() {
 
-    this.children.input.addEventHandler(event, f);
+    return `
+    <div class="input-composite-block">
+
+      <div class="input-label-block">
+      {{#if label}} <label>{{label}}</label> {{/if}}
+      {{{ input }}}
+      </div>
+
+      {{{ error }}}
+    </div>
+    `;
 
   }
 
 
   public set error(message: string) {
 
-    this.children.error.props = { errMessage: message };
+    this.child<ErrorBlock>("error").props = { errMessage: message };
 
   }
 
   public errorClear() {
 
-    this.children.error.props = { errMessage: null };
+    this.child<ErrorBlock>("error").props = { errMessage: null };
 
   }
 
@@ -48,9 +66,15 @@ class Input extends CompositeBlock {
 
   }
 
+  public set value(value: string) {
+
+    this.input.value = value;
+
+  }
+
   private get input() {
 
-    return this.children.input.content as HTMLInputElement;
+    return this.child<InputElement>("input").content as HTMLInputElement;
 
   }
 
@@ -61,7 +85,7 @@ class Input extends CompositeBlock {
   }
 
 
-  validate() {
+  validate(): boolean {
 
     const f = this.validateFunc;
 
@@ -73,12 +97,13 @@ class Input extends CompositeBlock {
     if (!isValid) {
 
       const lines = msg.split("\n").map(_ => _.trim()).join("</br>");
-      this.children.error.props = { errMessage: lines };
+      this.error = lines;
       return false;
 
     }
 
-    this.children.error.props = { errMessage: null };
+    this.errorClear();
+
     return true;
 
   }
@@ -87,23 +112,6 @@ class Input extends CompositeBlock {
   protected override wasUpdate(oldProps: object, newProps: object) {
 
     return getProp(newProps, "label") !== getProp(oldProps, "label");
-
-  }
-
-
-  protected override template() {
-
-    return `
-    <div class="input-composite-block">
-
-      <div class="input-label-block">
-        <label>{{label}}</label>
-        {{{ input }}}
-      </div>
-
-      {{{ error }}}
-    </div>
-    `;
 
   }
 

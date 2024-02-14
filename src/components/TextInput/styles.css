@@ -4,7 +4,8 @@
     min-height: 2.5rem;
     height: 100%;
     font-size: 1rem;
-    border: 1px solid black;
-    border-radius: 2px;
+    border: 1px solid silver;
+    border-radius: 3px;
     resize: none;
+    padding: 0.7rem;
 }

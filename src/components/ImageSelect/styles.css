@@ -2,7 +2,7 @@
     display: flex;
 }
 
-.img-select-block>.file-select {
+.img-select-block .file-select {
     display: none;
 }
 

@@ -1,19 +1,48 @@
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Chat } from "../../api/entities/Chat";
+import { getData } from "../../data/Store";
+import { CompositeBlock } from "../../view-base/CompositeBlock";
+import { ChatCard, ChatInfo } from "../ChatCard/ChatCard";
 import template from "./tmpl.hbs?raw";
 
 
-class ChatList extends Block {
+type IProps = {
+  chats: ChatInfo[],
+  onSelect: OnSelectFunc
+}
 
-  constructor(props: object = {}, events: EventsObj = {}) {
 
-    super(props, events);
+class ChatList extends CompositeBlock {
+
+  selectedChat: ChatID = NoneChatID;
+
+  constructor(props: IProps) {
+
+    super(props, {});
+
+    window.store.onUpdated(() => {
+
+      this.props = {
+        chats: getChatsFromStore()
+      };
+
+    },
+    this);
 
   }
 
 
-  protected override compiledTmpl() {
+  protected doInit() {
 
-    return compileBlock(this.template(), this.props);
+    this.children.chatCards = createChatCards(this.props as IProps);
+
+  }
+
+
+  protected render() {
+
+    this.children.chatCards = createChatCards(this.props as IProps);
+
+    super.render();
 
   }
 
@@ -25,13 +54,51 @@ class ChatList extends Block {
   }
 
 
-  protected wasUpdate(_oldProps: object, _newProps: object) {
+  protected override wasUpdate(_oldProps: IProps, _newProps: IProps) {
 
-    return false;
+    return _oldProps.chats.length !== _newProps.chats.length;
 
   }
 
 }
 
 
-export { ChatList };
+type OnSelectFunc = (chatId: ChatID) => void;
+type ChatID = number;
+
+const NoneChatID = -1;
+
+
+function createChatCards(props: IProps) {
+
+  const arr = props.chats.map(chat => new ChatCard({ info: chat, onClick: props.onSelect! })
+  );
+  return arr;
+
+}
+
+
+function getChatsFromStore() {
+
+  const chats = getData<Chat[]>("chats");
+  const res = chats?.map(toChatInfo);
+  return res ?? [];
+
+}
+
+function toChatInfo(value: Chat): ChatInfo {
+
+  return {
+    id: value.id,
+    avatarPath: value.avatar ?? undefined,
+    chatName: value.title,
+    lastMessage: value.last_message?.content,
+    lastMessageTime: value.last_message?.time,
+    unreadedMessages: value.unread_count,
+  };
+
+}
+
+
+export { ChatList, ChatID, NoneChatID, getChatsFromStore };
+

@@ -1,12 +1,18 @@
-import { getProp } from "../../utils/common";
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { Block, compileBlock } from "../../view-base/Block";
 
+
+type IProps = MessageInfo
+
+type MessageInfo = {
+  text: string,
+  time: string,
+}
 
 class Message extends Block {
 
-  constructor(props: object = {}, events: EventsObj = {}) {
+  constructor(props: IProps) {
 
-    super(props, events);
+    super(props);
 
   }
 
@@ -18,9 +24,9 @@ class Message extends Block {
   }
 
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+  protected override wasUpdate(oldProps: IProps, newProps: IProps) {
 
-    return getProp(newProps, "text") !== getProp(oldProps, "text");
+    return newProps.text !== oldProps.text;
 
   }
 
@@ -30,7 +36,7 @@ class Message extends Block {
     return `
     <div class="message-block">
     <p>{{text}}</p>
-    <span>{{time}}</span>
+    <span>{{formatTime time}}</span>
     </div>
     `;
 
@@ -39,4 +45,4 @@ class Message extends Block {
 }
 
 
-export { Message };
+export { Message, MessageInfo };

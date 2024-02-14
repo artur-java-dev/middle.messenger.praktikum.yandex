@@ -4,20 +4,31 @@ import { EventBus } from "./EventBus";
 import { v4 as makeUUID } from "uuid";
 
 
-class Block {
+type TProps = Record<string, unknown>;
 
-  protected eventBus = new EventBus();
-  protected element: HTMLElement | null = null;
-  protected properties: object;
+type Events = {
+  events?: EventsObj
+};
+
+type EventsObj = Record<string, EventHandler>;
+type EventHandler = (evt: Event) => void;
+
+
+abstract class Block<Props extends TProps & Events = TProps> {
+
+  protected properties: Props;
   protected events: EventsObj;
-  protected uuid: string;
+  protected element: HTMLElement | null = null;
 
+  protected readonly uuid: string;
+  protected readonly eventBus: EventBus<Props> = new EventBus();
   protected readonly AttrID = "data-id";
 
-  constructor(props: object = {}, events: EventsObj = {}) {
+
+  constructor(props: Props = {} as Props) {
 
     this.properties = this.makeProxy({ ...props });
-    this.events = { ...events };
+    this.events = { ...props.events };
 
     this.uuid = makeUUID();
 
@@ -27,7 +38,7 @@ class Block {
   }
 
 
-  public addEventHandler(event: string, f: EventListenerOrEventListenerObject) {
+  public addEventHandler(event: string, f: EventHandler) {
 
     this.events[event] = f;
 
@@ -110,58 +121,49 @@ class Block {
 
   }
 
-  protected compiledTmpl(): string {
-
-    return "";
-
-  }
+  protected abstract compiledTmpl(): string
 
   protected processCompiledTmpl(_tmpl: HTMLTemplateElement) { }
 
-  protected mount(_oldProps: object): void {
+  protected mount(_oldProps: Props): void {
   }
 
 
-  protected update(oldProps: object, newProps: object): void {
+  protected update(oldProps: Props, newProps: Props): void {
 
     if (this.wasUpdate(oldProps, newProps))
       this.eventBus.emit(EVENT.FlowRender);
 
   }
 
-  protected wasUpdate(_oldProps: object, _newProps: object): boolean {
+  protected wasUpdate(_oldProps: Props, _newProps: Props): boolean {
 
     return false;
 
   }
 
 
-  private makeProxy(props: object): object {
+  private makeProxy(props: Props): Props {
 
     const thisObj = this;
 
-    const proxy = new Proxy(props,
+    const proxy = new Proxy<Props>(props,
       {
-        get(target: object, prop: string | symbol) {
+        get(target: Props, prop: string) {
 
-          const key = <keyof typeof target>prop;
-          return target[key];
+          return target[prop];
 
         },
 
-        set(target: object, prop: string | symbol, value) {
+        set(target: Props, prop: string, value: any) {
 
-          const key = <keyof typeof target>prop;
-          type ObjStrProp = { [k in string]: any };
-          const obj = target as ObjStrProp;
 
-          const oldvalue = target[key];
-
-          if (oldvalue === value)
+          if (target[prop] === value)
             return true;
 
-          const oldProps = { ...target };
-          obj[key] = value;
+          const oldProps = { ...target } as Props;
+          target[prop as keyof Props] = value;
+
           thisObj.eventBus.emit(EVENT.FlowUpdate, oldProps, target);
 
           return true;
@@ -205,14 +207,14 @@ class Block {
   }
 
 
-  public get props() {
+  public get props(): Props {
 
     return this.properties;
 
   }
 
 
-  public set props(nextProps: object) {
+  public set props(nextProps: Props) {
 
     if (isEmptyObj(nextProps))
       return;
@@ -234,6 +236,16 @@ class Block {
 
   }
 
+
+  public setVisible(flag: boolean) {
+
+    if (flag)
+      this.content.style.visibility = "visible";
+    else
+      this.content.style.visibility = "hidden";
+
+  }
+
 }
 
 
@@ -243,11 +255,6 @@ const enum EVENT {
   FlowRender = "flow:render",
   FlowUpdate = "flow:update"
 }
-
-
-type EventsObj = { [k: string]: Handler };
-type Handler = EventListenerOrEventListenerObject;
-type PropertiesObj = { [k: string]: unknown };
 
 
 function renderBlock(query: string, block: Block) {
@@ -273,6 +280,6 @@ function compileBlock(template: string, props: object): string {
 
 
 export {
-  Block, EventsObj, PropertiesObj, EVENT,
+  Block, EventsObj, TProps, Events, EventHandler, EVENT,
   renderBlock, compileBlock
 };

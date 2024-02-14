@@ -1,56 +1,72 @@
-import { Block, EventsObj, compileBlock } from "../../view-base/Block";
+import { CompositeBlock } from "../../view-base/CompositeBlock";
+import { ActionLink } from "../ActionLink/ActionLink";
+import { Dialog } from "../Dialog/Dialog";
+import { ChatUsers } from "./ChatUsersDialog";
+import template from "./tmpl.hbs?raw";
 
 
-class ChatCard extends Block {
+type IProps = {
+  info: ChatInfo,
+  onClick: (chatId: number) => void
+}
 
-  constructor(props: object = {}, events: EventsObj = {}) {
+type ChatInfo = {
+  id: number,
+  avatarPath?: string,
+  chatName: string,
+  lastMessage?: string,
+  lastMessageTime?: string,
+  unreadedMessages?: number,
+}
 
-    super(props, events);
+
+class ChatCard extends CompositeBlock {
+
+  constructor(props: IProps) {
+
+    super(props, {
+
+      chatUsersLink: new ActionLink({
+        label: "участники",
+        onClick: () => {
+
+          this.dialog().open();
+
+        }
+      }),
+
+      chatUsersDialog: new Dialog(new ChatUsers(props.info.id)),
+    });
 
   }
 
 
-  protected override compiledTmpl() {
+  protected render() {
 
-    return compileBlock(this.template(), this.props);
+    super.render();
+
+    const p = this.props as IProps;
+    this.content.addEventListener("click",
+      () => p.onClick(p.info.id)
+    );
 
   }
 
 
-  protected override wasUpdate(_oldProps: object, _newProps: object) {
+  private dialog() {
 
-    return false;
+    return this.child<Dialog>("chatUsersDialog");
 
   }
 
 
   protected override template() {
 
-    return `
-    <div class="chat-block">
-
-    <div class="chat-info-1">
-        <img src="{{info.avatarPath}}" />
-        <div>
-            <h3>{{info.chatName}}</h3>
-            <p>{{info.lastMessage}}</p>
-        </div>
-    </div>
-
-
-    <div class="chat-info-2">
-        <div>{{info.lastMessageTime}}</div>
-        {{#if info.unreadedMessages}}
-        <div class="unreaded">{{info.unreadedMessages}}</div>
-        {{/if}}
-    </div>
-
-    </div>
-    `;
+    return template;
 
   }
 
 }
 
 
-export { ChatCard };
+export { ChatCard, ChatInfo };

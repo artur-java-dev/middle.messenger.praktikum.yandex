@@ -1,6 +1,9 @@
+import { CreateUser } from "../../api/entities/User";
 import { Button } from "../../components/Button/Button";
+import { ErrorBlock } from "../../components/ErrorBlock/ErrorBlock";
 import { Input } from "../../components/Input/Input";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
+import { LoginController } from "../../controllers/LoginController";
 import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
@@ -10,9 +13,28 @@ import template from "./tmpl.hbs?raw";
 
 class RegistrationPage extends CompositeBlock {
 
-  constructor(props: object = {}, components: Components = {}) {
+  constructor(components: Components = {}) {
 
-    super(props, {
+    super({
+      events: {
+        submit: (event: Event) => {
+
+          event.preventDefault();
+
+          const isValid = this.validate();
+
+          if (!isValid)
+            return;
+
+          const data = collectValuesToObj(this.form);
+          console.log(data);
+
+          LoginController.signup(data as CreateUser)
+            .catch((e: Error) => this.outErr(e));
+
+        }
+      }
+    }, {
       ...components,
       title: title,
       firstNameInput: firstName,
@@ -23,21 +45,15 @@ class RegistrationPage extends CompositeBlock {
       passwordInput: password,
       password2Input: password2,
       button: btn,
-    }, {
-      submit: (event) => {
-
-        event.preventDefault();
-        this.preSubmit();
-        firstName.validate();
-        secondName.validate();
-        login.validate();
-        email.validate();
-        phone.validate();
-        password.validate();
-        isPasswordRepeated(password, password2);
-
-      }
+      error: new ErrorBlock(),
     });
+
+  }
+
+
+  private outErr(e: Error) {
+
+    this.child<ErrorBlock>("error").props = { errMessage: e.message };
 
   }
 
@@ -48,12 +64,18 @@ class RegistrationPage extends CompositeBlock {
 
   }
 
-  private preSubmit() {
 
-    console.log(collectValuesToObj(this.form));
+  private validate() {
+
+    return firstName.validate()
+      && secondName.validate()
+      && login.validate()
+      && email.validate()
+      && phone.validate()
+      && password.validate()
+      && isPasswordRepeated(password, password2);
 
   }
-
 
   protected override template() {
 

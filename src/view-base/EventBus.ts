@@ -1,15 +1,24 @@
-class EventBus {
+import { Obj } from "../utils/common-types";
+import { TProps } from "./Block";
 
-  protected listeners: Listeners;
+class EventBus<T extends HandlerParam> {
 
-  constructor() {
+  protected listeners: HandlersMap<T>;
+
+  constructor(events?: string[]) {
 
     this.listeners = new Map;
+
+    if (events) {
+
+      events.forEach(e => this.listeners.set(e, new Set));
+
+    }
 
   }
 
 
-  on(event: string, callback: EventHandler) {
+  on(event: string, callback: Handler<T>) {
 
     if (this.listeners.has(event)) {
 
@@ -23,7 +32,7 @@ class EventBus {
   }
 
 
-  off(event: string, callback: EventHandler) {
+  off(event: string, callback: Handler<T>) {
 
     if (!this.listeners.has(event))
       throw new Error(`Нет события: ${event}`);
@@ -33,7 +42,7 @@ class EventBus {
   }
 
 
-  emit(event: string, ...args: HandlerParam[]) {
+  emit(event: string, ...args: T[]) {
 
     if (!this.listeners.has(event))
       throw new Error(`Нет события: ${event}`);
@@ -50,11 +59,13 @@ class EventBus {
 }
 
 
-type Listeners = Map<string, Set<EventHandler>>;
+type HandlersMap<T extends HandlerParam> = Map<string, Handlers<T>>;
+type Handlers<T extends HandlerParam> = Set<Handler<T>>;
 
-type EventHandler = (...args: HandlerParam[]) => void;
 
-type HandlerParam = object;
+type Handler<T extends HandlerParam> = (...args: T[]) => void;
+
+type HandlerParam = object | Obj | Event | TProps;
 
 
 export { EventBus };
