@@ -18,9 +18,11 @@ class MessageBand extends CompositeBlock {
   }
 
   addMessage(msg: ServerMessage | ServerLastMessage) {
-    const messages = this.props.messages as MessageInfo[];
-    messages.push(toMessageInfo(msg));
-    this.props.messages = messages;
+    this.props = {
+      messages: [
+        ...this.props.messages as MessageInfo[],
+        toMessageInfo(msg)]
+    };
   }
 
 

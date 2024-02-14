@@ -28,11 +28,6 @@ class ChatList extends CompositeBlock {
 
 
   protected doInit() {
-    // const p = this.props as IProps;
-    // this.props.onSelect = (chatId: ChatID) => {
-    //   this.selectedChat = chatId;
-    //   p.onSelect(chatId);
-    // };
   }
 
 

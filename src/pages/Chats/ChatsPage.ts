@@ -9,17 +9,17 @@ import { AppController } from "../../controllers/AppController";
 import { ChatController } from "../../controllers/ChatController";
 import { getData } from "../../data/Store";
 import { Pathname } from "../../navigation/RouteManagement";
-import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
+import { CompositeBlock } from "../../view-base/CompositeBlock";
 import { NewChatDialog } from "./NewChatDialog";
 import template from "./tmpl.hbs?raw";
 
 
 class ChatsPage extends CompositeBlock {
 
-  constructor(components: Components = {}) {
+  constructor() {
 
     super({}, {
-      ...components,
+
       profileLink: new PageLink({ title: "Профиль", href: Pathname.Profile }),
       newChatLink: newChat,
       search: new Search(),
@@ -27,28 +27,22 @@ class ChatsPage extends CompositeBlock {
       chats: new ChatList({
         chats: getChatsFromStore(),
         onSelect: (chatId: ChatID) => {
+          clearConversation();
           setConnection(chatId);
-          conversBlock.messages = [];
         }
       }),
 
       conversation: conversBlock,
+
       newChatDialog: NewChatDialog
     });
 
-    window.store.onUpdated(
-      () => this.child("chats").props.chats = getChatsFromStore(),
+    window.store.onUpdated(() =>
+      this.child("chats").props = {
+        chats: getChatsFromStore()
+      },
       this);
 
-    // AppController.initChatPage();
-
-  }
-
-
-  protected render() {
-    super.render();
-
-    conversBlock.hide();
   }
 
 
@@ -69,17 +63,33 @@ const newChat = new ActionLink({
 });
 
 
-function setConnection(chatId: number) {
-  ChatController.createWebSocket(chatId).then(socket =>
-    conversBlock.setConnection(socket)
-  );
+function clearConversation() {
+  conversBlock.hide();
+  conversBlock.messages = [];
+  conversBlock.show();
+}
+
+async function setConnection(chatId: number) {
+
+  if (conversBlock.hasActiveConnection(chatId))
+    return;
+
+  if (conversBlock.hasNonActiveConnection(chatId)) {
+    conversBlock.reConnect(chatId);
+    return;
+  }
+
+  const socket = await ChatController.createWebSocket(chatId);
+  conversBlock.setConnection(socket, chatId);
+
 }
 
 
 function getChatsFromStore() {
   if (!AppController.isAuthorized)
     return [];
-  const res = (getData<Chat[]>("chats"))?.map(toChatInfo);
+  const chats = getData<Chat[]>("chats");
+  const res = chats?.map(toChatInfo);
   return res ?? [];
 }
 

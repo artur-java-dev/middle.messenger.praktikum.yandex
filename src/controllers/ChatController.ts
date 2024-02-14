@@ -4,8 +4,7 @@ import { Chat } from "../api/entities/Chat";
 import { ChatUser, User } from "../api/entities/User";
 import { APIError } from "../api/types/types";
 import { getData } from "../data/Store";
-import { hasKey } from "../utils/common";
-import { Indexed, NumIndexed } from "../utils/common-types";
+import { Indexed } from "../utils/common-types";
 import { apiHasError } from "../utils/http-utils";
 
 
@@ -84,53 +83,19 @@ class ChatController {
 
 
   static async createWebSocket(chatId: number) {
-    if (hasKey(chatId, SocketsByChat))
-      return SocketsByChat[chatId];
 
     const me = window.store.getState().user as User;
     const userId = me.id;
-
     const token = await this.getToken(chatId);
 
-    const base = ProtocolWS + WebSocketURL;
-    const url = new URL(
-      `/${userId}/${chatId}/${token}`,
-      base);
-
+    const url = `${ProtocolWS}${WebSocketURL}/chats/${userId}/${chatId}/${token}`;
     const socket = new WebSocket(url);
-
-    socket.addEventListener('open', () => {
-      console.log('Соединение установлено');
-    });
-
-    socket.addEventListener('close', event => {
-      if (event.wasClean)
-        console.log('Соединение закрыто чисто');
-      else
-        console.log('Обрыв соединения');
-
-      console.log(`Код: ${event.code} | Причина: ${event.reason}`);
-    });
-
-    socket.addEventListener('message', event => {
-      console.log('Получены данные', event.data);
-    });
-
-    socket.addEventListener('error', event => {
-      if (event instanceof ErrorEvent)
-        console.log('Ошибка', event.message);
-    });
-
-    SocketsByChat[chatId] = socket;
 
     return socket;
   }
 
 
 }
-
-
-const SocketsByChat: NumIndexed<WebSocket> = {};
 
 
 export { ChatController };
