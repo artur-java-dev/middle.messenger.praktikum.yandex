@@ -9,5 +9,4 @@ declare global {
 }
 
 
-
 window.store = new Store();

@@ -28,7 +28,9 @@ function registerComponent(name: string, Component: BlockConstructable) {
 
 
 Handlebars.registerHelper("formatTime", function (date) {
+
   return formatMsgTime(date);
+
 });
 
 

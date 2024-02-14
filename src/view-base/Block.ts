@@ -226,15 +226,24 @@ abstract class Block<Props extends TProps & Events = TProps> {
 
   public show() {
 
-    // this.content.style.display = "block";
-    this.content.style.visibility = "visible";
+    this.content.style.display = "block";
 
   }
 
   public hide() {
 
-    // this.content.style.display = "none";
-    this.content.style.visibility = "hidden";
+    this.content.style.display = "none";
+
+  }
+
+
+  public setVisible(flag: boolean) {
+
+    if (flag)
+      this.content.style.visibility = "visible";
+    else
+      this.content.style.visibility = "hidden";
+
   }
 
 }

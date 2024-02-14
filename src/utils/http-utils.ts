@@ -13,15 +13,19 @@ function queryStringify(data: PlainObject): string {
   const keys = Object.keys(data);
 
   for (const key of keys) {
+
     const prop = data[key];
     params.push(stringifyNested(prop, key));
+
   }
 
   return params.join("&");
+
 }
 
 
 function stringifyNested(data: unknown, key: string) {
+
   if (data === null || data === undefined)
     return "";
 
@@ -32,38 +36,43 @@ function stringifyNested(data: unknown, key: string) {
     return stringifyArray(data, key);
 
   return stringifyObj(data, key);
+
 }
 
 
 function stringifyPrimitive(key: string, val: unknown) {
+
   return `${key}=${encodeURIComponent(String(val))}`;
+
 }
 
 function stringifyArray(data: unknown[], key: string) {
+
   const params: string[] = [];
-  data.forEach((e, i) =>
-    params.push(
-      stringifyNested(e, `${key}[${i}]`))
+  data.forEach((e, i) => params.push(
+    stringifyNested(e, `${key}[${i}]`))
   );
   return params.join("&");
+
 }
 
 function stringifyObj(data: object, key: string) {
+
   const params: string[] = [];
-  Object.keys(data).forEach(k =>
-    params.push(
-      stringifyNested(data[k as keyof object],
-        `${key}[${k}]`))
+  Object.keys(data).forEach(k => params.push(
+    stringifyNested(data[k as keyof object],
+      `${key}[${k}]`))
   );
   return params.join("&");
+
 }
 
 
-
-
 function getKey(key: string, parentKey?: string) {
-  return parentKey ?
-    `${parentKey}[${key}]` : key;
+
+  return parentKey
+    ? `${parentKey}[${key}]` : key;
+
 }
 
 function getParams(data: PlainObject | [], parentKey?: string) {
@@ -72,14 +81,17 @@ function getParams(data: PlainObject | [], parentKey?: string) {
   const kvPairs = Object.entries(data);
 
   for (const [key, val] of kvPairs) {
+
     const k = getKey(key, parentKey);
     if (isArrayOrObject(val))
       result.push(...getParams(val, k));
     else
       result.push([k, encodeURIComponent(String(val))]);
+
   }
 
   return result;
+
 }
 
 function queryString(data: PlainObject) {
@@ -90,15 +102,17 @@ function queryString(data: PlainObject) {
   const params = getParams(data);
 
   return params
-    .map(pair => pair.join('='))
-    .join('&');
+    .map(pair => pair.join("="))
+    .join("&");
 
 }
 
 function apiHasError(response: unknown): response is APIError {
-  return typeof response === "object" &&
-    response !== null &&
-    hasKey("reason", response);
+
+  return typeof response === "object"
+    && response !== null
+    && hasKey("reason", response);
+
 }
 
 

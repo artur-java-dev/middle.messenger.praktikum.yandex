@@ -37,12 +37,14 @@ class PasswordSetting extends CompositeBlock {
 
           UserController.changePassword(obj as ChangePasswordRequest)
             .then(req => {
+
               if (req.status === 200)
                 OnSaveDialog.open();
               else if (req.status === 400)
-                this.outErr(JSON.parse(req.response).reason)
+                this.outErr(JSON.parse(req.response).reason);
               else
-                this.outErr(req.response)
+                this.outErr(req.response);
+
             })
             .catch(reason => this.outErr(reason));
 
@@ -63,7 +65,9 @@ class PasswordSetting extends CompositeBlock {
 
 
   private outErr(reason: unknown) {
+
     this.child<ErrorBlock>("error").props = { errMessage: reason };
+
   }
 
 
@@ -72,7 +76,6 @@ class PasswordSetting extends CompositeBlock {
     return this.element as HTMLFormElement;
 
   }
-
 
 
   protected override template() {

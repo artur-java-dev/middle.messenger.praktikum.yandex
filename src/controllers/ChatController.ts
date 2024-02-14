@@ -12,6 +12,7 @@ class ChatController {
 
 
   static async getChats(): Promise<Chat[] | APIError> {
+
     const response = ChatAPI.request()
       .then(req => JSON.parse(req.response) as Chat[])
       .catch(reason => ({ reason }));
@@ -20,10 +21,12 @@ class ChatController {
       throw Error(response.reason);
 
     return response;
+
   }
 
 
   static async createChat(title: string) {
+
     const response = await ChatAPI.create({ title: title })
       .then(req => req.response)
       .catch(reason => ({ reason }));
@@ -33,28 +36,34 @@ class ChatController {
 
     const chats = await this.getChats();
     window.store.set("chats", chats);
+
   }
 
 
   static async getChatUsers(chatId: number): Promise<ChatUser[]> {
+
     const response = ChatAPI.getUsers(chatId)
       .then(req => JSON.parse(req.response) as ChatUser[]);
 
     return response;
+
   }
 
 
   static async addUserToChat(chatId: number, userId: number) {
+
     const response = await ChatAPI.addUser({ users: [userId], chatId: chatId })
       .then(req => req.response)
       .catch(reason => ({ reason }));
 
     if (apiHasError(response))
       throw Error(response.reason);
+
   }
 
 
   static async removeUserFromChat(chatId: number, userId: number) {
+
     const user = getData<User>("user")!;
 
     if (user.id === userId)
@@ -66,10 +75,12 @@ class ChatController {
 
     if (apiHasError(response))
       throw Error(response.reason);
+
   }
 
 
   static async getToken(chatId: number) {
+
     const response = await ChatAPI.getToken(chatId)
       .then(req => JSON.parse(req.response) as Indexed)
       .then(data => data.token as string)
@@ -79,6 +90,7 @@ class ChatController {
       throw Error(response.reason);
 
     return response;
+
   }
 
 
@@ -92,6 +104,7 @@ class ChatController {
     const socket = new WebSocket(url);
 
     return socket;
+
   }
 
 

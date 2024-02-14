@@ -24,7 +24,7 @@ class TextInput extends Block {
 
   protected override wasUpdate(_oldProps: IProps, _newProps: IProps) {
 
-    return _oldProps.placeholder != _newProps.placeholder;
+    return _oldProps.placeholder !== _newProps.placeholder;
 
   }
 

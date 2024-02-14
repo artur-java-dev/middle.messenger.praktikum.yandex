@@ -34,37 +34,50 @@ class SelectList extends Block {
 
 
   addItem(item: string | Indexed) {
+
     const p = this.props as IProps;
     const items = [...p.items, item];
     this.props = { items: items };
+
   }
 
 
   deleteItem(item: string | Indexed) {
+
     const p = this.props as IProps;
     const items = p.items.filter(x => notEq(x, item));
     this.props = { items: items };
 
     function notEq(x: string | Indexed, item: typeof x) {
-      return typeof x === "string" ?
-        x !== item :
-        hasKey("id", x) ?
-          !isEqualObjectsProp(x, item as Indexed, "id") :
-          !isEqualObjects(x, item as Indexed);
+
+      if (typeof x === "string")
+        return x !== item;
+
+      return hasKey("id", x)
+        ? !isEqualObjectsProp(x, item as Indexed, "id")
+        : !isEqualObjects(x, item as Indexed);
+
     }
+
   }
 
   deleteItemByValue() {
+
     const p = this.props as IProps;
     const options = this.select.options;
 
     for (let i = 0; i < options.length; i++) {
+
       if (options[i].value === this.value) {
+
         const items = p.items.filter((_, idx) => idx !== i);
         this.props = { items: items };
         return;
+
       }
+
     }
+
   }
 
 
@@ -86,16 +99,21 @@ class SelectList extends Block {
           {{/each }}
           </select>
           `;
+
   }
 
   private strItem() {
-    return `<option value="{{ this }}">{{ this }}</option>`;
+
+    return "<option value=\"{{ this }}\">{{ this }}</option>";
+
   }
 
   private objItem(o: Indexed[]) {
-    return o.length > 0 && hasKey("id", o[0]) ?
-      `<option value="{{ this.id }}">{{ this.value }}</option>` :
-      `<option value="{{@index}}">{{ this }}</option>`;
+
+    return o.length > 0 && hasKey("id", o[0])
+      ? "<option value=\"{{ this.id }}\">{{ this.value }}</option>"
+      : "<option value=\"{{@index}}\">{{ this }}</option>";
+
   }
 
 

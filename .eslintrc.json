@@ -56,6 +56,10 @@
     "nonblock-statement-body-position": "off",
     "function-paren-newline": "off",
     "arrow-parens": "off",
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
     "@typescript-eslint/ban-ts-comment": "off",
     "import/no-absolute-path": "off",
     "import/extensions": [
@@ -109,6 +113,11 @@
     "no-restricted-syntax": [
       "error",
       "WithStatement"
+    ],
+    "guard-for-in": "warn",
+    "max-classes-per-file": [
+      "error",
+      4
     ],
     "max-len": [
       2,

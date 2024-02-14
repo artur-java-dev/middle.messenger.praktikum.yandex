@@ -66,17 +66,24 @@ class UserProfile extends CompositeBlock {
 
 
   protected doInit() {
+
     this.setValues();
+
   }
 
 
   private setValues() {
-    const user = getData<User>("user")!;
+
+    const user = getData<User>("user");
+
+    if (user === null)
+      return;
+
     this.props.user = user;
 
-    const path = isEmpty(user.avatar) ?
-      avatar :
-      Protocol + BaseURL + "/resources" + user.avatar;
+    const path = isEmpty(user.avatar)
+      ? avatar
+      : `${Protocol + BaseURL}/resources${user.avatar}`;
     imgSelect.props = { imagePath: path };
 
     firstName.value = user.first_name;
@@ -85,19 +92,24 @@ class UserProfile extends CompositeBlock {
     login.value = user.login;
     email.value = user.email;
     phone.value = user.phone;
+
   }
 
   private outErr(reason: unknown) {
+
     this.child("error").props = { errMessage: reason };
+
   }
 
 
   private validate() {
-    return firstName.validate() &&
-      secondName.validate() &&
-      login.validate() &&
-      email.validate() &&
-      phone.validate();
+
+    return firstName.validate()
+      && secondName.validate()
+      && login.validate()
+      && email.validate()
+      && phone.validate();
+
   }
 
 
@@ -125,17 +137,22 @@ class UserProfile extends CompositeBlock {
 
 
 const logoutLink = new PageLink({
-  title: "Выйти из аккаунта", href: "",
+  title: "Выйти из аккаунта",
+  href: "",
   onclick: () => {
+
     LoginController.logout();
+
   }
 });
 
 const avatarLink = new ActionLink({
   label: "обновить аватар",
   onClick: () => {
+
     if (imgSelect.data)
       UserController.changeUserAvatar(imgSelect.data);
+
   }
 });
 
@@ -163,7 +180,6 @@ const email = new Input({
 const phone = new Input({
   label: "Номер телефона", elementName: "phone", validate: SpecialChecks.isValidPhone
 });
-
 
 
 export { UserProfile };

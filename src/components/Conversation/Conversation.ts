@@ -23,22 +23,28 @@ class Conversation extends CompositeBlock {
   private readonly lastMessagesLimit = 20;
 
   constructor(messages: MessageInfo[] = []) {
+
     super({}, {
       messageBand: new MessageBand({ messages: messages }),
       attachFileButton: new ImageButton({ imagePath: attachIcon }),
       messageInput: new TextInput({ elementName: "message", placeholder: "Сообщение.." }),
       sendMsgButton: new ImageButton({ imagePath: sendIcon }),
     });
+
   }
 
   setCurrentChat(chatId: number) {
+
     this.currChat = chatId;
     this.lastMsgNum = 0;
+
   }
 
 
   public set messages(array: MessageInfo[]) {
+
     this.messageBand.props.messages = array;
+
   }
 
 
@@ -47,70 +53,93 @@ class Conversation extends CompositeBlock {
 
 
   private get messageBand() {
+
     return this.children.messageBand as MessageBand;
+
   }
 
   private get sendButton() {
+
     return this.child<ImageButton>("sendMsgButton").content as HTMLButtonElement;
+
   }
 
   private get messageInput() {
+
     return this.child<TextInput>("messageInput").content as HTMLTextAreaElement;
+
   }
 
 
   public hasActiveConnection(chatId: number): boolean {
+
     const s = this.sockets[chatId];
     const res = s?.readyState === WebSocket.OPEN;
     if (res)
       this.getLastMessages();
     return res;
+
   }
 
 
   public hasNonActiveConnection(chatId: number): boolean {
+
     const s = this.sockets[chatId];
     return s?.readyState === WebSocket.CLOSED;
+
   }
 
 
   public setConnection(socket: WebSocket, chatId: number) {
+
     this.sockets[chatId] = socket;
     this.lastMsgNum = 0;
     this.setListeners(chatId);
+
   }
 
   public reConnect(chatId: number) {
+
     const s = this.sockets[chatId];
     this.sockets[chatId] = new WebSocket(s.url);
     this.setListeners(chatId);
+
   }
 
 
   private setListeners(chatId: number) {
+
     const socket = this.sockets[chatId];
     socket.addEventListener("message", e => {
+
       this.onMessage(e);
+
     });
 
     socket.addEventListener("open", () => this.onOpen());
     socket.addEventListener("close", e => {
+
       this.onClose(e);
       this.reConnect(chatId);
+
     });
 
     socket.addEventListener("error", e => this.onError(e));
+
   }
 
 
   private onMessage(event: MessageEvent) {
+
     console.log("Получены данные", event.data);
 
     const data = JSON.parse(event.data);
 
     if (isArray(data)) {
+
       data.reverse().forEach(msg => this.handleMsg(msg as ServerLastMessage));
       return;
+
     }
 
     const msg = data as Indexed;
@@ -120,28 +149,36 @@ class Conversation extends CompositeBlock {
 
     if (msg.type === "message")
       this.handleMsg(msg as ServerMessage);
+
   }
 
   private handleMsg(msg: ServerMessage | ServerLastMessage) {
+
     if (isEmpty(msg.content))
       return;
 
     this.messageBand.addMessage(msg);
+
   }
 
 
   private onOpen() {
+
     this.doPing();
     console.log("Соединение установлено");
     this.getLastMessages();
+
   }
 
   private onError(event: Event) {
+
     if (event instanceof ErrorEvent)
       console.log("Ошибка", event.message);
+
   }
 
   private onClose(event: CloseEvent) {
+
     this.stopPing();
 
     if (event.wasClean)
@@ -150,9 +187,11 @@ class Conversation extends CompositeBlock {
       console.log("Обрыв соединения");
 
     console.log(`Код: ${event.code}. Причина: ${event.reason}.`);
+
   }
 
   private getLastMessages() {
+
     const socket = this.sockets[this.currChat];
 
     socket!.send(JSON.stringify({
@@ -161,23 +200,29 @@ class Conversation extends CompositeBlock {
     }));
 
     this.lastMsgNum += this.lastMessagesLimit;
+
   }
 
 
   private doPing() {
+
     const socket = this.sockets[this.currChat]!;
 
     this.timerIdPing = setInterval(
       () => socket.send(""),
       this.pingInterval);
+
   }
 
   private stopPing() {
+
     if (this.timerIdPing !== null)
       clearInterval(this.timerIdPing);
+
   }
 
   private sendMessage() {
+
     const socket = this.sockets[this.currChat]!;
 
     if (socket.readyState !== WebSocket.OPEN)
@@ -195,14 +240,17 @@ class Conversation extends CompositeBlock {
     };
 
     socket.send(JSON.stringify(data));
+
   }
 
 
   protected render() {
+
     super.render();
 
     this.sendButton.addEventListener("click",
       () => this.sendMessage());
+
   }
 
 

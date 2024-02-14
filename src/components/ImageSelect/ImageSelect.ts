@@ -21,28 +21,34 @@ class ImageSelect extends Block {
   }
 
   get data(): Nullable<FormData> {
+
     if (this.image === null)
       return null;
     const form = new FormData();
     const elName = getValue(this.props, "elementName") as string;
     form.append(elName, this.image, this.filename);
     return form;
+
   }
 
 
   protected render() {
+
     super.render();
 
     const btn = this.content.querySelector("#imageBtn")! as HTMLInputElement;
     const input = this.content.querySelector("#imageFileInput")! as HTMLInputElement;
 
     btn.addEventListener("click", (event) => {
+
       event.preventDefault();
       input.click();
+
     });
 
     input.addEventListener("change",
       () => {
+
         const fileList = input.files;
 
         if (!fileList || !fileList[0])
@@ -54,16 +60,20 @@ class ImageSelect extends Block {
 
         const elName = getValue(this.props, "elementName") as string;
         const ext = getFilenameAndExtension(file.name)[1];
-        this.filename = elName + "." + ext;
+        this.filename = `${elName}.${ext}`;
 
         const reader = new FileReader();
 
         reader.onload = function () {
+
           btn.setAttribute("src", reader.result as string);
+
         };
 
         reader.readAsDataURL(file);
+
       });
+
   }
 
 

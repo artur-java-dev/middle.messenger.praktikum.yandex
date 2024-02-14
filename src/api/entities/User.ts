@@ -13,13 +13,13 @@ export type User = {
 
 
 export type CreateUser =
-  Omit<User, 'avatar' | 'display_name' | 'id'> &
+  Omit<User, "avatar" | "display_name" | "id"> &
   {
     password: string
   };
 
 
-export type UserTextData = Omit<User, 'avatar' | 'id'>;
+export type UserTextData = Omit<User, "avatar" | "id">;
 
 
 export type ChangePasswordRequest = {
@@ -34,7 +34,7 @@ export type UserID = {
 
 
 export type ChatUser =
-  Omit<User, 'phone' | 'email'> &
+  Omit<User, "phone" | "email"> &
   {
     role: string
   };

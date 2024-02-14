@@ -92,6 +92,14 @@
 
 .chat-users-dialog .add-user-block {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem;
+}
+
+.chat-users-dialog .add-user-block div {
+    margin: 0;
+    margin-right: 0.5rem;
 }
 
 

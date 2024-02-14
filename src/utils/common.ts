@@ -122,15 +122,20 @@ function getProp(obj: object, key: string | number): unknown {
 
 
 function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
+
   return obj[key];
+
 }
 
 
 function isTrue(value: unknown) {
-  if (typeof (value) === 'string')
-    value = value.trim().toLowerCase();
 
-  switch (value) {
+  let val = value;
+  if (typeof (value) === "string")
+    val = value.trim().toLowerCase();
+
+  switch (val) {
+
     case true:
     case "true":
     case 1:
@@ -140,7 +145,9 @@ function isTrue(value: unknown) {
       return true;
     default:
       return false;
+
   }
+
 }
 
 

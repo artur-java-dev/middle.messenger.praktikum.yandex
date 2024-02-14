@@ -20,6 +20,7 @@ class ChatAPI extends EntityBaseAPI {
       return this.http.get("", { data: urlParams });
 
     return this.http.get("");
+
   }
 
   requestById(id: number) {
@@ -41,19 +42,27 @@ class ChatAPI extends EntityBaseAPI {
   }
 
   getUsers(id: number) {
+
     return this.http.get(`/${id}/users`);
+
   }
 
   addUser(req: UsersRequest) {
+
     return this.http.put("/users", { data: req });
+
   }
 
   removeUser(req: UsersRequest) {
+
     return this.http.delete("/users", { data: req });
+
   }
 
   getToken(chatId: number) {
+
     return this.http.post(`/token/${chatId}`);
+
   }
 
 }

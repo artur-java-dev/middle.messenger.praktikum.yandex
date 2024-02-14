@@ -11,6 +11,7 @@ import { CompositeBlock } from "../../view-base/CompositeBlock";
 class NewChatDialog extends CompositeBlock {
 
   constructor() {
+
     super({}, {
       header: new Header({ text: "Новый чат" }),
 
@@ -27,9 +28,11 @@ class NewChatDialog extends CompositeBlock {
         onClick: () => this.createChat(),
       }),
     });
+
   }
 
   private createChat() {
+
     const title = chatTitle.value;
 
     if (isEmpty(title))
@@ -37,11 +40,17 @@ class NewChatDialog extends CompositeBlock {
 
     ChatController.createChat(title)
       .then(() => dlg.close())
-      .catch(reason => error.props = { errMessage: reason });
+      .catch(reason => {
+
+        error.props = { errMessage: reason };
+
+      });
+
   }
 
 
   protected template() {
+
     return `
 
         {{{ header }}}
@@ -52,7 +61,9 @@ class NewChatDialog extends CompositeBlock {
           {{{ closeButton }}}
         </div>
     `;
+
   }
+
 }
 
 const chatTitle = new Input({

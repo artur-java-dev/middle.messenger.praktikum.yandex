@@ -9,26 +9,33 @@ class Stack<T> {
   private tail: Nullable<StackNode<T>>;
 
   constructor() {
+
     this.size = 0;
     this.head = null;
     this.tail = null;
+
   }
 
 
   public push(value: T) {
+
     const node = new StackNode(value);
 
     if (this.isEmpty()) {
+
       this.head = node;
       this.tail = node;
 
     } else {
+
       this.tail!.next = node;
       node.prev = this.tail;
       this.tail = node;
+
     }
 
-    this.size++;
+    this.size += 1;
+
   }
 
 
@@ -46,26 +53,30 @@ class Stack<T> {
     else
       this.tail.next = null;
 
-    this.size--;
+    this.size -= 1;
 
     return deleted.value;
+
   }
 
 
   public peek(): T {
+
     if (this.isEmpty())
       throw new EmptyStackError();
 
     return this.tail!.value;
+
   }
 
 
   public isEmpty() {
+
     return this.head === null && this.tail === null;
+
   }
 
 }
-
 
 
 class StackNode<Type> {
@@ -75,17 +86,24 @@ class StackNode<Type> {
   prev: Nullable<StackNode<Type>>;
 
   constructor(value: Type) {
-    this.value = value
-    this.next = null
-    this.prev = null
+
+    this.value = value;
+    this.next = null;
+    this.prev = null;
+
   }
+
 }
 
 
 class EmptyStackError extends LogicError {
+
   constructor() {
+
     super("стек пуст");
+
   }
+
 }
 
 

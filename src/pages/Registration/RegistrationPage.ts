@@ -52,7 +52,9 @@ class RegistrationPage extends CompositeBlock {
 
 
   private outErr(e: Error) {
+
     this.child<ErrorBlock>("error").props = { errMessage: e.message };
+
   }
 
 
@@ -64,13 +66,15 @@ class RegistrationPage extends CompositeBlock {
 
 
   private validate() {
-    return firstName.validate() &&
-      secondName.validate() &&
-      login.validate() &&
-      email.validate() &&
-      phone.validate() &&
-      password.validate() &&
-      isPasswordRepeated(password, password2);
+
+    return firstName.validate()
+      && secondName.validate()
+      && login.validate()
+      && email.validate()
+      && phone.validate()
+      && password.validate()
+      && isPasswordRepeated(password, password2);
+
   }
 
   protected override template() {

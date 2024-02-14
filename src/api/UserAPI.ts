@@ -14,27 +14,35 @@ class UserAPI {
   }
 
   update<T extends RequestBody>(userData: T): Promise<XMLHttpRequest> {
+
     return this.http.put("/profile",
       { data: userData });
+
   }
 
   updateAvatar(avatarData: FormData) {
+
     return this.http.put("/profile/avatar",
       {
         // headers: { "Content-Type": "multipart/form-data" },
         withHeaders: false,
         data: avatarData
       });
+
   }
 
   updatePassword(reqData: ChangePasswordRequest) {
+
     return this.http.put("/password",
       { data: reqData });
+
   }
 
   findUsersByLogin(reqData: { login: string; }) {
+
     return this.http.post("/search",
       { data: reqData });
+
   }
 
 }

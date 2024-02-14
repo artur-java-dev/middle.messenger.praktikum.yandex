@@ -13,6 +13,7 @@ import template from "./tmpl.hbs?raw";
 class ChatsPage extends CompositeBlock {
 
   constructor() {
+
     super({}, {
       profileLink: new PageLink({ title: "Профиль", href: Pathname.Profile }),
       newChatLink: newChat,
@@ -25,23 +26,29 @@ class ChatsPage extends CompositeBlock {
 
 
   protected doInit() {
+
     const chats = new ChatList({
       chats: getChatsFromStore(),
       onSelect: (chatId: ChatID) => {
+
         if (chats.selectedChat === chatId)
           return;
         chats.selectedChat = chatId;
         clearConversation(chatId);
         setConnection(chatId);
+
       }
     });
 
     this.children.chats = chats;
+
   }
 
 
   protected override template() {
+
     return template;
+
   }
 
 }
@@ -52,28 +59,35 @@ const conversBlock = new Conversation();
 const newChat = new ActionLink({
   label: "Создать чат",
   onClick: () => {
+
     NewChatDialog.open();
+
   }
 });
 
 
-
 function clearConversation(chatId: ChatID) {
-  conversBlock.hide();
+
+  conversBlock.setVisible(false);
   conversBlock.messages = [];
-  conversBlock.setCurrentChat(chatId) ;
-  conversBlock.show();
+  conversBlock.setCurrentChat(chatId);
+  conversBlock.setVisible(true);
+
 }
 
 async function setConnection(chatId: number) {
 
   if (conversBlock.hasActiveConnection(chatId)) {
+
     return;
+
   }
 
   if (conversBlock.hasNonActiveConnection(chatId)) {
+
     conversBlock.reConnect(chatId);
     return;
+
   }
 
   const socket = await ChatController.createWebSocket(chatId);

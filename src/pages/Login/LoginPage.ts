@@ -34,25 +34,26 @@ class LoginPage extends CompositeBlock {
         }
       }
     },
-      {
-        ...components,
-        title: title,
-        loginInput: login,
-        passwordInput: password,
+    {
+      ...components,
+      title: title,
+      loginInput: login,
+      passwordInput: password,
 
-        button: new Button({ label: "Войти", type: "submit" }),
+      button: new Button({ label: "Войти", type: "submit" }),
 
-        regLink: new PageLink({ title: "Создать аккаунт", href: Pathname.Registration }),
-        error: new ErrorBlock(),
-      });
+      regLink: new PageLink({ title: "Создать аккаунт", href: Pathname.Registration }),
+      error: new ErrorBlock(),
+    });
 
   }
 
 
   private outErr(e: Error) {
-    this.child<ErrorBlock>("error").props = { errMessage: e.message };
-  }
 
+    this.child<ErrorBlock>("error").props = { errMessage: e.message };
+
+  }
 
 
   protected override template() {
@@ -85,7 +86,6 @@ const password = new Input({
   elementName: "password",
   validate: SpecialChecks.isValidPassword
 });
-
 
 
 export { LoginPage };

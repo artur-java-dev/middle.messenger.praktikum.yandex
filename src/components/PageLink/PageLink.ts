@@ -1,5 +1,5 @@
 import { RouteManagement } from "../../navigation/RouteManagement";
-import { getProp, getValue, hasKey } from "../../utils/common";
+import { getProp } from "../../utils/common";
 import { Block, EventHandler, compileBlock } from "../../view-base/Block";
 
 
@@ -19,22 +19,28 @@ class PageLink extends Block {
 
 
   protected render() {
+
     super.render();
 
-    if (hasKey("onclick", this.props)) {
-      const handler = getValue(this.props, "onclick") as EventHandler;
-      const link = this.content.querySelector("a")!;
-      link.addEventListener("click", handler);
+    const props = this.props as IProps;
+    const link = this.content.querySelector("a")!;
+
+    if (props.onclick) {
+
+      link.addEventListener("click", props.onclick);
       return;
+
     }
 
-    this.content.querySelector("a")!.addEventListener("click",
+    link.addEventListener("click",
       e => {
+
         e.preventDefault();
-        const link = e.target as HTMLLinkElement;
         const path = link.getAttribute("href")!;
         RouteManagement.go(path);
+
       });
+
   }
 
 

@@ -62,14 +62,10 @@ class HTTPTransport {
         req.timeout = timeout;
       this.setHeaders(headers, req);
 
-      req.onload = () =>
-        resolve(req);
-      req.onabort = () =>
-        reject("Запрос был прерван");
-      req.onerror = () =>
-        reject("Ошибка соединения");
-      req.ontimeout = () =>
-        reject(`Истекло время ожидания ответа (${timeout})`);
+      req.onload = () => resolve(req);
+      req.onabort = () => reject(Error("Запрос был прерван"));
+      req.onerror = () => reject(Error("Ошибка соединения"));
+      req.ontimeout = () => reject(Error(`Истекло время ожидания ответа (${timeout})`));
 
       if (method === METHOD.GET || !data) {
 
@@ -87,13 +83,13 @@ class HTTPTransport {
 
       if (typeof data === "object") {
 
-        const isJSON =
-          headers[ContentTypeHeader]?.includes("application/json") ??
-          false;
+        const isJSON
+          = headers[ContentTypeHeader]?.includes("application/json")
+          ?? false;
 
-        const isFormData =
-          headers[ContentTypeHeader]?.includes("multipart/form-data") ??
-          false;
+        const isFormData
+          = headers[ContentTypeHeader]?.includes("multipart/form-data")
+          ?? false;
 
         if (isJSON)
           req.send(JSON.stringify(data));
@@ -112,10 +108,11 @@ class HTTPTransport {
 
 
   private setHeaders(headers: Indexed<string>, req: XMLHttpRequest) {
+
     Object.keys(headers)
-      .forEach(k =>
-        req.setRequestHeader(k, headers[k])
+      .forEach(k => req.setRequestHeader(k, headers[k])
       );
+
   }
 
 
@@ -199,6 +196,7 @@ type Millisec = number;
 
 
 function setJSONheader(options: OptionsWithoutMethod) {
+
   if (!options.data || !(options.withHeaders ?? true))
     return;
 
@@ -207,6 +205,7 @@ function setJSONheader(options: OptionsWithoutMethod) {
 
   if (!hasKey(ContentTypeHeader, options.headers))
     options.headers[ContentTypeHeader] = "application/json";
+
 }
 
 

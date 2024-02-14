@@ -46,6 +46,7 @@ function getData<T extends object = object>(key: string) {
     return null;
 
   return state[key] as T;
+
 }
 
 

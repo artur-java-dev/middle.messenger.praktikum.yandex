@@ -10,7 +10,9 @@ class EventBus<T extends HandlerParam> {
     this.listeners = new Map;
 
     if (events) {
+
       events.forEach(e => this.listeners.set(e, new Set));
+
     }
 
   }

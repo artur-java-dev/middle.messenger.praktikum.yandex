@@ -9,50 +9,55 @@ class AuthAPI {
   private http: HTTPTransport;
 
   constructor() {
+
     this.http = new HTTPTransport(this.endpoint);
+
   }
 
 
   async me(): Promise<User | APIError> {
+
     return this.http.get("/user")
-      .then(req =>
-        JSON.parse(req.response) as User
+      .then(req => JSON.parse(req.response) as User
       )
       .catch(reason => ({ reason }));
+
   }
 
 
   async createUser(dataUser: CreateUser): Promise<UserID | APIError> {
+
     return this.http.post("/signup",
       { data: dataUser })
-      .then(req =>
-        JSON.parse(req.response) as UserID)
+      .then(req => JSON.parse(req.response) as UserID)
       .catch(reason => ({ reason }));
+
   }
 
 
   async login(dataLogin: LoginRequest): Promise<void | APIError> {
+
     return this.http.post("/signin",
       {
         data: dataLogin,
         headers: { "Content-Type": "application/json" }
       })
-      .then(req =>
-        req.status === 400 ?
-          JSON.parse(req.response) :
-          req.response)
+      .then(req => (req.status === 400
+        ? JSON.parse(req.response)
+        : req.response))
       .catch(reason => ({ reason }));
+
   }
 
 
   async logout() {
+
     return this.http.post("/logout",
       {
         data: "",
         withHeaders: false
-      })
-      .then(req => req.response)
-      .catch(reason => ({ reason }));
+      });
+
   }
 
 

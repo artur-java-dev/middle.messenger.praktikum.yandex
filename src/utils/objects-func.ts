@@ -3,9 +3,13 @@ import { Indexed } from "./common-types";
 
 
 class MergeErr extends LogicError {
+
   constructor(msg: string) {
+
     super(`Невозможно выполнить ${merge.name}.\n Причина: ${msg}`);
+
   }
+
 }
 
 
@@ -27,8 +31,10 @@ function merge(lhs: Indexed, rhs: Indexed): Indexed {
     }
 
     if (typeof to[k] !== "object" || typeof from[k] !== "object") {
+
       const s = `свойства '${k}' не являются объектами`;
       throw new MergeErr(s);
+
     }
 
     to[k] = merge(to[k] as Indexed, from[k] as Indexed);
@@ -73,32 +79,42 @@ function set(object: Indexed | unknown, path: string, value: unknown): Indexed |
 function cloneDeep<T extends object = object>(obj: T): T {
 
   if (Array.isArray(obj)) {
+
     return cloneArray(obj) as T;
+
   }
 
   const copy: { [P in keyof T]: unknown } = {} as T;
 
   for (const key in obj) {
+
     const nested = obj[key] as unknown;
 
     if (Array.isArray(nested)) {
+
       copy[key] = cloneArray(nested);
       continue;
+
     }
 
     if (typeof nested === "object") {
+
       copy[key] = (nested === null) ? null : cloneDeep(nested);
       continue;
+
     }
 
     copy[key] = obj[key];
+
   }
 
   return copy as T;
+
 }
 
 
 function cloneArray(a: unknown[]) {
+
   const copy: unknown[] = [];
 
   a.forEach((e, i) => {
@@ -114,9 +130,11 @@ function cloneArray(a: unknown[]) {
 
     else
       copy[i] = e;
+
   });
 
   return copy;
+
 }
 
 

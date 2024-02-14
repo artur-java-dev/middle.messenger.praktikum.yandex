@@ -8,26 +8,33 @@ class Queue<T> {
   private tail: Nullable<QueueNode<T>>;
 
   constructor() {
+
     this.size = 0;
     this.head = null;
     this.tail = null;
+
   }
 
 
   public enqueue(value: T) {
+
     const node = new QueueNode(value);
 
     if (this.isEmpty()) {
+
       this.head = node;
       this.tail = node;
 
     } else {
+
       this.tail!.next = node;
       node.prev = this.tail;
       this.tail = node;
+
     }
 
-    this.size++;
+    this.size += 1;
+
   }
 
 
@@ -48,9 +55,10 @@ class Queue<T> {
     deleted.next = null;
     deleted.prev = null;
 
-    this.size--;
+    this.size -= 1;
 
     return deleted.value;
+
   }
 
 
@@ -60,15 +68,17 @@ class Queue<T> {
       throw new EmptyQueueError();
 
     return this.head!.value;
+
   }
 
 
   public isEmpty() {
+
     return this.head === null && this.tail === null;
+
   }
 
 }
-
 
 
 class QueueNode<Type> {
@@ -78,17 +88,24 @@ class QueueNode<Type> {
   prev: Nullable<QueueNode<Type>>;
 
   constructor(value: Type) {
-    this.value = value
-    this.next = null
-    this.prev = null
+
+    this.value = value;
+    this.next = null;
+    this.prev = null;
+
   }
+
 }
 
 
 class EmptyQueueError extends LogicError {
+
   constructor() {
+
     super("очередь пуста");
+
   }
+
 }
 
 

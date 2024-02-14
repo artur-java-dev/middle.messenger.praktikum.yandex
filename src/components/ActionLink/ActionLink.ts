@@ -1,4 +1,4 @@
-import { Block, EventHandler, compileBlock } from "../../view-base/Block"
+import { Block, EventHandler, compileBlock } from "../../view-base/Block";
 
 
 type IProps = {
@@ -10,20 +10,26 @@ type IProps = {
 class ActionLink extends Block {
 
   constructor(props: IProps) {
+
     super(props);
+
   }
 
 
   protected render() {
+
     super.render();
 
     const p = this.props as IProps;
     this.content.addEventListener("click", p.onClick);
+
   }
 
 
   protected compiledTmpl() {
+
     return compileBlock(this.template(), this.props);
+
   }
 
 

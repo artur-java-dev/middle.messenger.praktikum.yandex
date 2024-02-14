@@ -12,7 +12,9 @@ type IProps = {
 class Button extends Block {
 
   constructor(props: IProps) {
+
     super(props);
+
   }
 
   protected render() {
@@ -23,6 +25,7 @@ class Button extends Block {
       this.addEventHandler("click", props.onClick);
 
     super.render();
+
   }
 
 

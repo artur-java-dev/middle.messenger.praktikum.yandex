@@ -33,6 +33,7 @@ function isEqualObjects(a: object, b: object): boolean {
 }
 
 function isEqualObjectsProp(a: object, b: object, key: string): boolean {
+
   if (a === null || b === null)
     return false;
 
@@ -55,11 +56,13 @@ function isEqual(lhs: PlainObject, rhs: PlainObject) {
     const rVal = rhs[key];
 
     if (isArrayOrObject(val) && isArrayOrObject(rVal)) {
+
       if (isPlainObject(val) && isPlainObject(rVal) && isEqual(val, rVal))
         continue;
       if (isArray(val) && isArray(rVal) && isEqualArrays(val, rVal))
         continue;
       return false;
+
     }
 
     if (Number.isNaN(val) && Number.isNaN(rVal))
@@ -67,28 +70,34 @@ function isEqual(lhs: PlainObject, rhs: PlainObject) {
 
     if (val !== rVal)
       return false;
+
   }
 
   return true;
+
 }
 
 
 function isEqualArrays(lhs: [], rhs: []) {
 
   function is(e: unknown, i: number): boolean {
-    return isPlainObject(e) && isPlainObject(rhs[i]) ?
-      isEqual(e, rhs[i]) :
-      Array.isArray(e) && Array.isArray(rhs[i]) ?
-        isEqualArrays(e as [], rhs[i]) :
-        Number.isNaN(e) && Number.isNaN(rhs[i]) ?
-          true :
-          e === rhs[i];
+
+    if (isPlainObject(e) && isPlainObject(rhs[i]))
+      return isEqual(e, rhs[i]);
+
+    if (Array.isArray(e) && Array.isArray(rhs[i]))
+      return isEqualArrays(e as [], rhs[i]);
+
+    return Number.isNaN(e) && Number.isNaN(rhs[i])
+      ? true : (e === rhs[i]);
+
   }
 
   if (lhs.length !== rhs.length)
     return false;
 
   return lhs.every((e, i) => is(e, i));
+
 }
 
 

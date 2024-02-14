@@ -24,11 +24,15 @@ class InputElement extends Block {
   }
 
   public get value() {
+
     return this.input.value;
+
   }
 
   private get input() {
+
     return this.content as HTMLInputElement;
+
   }
 
 

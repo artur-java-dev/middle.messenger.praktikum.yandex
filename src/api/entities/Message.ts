@@ -36,4 +36,4 @@ export type ServerLastMessage = {
 export const enum PingPong {
   Pong = "pong",
   Ping = "ping",
-};
+}

@@ -19,8 +19,8 @@ class ChatUsers extends CompositeBlock {
       {
         header: new Header({ text: "Участники чата" }),
 
-        inputLogin: inputLogin,
-        usersList: usersList,
+        inputLogin: new Input({ elementName: "inputLogin" }),
+        usersList: new SelectList({ elementName: "usersList", items: [] }),
 
         addUserButton: new Button({
           label: "Добавить",
@@ -35,13 +35,18 @@ class ChatUsers extends CompositeBlock {
 
     this.chatId = chatId;
 
-    ChatController.getChatUsers(chatId).then(users =>
-      usersList.props = { items: toListItems(users) }
+    ChatController.getChatUsers(chatId).then(users => {
+
+      this.usersList.props = { items: toListItems(users) };
+
+    }
     );
+
   }
 
 
   protected template() {
+
     return `
     <div class="chat-users-dialog">
         {{{ header }}}
@@ -57,59 +62,70 @@ class ChatUsers extends CompositeBlock {
         </div>
     </div>
     `;
+
   }
 
 
   protected doInit() {
   }
 
+  get usersList() {
+
+    return this.child<SelectList>("usersList");
+
+  }
+
 
   addUser() {
 
-    if (isEmpty(inputLogin.value))
+    if (isEmpty(new Input({ elementName: "inputLogin" }).value))
       return;
 
-    UserController.findUser(inputLogin.value)
+    UserController.findUser(new Input({ elementName: "inputLogin" }).value)
       .then(user => {
+
         if (user) {
-          ChatController.addUserToChat(this.chatId, user.id).then(() =>
-            usersList.addItem(toListItem(user))
+
+          ChatController.addUserToChat(this.chatId, user.id).then(() => this.usersList.addItem(toListItem(user))
           );
-        }
-        else
-          inputLogin.error = "Пользователь с таким логином не найден";
+
+        } else
+          new Input({ elementName: "inputLogin" }).error = "Пользователь с таким логином не найден";
+
       });
+
   }
 
 
   removeUser() {
 
-    if (isEmpty(usersList.value))
+    if (isEmpty(this.usersList.value))
       return;
 
-    const userId = Number(usersList.value);
-    ChatController.removeUserFromChat(this.chatId, userId).then(() =>
-      usersList.deleteItemByValue()
+    const userId = Number(this.usersList.value);
+    ChatController.removeUserFromChat(this.chatId, userId).then(() => this.usersList.deleteItemByValue()
     );
+
   }
 
 
 }
 
-const inputLogin = new Input({ elementName: "inputLogin" });
-const usersList = new SelectList({ elementName: "usersList", items: [] });
 
 function toListItems(users: ChatUser[]) {
+
   return users.map(toListItem);
+
 }
 
 function toListItem(x: ChatUser | User) {
+
   return {
     id: x.id,
     value: `${x.first_name} ${x.second_name}`
   };
-}
 
+}
 
 
 export { ChatUsers };

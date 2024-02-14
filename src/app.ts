@@ -13,12 +13,7 @@ window.addEventListener("load", () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-  // if (isTrue(sessionStorage.getItem("initPerformed"))) {
-  //   return;
-  // }
-
-  await AppController.initApp();
   RouteManagement.init();
+  await AppController.initApp();
 
-  // sessionStorage.setItem("initPerformed", "true");
 });

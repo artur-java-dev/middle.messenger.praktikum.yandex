@@ -32,11 +32,15 @@ class RouteManagement {
 
 
   static go(path: string) {
+
     return this.router.go(path);
+
   }
 
   static use(path: string, block: CompositeBlock) {
+
     return this.router.use(path, block);
+
   }
 
 }
