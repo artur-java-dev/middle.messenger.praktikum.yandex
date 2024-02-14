@@ -19,7 +19,7 @@
     <div class="chat-info-2">
 
         {{#if info.lastMessageTime}}
-        <div>{{info.lastMessageTime}}</div>
+        <div>{{formatTime info.lastMessageTime}}</div>
         {{/if}}
 
         {{#if info.unreadedMessages}}

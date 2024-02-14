@@ -40,10 +40,10 @@
     margin: 0;
 }
 
-.left-block>div input[type="image"] {
-    opacity: 0.5;
+.left-block button>img {
+    opacity: 0.7;
 }
 
-.left-block>div input[type="text"] {
+.left-block input[type="text"] {
     background: hsl(0deg, 0%, 87%, 88%);
 }

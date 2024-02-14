@@ -15,9 +15,9 @@ import { isArray } from "../../utils/checks-types";
 class Conversation extends CompositeBlock {
 
   private sockets: NumIndexed<WebSocket> = {};
-  private socket: Nullable<WebSocket> = null;
   private timerIdPing: Nullable<number> = null;
   private lastMsgNum: number = 0;
+  private currChat: number = -1;
 
   private readonly pingInterval = 100 * 1000;
   private readonly lastMessagesLimit = 20;
@@ -26,9 +26,14 @@ class Conversation extends CompositeBlock {
     super({}, {
       messageBand: new MessageBand({ messages: messages }),
       attachFileButton: new ImageButton({ imagePath: attachIcon }),
-      messageInput: new TextInput({ elementName: "message", placeholder: "Сообщение" }),
+      messageInput: new TextInput({ elementName: "message", placeholder: "Сообщение.." }),
       sendMsgButton: new ImageButton({ imagePath: sendIcon }),
     });
+  }
+
+  setCurrentChat(chatId: number) {
+    this.currChat = chatId;
+    this.lastMsgNum = 0;
   }
 
 
@@ -56,32 +61,34 @@ class Conversation extends CompositeBlock {
 
   public hasActiveConnection(chatId: number): boolean {
     const s = this.sockets[chatId];
-    return s && s.readyState === WebSocket.OPEN;
+    const res = s?.readyState === WebSocket.OPEN;
+    if (res)
+      this.getLastMessages();
+    return res;
   }
 
 
   public hasNonActiveConnection(chatId: number): boolean {
     const s = this.sockets[chatId];
-    return s && s.readyState === WebSocket.CLOSED;
+    return s?.readyState === WebSocket.CLOSED;
   }
 
 
   public setConnection(socket: WebSocket, chatId: number) {
-    this.socket = socket;
     this.sockets[chatId] = socket;
     this.lastMsgNum = 0;
-    this.setListeners(socket, chatId);
+    this.setListeners(chatId);
   }
 
   public reConnect(chatId: number) {
     const s = this.sockets[chatId];
-    this.socket = new WebSocket(s.url);
-    this.sockets[chatId] = this.socket;
-    this.setListeners(this.socket, chatId);
+    this.sockets[chatId] = new WebSocket(s.url);
+    this.setListeners(chatId);
   }
 
 
-  private setListeners(socket: WebSocket, chatId: number) {
+  private setListeners(chatId: number) {
+    const socket = this.sockets[chatId];
     socket.addEventListener("message", e => {
       this.onMessage(e);
     });
@@ -146,7 +153,9 @@ class Conversation extends CompositeBlock {
   }
 
   private getLastMessages() {
-    this.socket!.send(JSON.stringify({
+    const socket = this.sockets[this.currChat];
+
+    socket!.send(JSON.stringify({
       content: String(this.lastMsgNum),
       type: "get old",
     }));
@@ -156,8 +165,10 @@ class Conversation extends CompositeBlock {
 
 
   private doPing() {
+    const socket = this.sockets[this.currChat]!;
+
     this.timerIdPing = setInterval(
-      () => this.socket!.send(""),
+      () => socket.send(""),
       this.pingInterval);
   }
 
@@ -167,10 +178,13 @@ class Conversation extends CompositeBlock {
   }
 
   private sendMessage() {
-    if (this.socket === null || this.socket.readyState !== WebSocket.OPEN)
+    const socket = this.sockets[this.currChat]!;
+
+    if (socket.readyState !== WebSocket.OPEN)
       return;
 
     const msg = this.messageInput.value;
+    this.messageInput.value = "";
 
     if (isEmpty(msg))
       return;
@@ -180,7 +194,7 @@ class Conversation extends CompositeBlock {
       type: "message",
     };
 
-    this.socket.send(JSON.stringify(data));
+    socket.send(JSON.stringify(data));
   }
 
 

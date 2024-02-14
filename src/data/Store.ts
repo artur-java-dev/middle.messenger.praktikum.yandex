@@ -39,6 +39,7 @@ const enum StoreEvent {
 }
 
 function getData<T extends object = object>(key: string) {
+
   const state = window.store.getState();
 
   if (!hasKey(key, state))

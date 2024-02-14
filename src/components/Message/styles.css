@@ -1,5 +1,21 @@
 .message-block {
-    margin: 0.6rem;
-    font-size: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 0.8rem;
+    padding: 0.8rem;
     word-wrap: break-word;
+    background: rgba(211, 211, 211, 0.4);
+}
+
+.message-block p {
+    align-self: flex-start;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.message-block span {
+    align-self: flex-end;
+    font-size: 0.55rem;
+    color: purple;
 }

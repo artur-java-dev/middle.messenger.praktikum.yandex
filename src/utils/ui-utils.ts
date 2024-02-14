@@ -2,6 +2,7 @@ import { Block, Events, TProps } from "../view-base/Block";
 import Handlebars, { HelperOptions } from "handlebars";
 import { Indexed } from "./common-types";
 import { isEqual } from "./checks-equal";
+import { formatMsgTime } from "./date-time-utils";
 
 
 interface BlockConstructable {
@@ -24,6 +25,11 @@ function registerComponent(name: string, Component: BlockConstructable) {
     });
 
 }
+
+
+Handlebars.registerHelper("formatTime", function (date) {
+  return formatMsgTime(date);
+});
 
 
 type MapFunc = (state: Indexed) => Indexed;

@@ -36,7 +36,7 @@ class Message extends Block {
     return `
     <div class="message-block">
     <p>{{text}}</p>
-    <span>{{time}}</span>
+    <span>{{formatTime time}}</span>
     </div>
     `;
 
