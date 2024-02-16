@@ -1,4 +1,3 @@
-import { getProp } from "../../utils/common";
 import { Block, EventHandler, compileBlock } from "../../view-base/Block";
 
 
@@ -36,18 +35,16 @@ class Button extends Block {
   }
 
 
-  protected override wasUpdate(oldProps: object, newProps: object) {
+  protected override wasUpdate(oldProps: IProps, newProps: IProps) {
 
-    return getProp(newProps, "label") !== getProp(oldProps, "label");
+    return newProps.label !== oldProps.label;
 
   }
 
 
   protected override template() {
 
-    return `
-    <button class="button" type="{{type}}">{{label}}</button>
-    `;
+    return `<button class="button" type="{{type}}">{{label}}</button>`;
 
   }
 

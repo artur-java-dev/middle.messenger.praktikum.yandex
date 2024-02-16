@@ -66,9 +66,6 @@ class ChatUsers extends CompositeBlock {
   }
 
 
-  protected doInit() {
-  }
-
   get usersList() {
 
     return this.child<SelectList>("usersList");
@@ -78,19 +75,21 @@ class ChatUsers extends CompositeBlock {
 
   addUser() {
 
-    if (isEmpty(new Input({ elementName: "inputLogin" }).value))
+    const input = this.child<Input>("inputLogin");
+
+    if (isEmpty(input.value))
       return;
 
-    UserController.findUser(new Input({ elementName: "inputLogin" }).value)
+    UserController.findUser(input.value)
       .then(user => {
 
         if (user) {
 
-          ChatController.addUserToChat(this.chatId, user.id).then(() => this.usersList.addItem(toListItem(user))
-          );
+          ChatController.addUserToChat(this.chatId, user.id)
+            .then(() => this.usersList.addItem(toListItem(user)));
 
         } else
-          new Input({ elementName: "inputLogin" }).error = "Пользователь с таким логином не найден";
+          input.error = "Пользователь с таким логином не найден";
 
       });
 
@@ -103,8 +102,9 @@ class ChatUsers extends CompositeBlock {
       return;
 
     const userId = Number(this.usersList.value);
-    ChatController.removeUserFromChat(this.chatId, userId).then(() => this.usersList.deleteItemByValue()
-    );
+
+    ChatController.removeUserFromChat(this.chatId, userId)
+      .then(() => this.usersList.deleteItemByValue());
 
   }
 

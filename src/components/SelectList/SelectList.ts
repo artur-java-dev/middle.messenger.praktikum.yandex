@@ -48,14 +48,14 @@ class SelectList extends Block {
     const items = p.items.filter(x => notEq(x, item));
     this.props = { items: items };
 
-    function notEq(x: string | Indexed, item: typeof x) {
+    function notEq(x: string | Indexed, y: typeof x) {
 
       if (typeof x === "string")
-        return x !== item;
+        return x !== y;
 
       return hasKey("id", x)
-        ? !isEqualObjectsProp(x, item as Indexed, "id")
-        : !isEqualObjects(x, item as Indexed);
+        ? !isEqualObjectsProp(x, y as Indexed, "id")
+        : !isEqualObjects(x, y as Indexed);
 
     }
 

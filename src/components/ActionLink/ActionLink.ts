@@ -35,9 +35,7 @@ class ActionLink extends Block {
 
   protected override template() {
 
-    return `
-        <a href="#" class="action-link" onclick="event.preventDefault()">{{label}}</a>
-    `;
+    return `<a href="#" class="action-link" onclick="event.preventDefault()">{{label}}</a>`;
 
   }
 
