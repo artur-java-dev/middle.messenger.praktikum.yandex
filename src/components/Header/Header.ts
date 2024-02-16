@@ -31,7 +31,7 @@ class Header extends Block {
 
   protected override template() {
 
-    return "<h2 class=\"header\">{{text}}</h2>";
+    return `<h2 class="header">{{text}}</h2>`;
 
   }
 

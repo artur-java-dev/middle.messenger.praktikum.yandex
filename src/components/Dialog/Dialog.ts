@@ -15,11 +15,10 @@ class Dialog extends CompositeBlock {
 
   protected template() {
 
-    return `
-            <dialog id="${this.elemId}">{{{ block }}}</dialog>
-    `;
+    return `<dialog id="${this.elemId}">{{{ block }}}</dialog>`;
 
   }
+
 
   protected render() {
 

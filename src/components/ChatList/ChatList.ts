@@ -25,8 +25,7 @@ class ChatList extends CompositeBlock {
         chats: getChatsFromStore()
       };
 
-    },
-    this);
+    }, this);
 
   }
 
@@ -71,7 +70,8 @@ const NoneChatID = -1;
 
 function createChatCards(props: IProps) {
 
-  const arr = props.chats.map(chat => new ChatCard({ info: chat, onClick: props.onSelect! })
+  const arr = props.chats.map(chat =>
+    new ChatCard({ info: chat, onClick: props.onSelect! })
   );
   return arr;
 

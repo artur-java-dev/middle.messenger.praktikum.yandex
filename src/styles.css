@@ -55,3 +55,7 @@ h1 {
     display: flex;
     justify-content: space-evenly;
 }
+
+#app>div {
+    width: 100%;
+}
