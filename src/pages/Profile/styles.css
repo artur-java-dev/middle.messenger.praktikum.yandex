@@ -3,11 +3,36 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    width: 40em;
+    width: 100%;
 }
 
-.profile-form h1 {
-    margin: 1rem auto;
+.chats-link {
+    display: flex;
+    margin-left: 8rem;
+}
+
+.chats-link a {
+    margin-bottom: 0;
+}
+
+.profile-header {
+    margin-bottom: 1rem;
+}
+
+.profile-header h1 {
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.profile-header a {
+    margin-bottom: 0.5rem;
+}
+
+.avatar-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .profile-form div {
@@ -15,6 +40,11 @@
     margin: 0.2rem auto;
 }
 
-.profile-form .button-save {
+.profile-form .button-save button {
     margin: 1.5rem auto;
+    color: darkslategrey;
+}
+
+.profile-form label {
+    color: darkslategrey;
 }

@@ -1,7 +1,7 @@
 .button {
-    min-width: 16em;
-    min-height: 3em;
-    font-size: 1em;
+    min-width: 16rem;
+    min-height: 3rem;
+    font-size: 1rem;
     border: thin solid;
     border-radius: 4px;
     margin: auto;

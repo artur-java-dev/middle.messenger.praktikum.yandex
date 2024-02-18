@@ -23,6 +23,10 @@
   },
   "rules": {
     "linebreak-style": 0,
+    "operator-linebreak": [
+      "error",
+      "before"
+    ],
     "no-multiple-empty-lines": [
       "error",
       {
@@ -32,7 +36,10 @@
     ],
     "quotes": [
       "error",
-      "double"
+      "double",
+      {
+        "allowTemplateLiterals": true
+      }
     ],
     "padded-blocks": [
       "error",
@@ -52,6 +59,11 @@
     "nonblock-statement-body-position": "off",
     "function-paren-newline": "off",
     "arrow-parens": "off",
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
+    "implicit-arrow-linebreak": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "import/no-absolute-path": "off",
     "import/extensions": [
@@ -85,8 +97,11 @@
     "no-useless-constructor": "off",
     "no-use-before-define": "off",
     "no-unused-vars": "off",
-    "no-undef": "warn",
+    "no-underscore-dangle": "off",
+    "no-prototype-builtins": "off",
+    "no-continue": "warn",
     "no-shadow": "warn",
+    "no-undef": "warn",
     "no-param-reassign": [
       "error",
       {
@@ -102,6 +117,11 @@
     "no-restricted-syntax": [
       "error",
       "WithStatement"
+    ],
+    "guard-for-in": "warn",
+    "max-classes-per-file": [
+      "error",
+      4
     ],
     "max-len": [
       2,

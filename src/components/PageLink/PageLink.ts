@@ -1,10 +1,12 @@
+import { RouteManagement } from "../../navigation/RouteManagement";
 import { getProp } from "../../utils/common";
-import { Block, compileBlock } from "../../view-base/Block";
+import { Block, EventHandler, compileBlock } from "../../view-base/Block";
 
 
 type IProps = {
   href: string,
   title: string,
+  onclick?: EventHandler
 }
 
 class PageLink extends Block {
@@ -12,6 +14,32 @@ class PageLink extends Block {
   constructor(props: IProps) {
 
     super(props);
+
+  }
+
+
+  protected render() {
+
+    super.render();
+
+    const props = this.props as IProps;
+    const link = this.content.querySelector("a")!;
+
+    if (props.onclick) {
+
+      link.addEventListener("click", props.onclick);
+      return;
+
+    }
+
+    link.addEventListener("click",
+      e => {
+
+        e.preventDefault();
+        const path = link.getAttribute("href")!;
+        RouteManagement.go(path);
+
+      });
 
   }
 

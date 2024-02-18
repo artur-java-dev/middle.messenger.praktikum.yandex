@@ -1,5 +1,5 @@
-type NameSpace = { [k: string]: NameSpace };
-type Obj = { [k: string]: unknown };
+import { NameSpace } from "./common-types";
+
 
 function namespace(s: string): NameSpace {
 
@@ -9,13 +9,12 @@ function namespace(s: string): NameSpace {
 
   const obj: NameSpace = {};
   let curr = obj;
+
   for (const name of names) {
 
-    if (name === "" || startsWithDigit(name)) {
-
+    if (name === "" || startsWithDigit(name))
       throw Error("invalid string");
 
-    }
     curr[name] = {};
     curr = curr[name];
 
@@ -28,20 +27,19 @@ function namespace(s: string): NameSpace {
 function validate(s: string) {
 
   const re = /[a-zA-Z0-9.]/;
-  if (!s.match(re)) {
 
+  if (!s.match(re))
     throw Error("invalid string");
-
-  }
 
 }
 
-function startsWithDigit(name: string): boolean {
+function startsWithDigit(name: string) {
 
   const re = /^[0-9]/;
   return re.test(name);
 
 }
+
 
 function isEmpty(value: unknown) {
 
@@ -103,28 +101,56 @@ function isEmptyObj(obj: object) {
 
 }
 
+
 function hasKey(key: string | number, obj: object) {
 
-  return (key in obj);
+  return !obj ? false : (key in obj);
 
 }
 
 function getProp(obj: object, key: string | number): unknown {
 
   const k = <keyof typeof obj>key;
-  if (hasKey(key, obj)) {
 
+  if (hasKey(key, obj))
     return obj[k];
 
-  }
   return null;
   // throw Error(`в 'obj' нет свойства '${key}'`);
 
 }
 
+
+function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
+
+  return obj[key];
+
+}
+
+
+function isTrue(value: unknown) {
+
+  let val = value;
+  if (typeof (value) === "string")
+    val = value.trim().toLowerCase();
+
+  switch (val) {
+
+    case true:
+    case "true":
+    case 1:
+    case "1":
+    case "on":
+    case "yes":
+      return true;
+    default:
+      return false;
+
+  }
+
+}
+
+
 export {
-  namespace,
-  isEmpty, isEmptyObj,
-  hasKey, getProp,
-  Obj,
+  namespace, isEmpty, isEmptyObj, hasKey, getProp, getValue, isTrue
 };

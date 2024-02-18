@@ -28,13 +28,6 @@ class Search extends CompositeBlock {
 
   }
 
-
-  protected wasUpdate(_oldProps: object, _newProps: object) {
-
-    return false;
-
-  }
-
 }
 
 const input = new InputElement({ elementName: "search" });

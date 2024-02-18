@@ -1,10 +1,21 @@
-<form class="profile-form">
-    {{{ title }}}
+<div class="chats-link">
+    {{{ toChatsLink }}}
+</div>
 
+<div class="profile-header">
+    {{{ title }}}
     {{{ logoutLink }}}
     {{{ changePasswordLink }}}
+</div>
 
+
+<div class="avatar-block">
     {{{ imageSelect }}}
+    {{{ updateAvatarLink }}}
+</div>
+
+
+<form id="profile-data-form" class="profile-form">
     {{{ firstNameInput }}}
     {{{ secondNameInput }}}
     {{{ displayNameInput }}}
@@ -15,5 +26,7 @@
     <div class="button-save">
         {{{ button }}}
     </div>
+
+    {{{ error }}}
 
 </form>

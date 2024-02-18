@@ -19,6 +19,7 @@ abstract class Block<Props extends TProps & Events = TProps> {
   protected properties: Props;
   protected events: EventsObj;
   protected element: HTMLElement | null = null;
+  private displayValue?: string;
 
   protected readonly uuid: string;
   protected readonly eventBus: EventBus<Props> = new EventBus();
@@ -226,13 +227,32 @@ abstract class Block<Props extends TProps & Events = TProps> {
 
   public show() {
 
+    if (this.displayValue) {
+
+      this.content.style.display = this.displayValue;
+      return;
+
+    }
+
     this.content.style.display = "block";
 
   }
 
   public hide() {
 
+    this.displayValue = this.content.style.display;
+
     this.content.style.display = "none";
+
+  }
+
+
+  public setVisible(flag: boolean) {
+
+    if (flag)
+      this.content.style.visibility = "visible";
+    else
+      this.content.style.visibility = "hidden";
 
   }
 

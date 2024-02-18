@@ -94,7 +94,7 @@ const SpecialChecks = {
 
   isValidEmail(s: string): [boolean, string] {
 
-    const result = isLatinWithOptionalDigits(removeChars(s, "-_")) && isEmail(s);
+    const result = isLatinWithOptionalDigits(removeChars(s, `-_${doggieChar}${dot}`)) && isEmail(s);
     return [
       result,
       `латиница, должен включать @ и точку после неё
