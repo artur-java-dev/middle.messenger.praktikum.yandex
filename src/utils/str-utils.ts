@@ -77,9 +77,16 @@ function escapeHtml(unsafe: string) {
 }
 
 
+function pad(s: string, maxLength: number) {
+  const count = s.length;
+  const pad = (maxLength - count) / 2 + count;
+  return s.padStart(pad).padEnd(maxLength);
+}
+
+
 export {
   getChar, isUpperCase,
   beginsWithUpperCase, containsUpperCase,
   removeSpaces, removeChars, trim,
-  isEqual, escapeHtml
+  isEqual, escapeHtml, pad
 };

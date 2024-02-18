@@ -24,16 +24,35 @@ type NumIndexed<T = unknown> = {
 };
 
 
-type StringIndexed = Record<string, any>;
+type Readonly<T extends Indexed | NumIndexed> = {
+  readonly [P in keyof T]: T[P];
+};
 
 
-type NameSpace = { [k: string]: NameSpace; };
+type DeepReadonly<T> = {
+  readonly [P in keyof T]:
+  T[P] extends (infer U)[] ? DeepReadonly<U>[] :
+  T[P] extends object ? DeepReadonly<T[P]> :
+  T[P];
+};
+
+
+type ReturnType<T> =
+  T extends ((...args: unknown[]) => infer R) ?
+  R :
+  never;
+
+
+type NameSpace = {
+  [k: string]: NameSpace;
+};
+
 
 
 export {
   Nullable, Primitive,
   Obj, PlainObject, RecObj,
-  Indexed, NumIndexed, ArrayOrObject, StringIndexed,
-  NameSpace,
+  Indexed, NumIndexed, ArrayOrObject,
+  NameSpace, ReturnType, Readonly, DeepReadonly
 };
 

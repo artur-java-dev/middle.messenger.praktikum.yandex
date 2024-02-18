@@ -116,7 +116,6 @@ function getProp(obj: object, key: string | number): unknown {
     return obj[k];
 
   return null;
-  // throw Error(`в 'obj' нет свойства '${key}'`);
 
 }
 
@@ -151,6 +150,18 @@ function isTrue(value: unknown) {
 }
 
 
+function range(start: number, end: number) {
+  const length = Math.abs(end - start) + 1;
+  return Array.from({ length },
+    (_, idx) => idx + 1
+  );
+}
+
+
+
+
 export {
-  namespace, isEmpty, isEmptyObj, hasKey, getProp, getValue, isTrue
+  namespace, isEmpty, isEmptyObj,
+  hasKey, getProp, getValue, isTrue,
+  range
 };
