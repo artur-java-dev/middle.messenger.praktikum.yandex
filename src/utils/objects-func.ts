@@ -138,5 +138,16 @@ function cloneArray(a: unknown[]) {
 }
 
 
-export { merge, set, cloneDeep, cloneArray };
+function omit<T extends object>(obj: T, fields: (keyof T)[]) {
+  const newObj = cloneDeep(obj);
+
+  for (const f of fields)
+    delete newObj[f];
+
+  return newObj;
+}
+
+
+
+export { merge, set, cloneDeep, cloneArray, omit };
 

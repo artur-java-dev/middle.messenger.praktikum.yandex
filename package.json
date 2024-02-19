@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
+        "favicon:copy": "node scripts/favicon.js",
         "eslint": "eslint . --ext .ts",
         "eslint-fix": "eslint . --ext .ts --fix",
         "stylelint": "stylelint \"**/*.css\" --fix",
