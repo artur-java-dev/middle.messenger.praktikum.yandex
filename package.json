@@ -10,8 +10,7 @@
         "typescheck": "tsc --noEmit",
         "lint": "npm run eslint && npm run stylelint && npm run typescheck",
         "dev": "vite",
-        "prebuild": "tsc --noEmit",
-        "build": "npm run prebuild && vite build",
+        "build": "tsc --noEmit && vite build",
         "start": "npm run build && vite preview --port=3000",
         "test": "mocha"
     },
@@ -34,8 +33,12 @@
         "handlebars": "4.7.8",
         "jsdom": "24.0.0",
         "mocha": "10.3.0",
+        "sinon": "17.0.1",
+        "@types/sinon": "17.0.3",
         "stylelint": "16.1.0",
         "stylelint-config-standard": "36.0.0",
+        "ts-node": "10.9.2",
+        "@types/node": "20.11.19",
         "typescript": "5.3.3",
         "vite": "5.1.3"
     }

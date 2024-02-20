@@ -6,5 +6,7 @@
   "require": [
     "mochaSetup.js"
   ],
-  "loader": []
+  "loader": [
+    "ts-node/esm"
+  ]
 }

@@ -2,9 +2,10 @@ import Handlebars from "handlebars";
 import { isEmptyObj } from "../utils/common";
 import { EventBus } from "./EventBus";
 import { v4 as makeUUID } from "uuid";
+import { Indexed } from "../utils/common-types";
 
 
-type TProps = Record<string, unknown>;
+type TProps = Indexed;
 
 type Events = {
   events?: EventsObj

@@ -208,7 +208,7 @@ class Conversation extends CompositeBlock {
 
     const socket = this.sockets[this.currChat]!;
 
-    this.timerIdPing = setInterval(
+    this.timerIdPing = window.setInterval(
       () => socket.send(""),
       this.pingInterval);
 
