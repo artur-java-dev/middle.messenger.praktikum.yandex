@@ -6,6 +6,7 @@ import { PasswordSetting } from "../pages/PasswordSetting/PasswordSetting";
 import { UserProfile } from "../pages/Profile/UserProfile";
 import { RegistrationPage } from "../pages/Registration/RegistrationPage";
 import { CompositeBlock } from "../view-base/CompositeBlock";
+import { Pathname } from "./Router";
 import { Router } from "./Router";
 
 
@@ -43,17 +44,6 @@ class RouteManagement {
 
   }
 
-}
-
-
-const enum Pathname {
-  Login = "/",
-  Registration = "/sign-up",
-  Profile = "/settings",
-  Password = "/set-password",
-  Chats = "/messenger",
-  Err404 = "/404-error",
-  Err500 = "/500-error",
 }
 
 

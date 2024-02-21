@@ -4,7 +4,7 @@ import { Conversation } from "../../components/Conversation/Conversation";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { Search } from "../../components/Search/Search";
 import { ChatController } from "../../controllers/ChatController";
-import { Pathname } from "../../navigation/RouteManagement";
+import { Pathname } from "../../navigation/Router";
 import { CompositeBlock } from "../../view-base/CompositeBlock";
 import { NewChatDialog } from "./NewChatDialog";
 import template from "./tmpl.hbs?raw";

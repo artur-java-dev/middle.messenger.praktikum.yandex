@@ -1,8 +1,7 @@
 import { expect } from "chai";
 import { Router } from "./Router";
 import sinon from "sinon";
-import { LoginPage } from "../pages/Login/LoginPage";
-import { RegistrationPage } from "../pages/Registration/RegistrationPage";
+import { CompositeBlock } from "../view-base/CompositeBlock";
 
 
 describe("тесты для роутера", () => {
@@ -12,16 +11,20 @@ describe("тесты для роутера", () => {
 
   before(() => {
     router = Router.Instance;
-    // sinon.stub(router, "use").resolves();
-    // sinon.stub(router, "start").resolves();
-    // sinon.stub(router, <any>"onRoute").resolves();
 
-    // window.location.pathname = "/login";
+    const stubPage = sinon.createStubInstance(CompositeBlock);
 
-    // router
-    //   .use("/login", sinon.createStubInstance(LoginPage))
-    // .use("/register", sinon.createStubInstance(RegistrationPage))
-    // .start();
+    router
+      .use("/login", stubPage)
+      .use("/register", stubPage)
+      .start();
+  });
+
+
+  afterEach(() => {
+
+    sinon.restore();
+
   });
 
 
@@ -32,6 +35,31 @@ describe("тесты для роутера", () => {
 
     const countRecords = window.history.length;
     expect(countRecords).to.eq(3);
+  });
+
+
+  it("тест перехода на предыдущую страницу", () => {
+
+    router.go("/login");
+    router.go("/register");
+    const spy = sinon.spy(history, "back");
+
+    router.back();
+
+    expect(spy.calledOnce).to.be.true;
+  });
+
+
+  it("тест перехода на следущую страницу", () => {
+
+    router.go("/login");
+    router.go("/register");
+    router.back();
+    const spy = sinon.spy(history, "forward");
+
+    router.forward();
+
+    expect(spy.calledOnce).to.be.true;
   });
 
 

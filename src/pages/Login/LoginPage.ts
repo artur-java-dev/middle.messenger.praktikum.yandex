@@ -4,7 +4,7 @@ import { Input } from "../../components/Input/Input";
 import { PageLink } from "../../components/PageLink/PageLink";
 import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { LoginController } from "../../controllers/LoginController";
-import { Pathname } from "../../navigation/RouteManagement";
+import { Pathname } from "../../navigation/Router";
 import { SpecialChecks } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
 // import template from "./tmpl.hbs?raw";

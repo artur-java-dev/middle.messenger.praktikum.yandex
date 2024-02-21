@@ -1,6 +1,7 @@
 import { AuthAPI } from "../api/AuthAPI";
 import { CreateUser } from "../api/entities/User";
-import { Pathname, RouteManagement } from "../navigation/RouteManagement";
+import { RouteManagement } from "../navigation/RouteManagement";
+import { Pathname } from "../navigation/Router";
 import { apiHasError } from "../utils/http-utils";
 import { ChatController } from "./ChatController";
 

@@ -1,6 +1,7 @@
 import { Button } from "../../components/Button/Button";
 import { Dialog } from "../../components/Dialog/Dialog";
-import { Pathname, RouteManagement } from "../../navigation/RouteManagement";
+import { RouteManagement } from "../../navigation/RouteManagement";
+import { Pathname } from "../../navigation/Router";
 import { CompositeBlock } from "../../view-base/CompositeBlock";
 
 

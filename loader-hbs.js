@@ -25,9 +25,9 @@ export async function load(url, context, next) {
 	return {
 		format: "module",
 		shortCircuit: true,
-		// source: `
-		// const template = ${json};
-		// export default template;
-		// `,
+		source: `
+		const template = ${json};
+		export default template;
+		`,
 	};
 }

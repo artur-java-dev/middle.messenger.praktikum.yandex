@@ -9,7 +9,7 @@ import { PageTitle } from "../../components/PageTitle/PageTitle";
 import { LoginController } from "../../controllers/LoginController";
 import { UserController } from "../../controllers/UserController";
 import { getData } from "../../data/Store";
-import { Pathname } from "../../navigation/RouteManagement";
+import { Pathname } from "../../navigation/Router";
 import { isEmpty } from "../../utils/common";
 import { collectValuesToObj } from "../../utils/form-utils";
 import { SpecialChecks } from "../../utils/validators-func";
