@@ -7,7 +7,7 @@ import { LoginController } from "../../controllers/LoginController";
 import { Pathname } from "../../navigation/RouteManagement";
 import { SpecialChecks } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
-import template from "./tmpl.hbs?raw";
+// import template from "./tmpl.hbs?raw";
 
 
 class LoginPage extends CompositeBlock {
@@ -34,17 +34,17 @@ class LoginPage extends CompositeBlock {
         }
       }
     },
-    {
-      ...components,
-      title: title,
-      loginInput: login,
-      passwordInput: password,
+      {
+        ...components,
+        title: title,
+        loginInput: login,
+        passwordInput: password,
 
-      button: new Button({ label: "Войти", type: "submit" }),
+        button: new Button({ label: "Войти", type: "submit" }),
 
-      regLink: new PageLink({ title: "Создать аккаунт", href: Pathname.Registration }),
-      error: new ErrorBlock(),
-    });
+        regLink: new PageLink({ title: "Создать аккаунт", href: Pathname.Registration }),
+        error: new ErrorBlock(),
+      });
 
   }
 
@@ -58,7 +58,24 @@ class LoginPage extends CompositeBlock {
 
   protected override template() {
 
-    return template;
+    // return template;
+    return `
+    <form class="login-form">
+    {{{ title }}}
+
+    {{{ loginInput }}}
+    {{{ passwordInput }}}
+
+    <div class="button-signin">
+        {{{ button }}}
+    </div>
+
+    {{{ error }}}
+
+    {{{ regLink }}}
+
+    </form>
+    `;
 
   }
 

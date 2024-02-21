@@ -1,4 +1,4 @@
-import { ArrayOrObject, PlainObject } from "./common-types";
+import { ArrayOrObject, PlainObject, Primitive } from "./common-types";
 
 
 function isPlainObject(o: unknown): o is PlainObject {
@@ -19,6 +19,18 @@ function isArray<T>(arr: unknown): arr is T[] {
 }
 
 
+function isPrimitive(value: unknown): value is Primitive {
+
+  const type = typeof value;
+
+  return type === "bigint" ||
+    type === "boolean" ||
+    type === "number" ||
+    type === "string";
+
+}
+
+
 function isStrArray(arr: unknown): arr is string[] {
 
   return Array.isArray(arr) && arr.length > 0 && typeof arr[0] === "string";
@@ -33,4 +45,8 @@ function isArrayOrObject(value: unknown): value is ArrayOrObject {
 }
 
 
-export { isPlainObject, isArray, isArrayOrObject, isStrArray };
+export {
+  isPlainObject, isArray,
+  isArrayOrObject, isStrArray,
+  isPrimitive
+};

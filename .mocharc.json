@@ -7,6 +7,8 @@
     "mochaSetup.js"
   ],
   "loader": [
-    "ts-node/esm"
+    "ts-node/esm",
+    "./loader-hbs.js",
+    "./loader-css.js"
   ]
 }
