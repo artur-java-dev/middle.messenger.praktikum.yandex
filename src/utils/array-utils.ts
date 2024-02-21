@@ -3,24 +3,30 @@ import { isEmpty } from "./common";
 
 
 function range(start: number, end: number) {
+
   const length = Math.abs(end - start) + 1;
   return Array.from({ length },
     (_, idx) => idx + 1
   );
+
 }
 
 
 type NestedArray = Array<NestedArray | unknown>;
 
 function flatten(array: NestedArray, acc: Array<unknown> = []): Array<unknown> {
+
   array.forEach(elem => {
+
     if (isArray(elem))
       flatten(elem, acc);
     else
       acc.push(elem);
+
   });
 
   return acc;
+
 }
 
 
@@ -42,14 +48,18 @@ function take<T>(list: T[], num: number = 1): T[] {
     part.push(list[n - 1]);
 
   return part;
+
 }
 
 function isInt(num: number) {
-  return Math.floor(num) == num;
+
+  return Math.floor(num) === num;
+
 }
 
 
 function unzip(...arrays: Array<unknown>[]) {
+
   if (!isArray(arrays))
     throw Error(`${arrays} is not array`);
 
@@ -64,12 +74,14 @@ function unzip(...arrays: Array<unknown>[]) {
     result.push(groupValues(n - 1, arrays));
 
   function groupValues(idx: number, arrays: Array<unknown>[]) {
-    return arrays.map(a => idx < a.length ? a[idx] : undefined);
+
+    return arrays.map(a => (idx < a.length ? a[idx] : undefined));
+
   }
 
   return result;
-}
 
+}
 
 
 export {

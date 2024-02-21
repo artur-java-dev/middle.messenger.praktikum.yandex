@@ -6,8 +6,7 @@ import { PasswordSetting } from "../pages/PasswordSetting/PasswordSetting";
 import { UserProfile } from "../pages/Profile/UserProfile";
 import { RegistrationPage } from "../pages/Registration/RegistrationPage";
 import { CompositeBlock } from "../view-base/CompositeBlock";
-import { Pathname } from "./Router";
-import { Router } from "./Router";
+import { Pathname, Router } from "./Router";
 
 
 class RouteManagement {

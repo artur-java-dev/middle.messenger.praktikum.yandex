@@ -39,6 +39,7 @@ describe("тесты для модуля отправки запросов (HTTP
     const options = { method: METHOD.GET };
     const argsMatch = stub.calledWithMatch(expectedUrl, options);
     expect(argsMatch).to.be.true;
+
   });
 
 
@@ -51,6 +52,7 @@ describe("тесты для модуля отправки запросов (HTTP
     const options = stub.args[0][1];
     const ctype = options.headers!["Content-Type"];
     expect(ctype).to.be.eq("application/json");
+
   });
 
 
@@ -68,6 +70,7 @@ describe("тесты для модуля отправки запросов (HTTP
     await http.fetchWithRetry("", options).catch(() => null);
 
     expect(stub.callCount).to.be.eq(triesCount);
+
   });
 
 

@@ -92,34 +92,45 @@ function classNames(...args: unknown[]) {
   const arr = Array<unknown>();
 
   for (const arg of args) {
+
     if (isArray(arg))
       flatten(arg).forEach(_ => add(_));
     else
       add(arg);
+
   }
 
   function add(arg: unknown) {
+
     if (arg === null) return;
 
     if (typeof arg === "object") {
+
       arr.push(getTrueProps(arg));
       return;
+
     }
 
     if (typeof arg === "string" && !isEmpty(arg)) {
+
       arr.push(arg.trim());
       return;
+
     }
 
     if (typeof arg === "number" && arg !== 0)
       arr.push(String(arg));
+
   }
 
   function getTrueProps(o: object) {
+
     return Object.keys(o).filter(k => getProp(o, k) === true).join(" ");
+
   }
 
   return arr.join(" ").trim();
+
 }
 
 

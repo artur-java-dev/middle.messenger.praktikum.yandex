@@ -143,11 +143,13 @@ class Router {
     } catch (e) {
 
       return this.redirAuth(pathname);
+
     }
 
   }
 
   private redirChats(pathname: string) {
+
     if (pathname === Pathname.Login) {
 
       this.on(Pathname.Chats);
@@ -156,9 +158,11 @@ class Router {
     }
 
     return false;
+
   }
 
   private redirAuth(pathname: string) {
+
     if (pathname === Pathname.Registration) {
 
       this.on(Pathname.Registration);
@@ -168,6 +172,7 @@ class Router {
 
     this.on(Pathname.Login);
     return true;
+
   }
 
 

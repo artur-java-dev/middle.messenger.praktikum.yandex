@@ -23,10 +23,10 @@ function isPrimitive(value: unknown): value is Primitive {
 
   const type = typeof value;
 
-  return type === "bigint" ||
-    type === "boolean" ||
-    type === "number" ||
-    type === "string";
+  return type === "bigint"
+    || type === "boolean"
+    || type === "number"
+    || type === "string";
 
 }
 

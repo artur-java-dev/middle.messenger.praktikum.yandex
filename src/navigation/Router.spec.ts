@@ -10,6 +10,7 @@ describe("тесты для роутера", () => {
 
 
   before(() => {
+
     router = Router.Instance;
 
     const stubPage = sinon.createStubInstance(CompositeBlock);
@@ -18,6 +19,7 @@ describe("тесты для роутера", () => {
       .use("/login", stubPage)
       .use("/register", stubPage)
       .start();
+
   });
 
 
@@ -35,6 +37,7 @@ describe("тесты для роутера", () => {
 
     const countRecords = window.history.length;
     expect(countRecords).to.eq(3);
+
   });
 
 
@@ -47,6 +50,7 @@ describe("тесты для роутера", () => {
     router.back();
 
     expect(spy.calledOnce).to.be.true;
+
   });
 
 
@@ -60,6 +64,7 @@ describe("тесты для роутера", () => {
     router.forward();
 
     expect(spy.calledOnce).to.be.true;
+
   });
 
 

@@ -48,7 +48,6 @@ type NameSpace = {
 };
 
 
-
 export {
   Nullable, Primitive,
   Obj, PlainObject, RecObj,

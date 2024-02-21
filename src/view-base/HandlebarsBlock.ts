@@ -5,7 +5,9 @@ import Handlebars from "handlebars";
 class HandlebarsBlock<Props extends TProps & Events = TProps> extends Block<Props> {
 
   constructor(props: Props) {
-    super({ ...props })
+
+    super({ ...props });
+
   }
 
   protected override compiledTmpl() {
