@@ -21,6 +21,9 @@
     сборка (без запуска проекта)
     npm run build
 
+    запуск всех тестов
+    npm run test
+
 
 Ссылка на прототип в Figma
     https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link
