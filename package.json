@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "prepare": "husky",
+        "prepare": "husky install",
         "favicon:copy": "node scripts/favicon.js",
         "eslint": "eslint . --ext .ts --ext .js",
         "eslint-fix": "eslint . --ext .ts --ext .js --fix",
@@ -41,7 +41,7 @@
         "stylelint-config-standard": "36.0.0",
         "ts-node": "10.9.2",
         "@types/node": "20.11.19",
-        "husky": "9.0.11",
+        "husky": "8.0.0",
         "typescript": "5.3.3",
         "vite": "5.1.3"
     },
