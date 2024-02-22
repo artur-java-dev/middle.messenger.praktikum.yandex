@@ -5,8 +5,8 @@
     "scripts": {
         "prepare": "husky",
         "favicon:copy": "node scripts/favicon.js",
-        "eslint": "eslint . --ext .ts",
-        "eslint-fix": "eslint . --ext .ts --fix",
+        "eslint": "eslint . --ext .ts --ext .js",
+        "eslint-fix": "eslint . --ext .ts --ext .js --fix",
         "stylelint": "stylelint \"**/*.css\" --fix",
         "typescheck": "tsc --noEmit",
         "lint": "npm-run-all eslint stylelint typescheck",

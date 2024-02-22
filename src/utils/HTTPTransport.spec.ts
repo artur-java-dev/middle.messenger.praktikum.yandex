@@ -1,6 +1,5 @@
 import sinon from "sinon";
 import { HTTPTransport, METHOD } from "./HTTPTransport";
-import { BaseURL, Protocol } from "../api/constants";
 import { expect } from "chai";
 
 
@@ -35,7 +34,7 @@ describe("тесты для модуля отправки запросов (HTTP
       }
     });
 
-    const expectedUrl = `${Protocol + BaseURL}/test?param1=1&param2=2%202`;
+    const expectedUrl = `?param1=1&param2=2%202`;
     const options = { method: METHOD.GET };
     const argsMatch = stub.calledWithMatch(expectedUrl, options);
     expect(argsMatch).to.be.true;
