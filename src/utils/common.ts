@@ -150,18 +150,8 @@ function isTrue(value: unknown) {
 }
 
 
-function range(start: number, end: number) {
-  const length = Math.abs(end - start) + 1;
-  return Array.from({ length },
-    (_, idx) => idx + 1
-  );
-}
-
-
-
-
 export {
   namespace, isEmpty, isEmptyObj,
-  hasKey, getProp, getValue, isTrue,
-  range
+  hasKey, getProp, getValue, isTrue
 };
+

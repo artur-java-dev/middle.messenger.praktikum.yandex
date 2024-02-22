@@ -1,4 +1,5 @@
 import { BaseURL, Protocol } from "../api/constants";
+import { isPrimitive } from "./checks-types";
 import { hasKey, isEmptyObj } from "./common";
 import { Indexed } from "./common-types";
 import { objToFormData } from "./form-utils";
@@ -17,9 +18,15 @@ class HTTPTransport {
 
   public get(url: string, options: OptionsWithoutMethod = {}) {
 
-    return this.request(url, { ...options, method: METHOD.GET });
+    const urlGet
+      = typeof options.data === "object" && !isEmptyObj(options.data)
+        ? `${url}${this.queryStringify(options.data)}`
+        : url;
+
+    return this.request(urlGet, { ...options, method: METHOD.GET });
 
   }
+
 
   public post(url: string, options: OptionsWithoutMethod = {}) {
 
@@ -28,12 +35,14 @@ class HTTPTransport {
 
   }
 
+
   public put(url: string, options: OptionsWithoutMethod = {}) {
 
     setJSONheader(options);
     return this.request(url, { ...options, method: METHOD.PUT });
 
   }
+
 
   public delete(url: string, options: OptionsWithoutMethod = {}) {
 
@@ -46,17 +55,12 @@ class HTTPTransport {
   public async request(url: string, options: Options, timeout?: Millisec): Promise<XMLHttpRequest> {
 
     const { headers = {}, method, data } = options;
-    const isGet = method === METHOD.GET;
 
     return new Promise((resolve, reject) => {
 
       const req = new XMLHttpRequest();
 
-      const urlGet = isGet && typeof data === "object"
-        ? `${this.urlBase + url}${this.queryStringify(data)}`
-        : this.urlBase + url;
-
-      req.open(method, urlGet);
+      req.open(method, this.urlBase + url);
       req.withCredentials = options.needCookie ?? true;
       if (timeout)
         req.timeout = timeout;
@@ -157,9 +161,13 @@ class HTTPTransport {
       (str, key, idx) => {
 
         const k = <keyof object>key;
+        const val = data[k];
+        if (val === undefined || !isPrimitive(val))
+          return str;
+
+        const param = `${encodeURIComponent(key)}=${encodeURIComponent(val)}`;
         const sep = idx < keys.length - 1 ? "&" : "";
-        const param = `${key}=${data[k]}${sep}`;
-        return `${str}${param}`;
+        return `${str}${param}${sep}`;
 
       },
       delim,

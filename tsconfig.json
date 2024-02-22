@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es2017",
+    "target": "ES2022",
     "lib": [
       "es2021",
       "dom"
     ],
     "allowJs": false,
     "declaration": false,
-    "module": "es2015",
+    "module": "ES2022",
     "strictNullChecks": true,
     "preserveConstEnums": true,
     "moduleResolution": "Node",
@@ -23,9 +23,18 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   },
   "include": [
     "src"
-  ]
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true
+  }
 }

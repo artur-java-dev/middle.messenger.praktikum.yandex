@@ -1,4 +1,5 @@
-import { Block, EventHandler, compileBlock } from "../../view-base/Block";
+import { EventHandler } from "../../view-base/Block";
+import { HandlebarsBlock } from "../../view-base/HandlebarsBlock";
 
 
 type IProps = {
@@ -8,7 +9,7 @@ type IProps = {
 }
 
 
-class Button extends Block {
+class Button extends HandlebarsBlock {
 
   constructor(props: IProps) {
 
@@ -24,13 +25,6 @@ class Button extends Block {
       this.addEventHandler("click", props.onClick);
 
     super.render();
-
-  }
-
-
-  protected override compiledTmpl() {
-
-    return compileBlock(this.template(), this.props);
 
   }
 

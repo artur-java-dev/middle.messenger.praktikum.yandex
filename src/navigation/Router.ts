@@ -1,8 +1,8 @@
-import { LoginController } from "../controllers/LoginController";
+import { AuthAPI } from "../api/AuthAPI";
 import { Nullable } from "../utils/common-types";
+import { apiHasError } from "../utils/http-utils";
 import { CompositeBlock } from "../view-base/CompositeBlock";
 import { Route } from "./Route";
-import { Pathname } from "./RouteManagement";
 
 
 class Router {
@@ -74,7 +74,7 @@ class Router {
 
   go(pathname: string) {
 
-    this.history.pushState({}, "", pathname);
+    this.history.pushState({ page: pathname }, "", pathname);
     this.onRoute(pathname);
 
   }
@@ -102,7 +102,7 @@ class Router {
 
   private onRoute(pathname: string) {
 
-    this.redirectOnLogin(pathname)
+    this.doRedirect(pathname)
       .then(isRedir => {
 
         if (!isRedir)
@@ -130,34 +130,48 @@ class Router {
 
   }
 
-  private async redirectOnLogin(pathname: string) {
+  private async doRedirect(pathname: string) {
 
     try {
 
-      await LoginController.getUser();
+      const res = await AuthAPI.me();
+      if (apiHasError(res))
+        return this.redirAuth(pathname);
 
-      if (pathname === Pathname.Login) {
-
-        this.on(Pathname.Chats);
-        return true;
-
-      }
-
-      return false;
+      return this.redirChats(pathname);
 
     } catch (e) {
 
-      if (pathname === Pathname.Registration) {
+      return this.redirAuth(pathname);
 
-        this.on(Pathname.Registration);
-        return false;
+    }
 
-      }
+  }
 
-      this.on(Pathname.Login);
+  private redirChats(pathname: string) {
+
+    if (pathname === Pathname.Login) {
+
+      this.on(Pathname.Chats);
       return true;
 
     }
+
+    return false;
+
+  }
+
+  private redirAuth(pathname: string) {
+
+    if (pathname === Pathname.Registration) {
+
+      this.on(Pathname.Registration);
+      return false;
+
+    }
+
+    this.on(Pathname.Login);
+    return true;
 
   }
 
@@ -165,4 +179,13 @@ class Router {
 }
 
 
-export { Router };
+export { Router }; export const enum Pathname {
+  Login = "/",
+  Registration = "/sign-up",
+  Profile = "/settings",
+  Password = "/set-password",
+  Chats = "/messenger",
+  Err404 = "/404-error",
+  Err500 = "/500-error"
+}
+

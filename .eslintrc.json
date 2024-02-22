@@ -95,6 +95,7 @@
     "class-methods-use-this": "warn",
     "object-shorthand": "off",
     "no-useless-constructor": "off",
+    "no-array-constructor": "off",
     "no-use-before-define": "off",
     "no-unused-vars": "off",
     "no-underscore-dangle": "off",
@@ -131,5 +132,16 @@
       2,
       3
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.spec.ts"
+      ],
+      "rules": {
+        "no-unused-expressions": "off",
+        "no-restricted-globals": "off"
+      }
+    }
+  ]
 }
