@@ -18,9 +18,10 @@ class HTTPTransport {
 
   public get(url: string, options: OptionsWithoutMethod = {}) {
 
-    const urlGet = typeof options.data === "object" && !isEmptyObj(options.data)
-      ? `${this.urlBase + url}${this.queryStringify(options.data)}`
-      : this.urlBase + url;
+    const urlGet
+      = typeof options.data === "object" && !isEmptyObj(options.data)
+        ? `${url}${this.queryStringify(options.data)}`
+        : url;
 
     return this.request(urlGet, { ...options, method: METHOD.GET });
 
