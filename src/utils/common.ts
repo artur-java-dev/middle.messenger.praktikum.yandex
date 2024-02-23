@@ -1,3 +1,4 @@
+import { isArray } from "./checks-types";
 import { NameSpace } from "./common-types";
 
 
@@ -41,55 +42,35 @@ function startsWithDigit(name: string) {
 }
 
 
+function identity(val: unknown) {
+
+  return val;
+
+}
+
+
 function isEmpty(value: unknown) {
 
-  if (value === null || value === undefined) {
-
+  if (value === null || value === undefined)
     return true;
 
-  }
-
-  if (typeof value === "number") {
-
+  if (typeof value === "number")
     return true;
 
-  }
-
-  if (typeof value === "boolean") {
-
+  if (typeof value === "boolean")
     return true;
 
-  }
-
-  if (value === "") {
-
+  if (value === "")
     return true;
 
-  }
-
-  if (value instanceof Set) {
-
+  if (value instanceof Set || value instanceof Map)
     return value.size === 0;
 
-  }
-
-  if (value instanceof Map) {
-
-    return value.size === 0;
-
-  }
-
-  if (Array.isArray(value)) {
-
+  if (isArray(value))
     return value.length === 0;
 
-  }
-
-  if (typeof value === "object") {
-
+  if (typeof value === "object")
     return isEmptyObj(value);
-
-  }
 
   return false;
 
@@ -130,6 +111,7 @@ function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
 function isTrue(value: unknown) {
 
   let val = value;
+
   if (typeof (value) === "string")
     val = value.trim().toLowerCase();
 
@@ -142,6 +124,7 @@ function isTrue(value: unknown) {
     case "on":
     case "yes":
       return true;
+
     default:
       return false;
 
@@ -152,6 +135,7 @@ function isTrue(value: unknown) {
 
 export {
   namespace, isEmpty, isEmptyObj,
-  hasKey, getProp, getValue, isTrue
+  hasKey, getProp, getValue,
+  isTrue, identity
 };
 
