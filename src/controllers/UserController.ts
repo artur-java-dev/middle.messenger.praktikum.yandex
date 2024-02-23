@@ -39,7 +39,6 @@ class UserController {
     const res = await UserAPI.findUsersByLogin({ login: login })
       .then(req => JSON.parse(req.response) as User[])
       .then(users => users.find(x => x.login === login));
-    // .catch(reason => ({ reason }));
 
     if (apiHasError(res))
       throw Error(res.reason);
