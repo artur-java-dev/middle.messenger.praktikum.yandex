@@ -2,16 +2,6 @@ import { isArray } from "./checks-types";
 import { isEmpty } from "./common";
 
 
-function range(start: number, end: number) {
-
-  const length = Math.abs(end - start) + 1;
-  return Array.from({ length },
-    (_, idx) => idx + 1
-  );
-
-}
-
-
 type NestedArray = Array<NestedArray | unknown>;
 
 function flatten(array: NestedArray, acc: Array<unknown> = []): Array<unknown> {
@@ -85,6 +75,6 @@ function unzip(...arrays: Array<unknown>[]) {
 
 
 export {
-  range, flatten, take, unzip
+  flatten, take, unzip
 };
 
