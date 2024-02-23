@@ -77,7 +77,7 @@
       }
     ],
     "import/no-unresolved": [
-      2,
+      "error",
       {
         "ignore": [
           "\\?raw$",
@@ -125,11 +125,11 @@
       4
     ],
     "max-len": [
-      2,
+      "error",
       128
     ],
     "max-params": [
-      2,
+      "error",
       3
     ]
   },
