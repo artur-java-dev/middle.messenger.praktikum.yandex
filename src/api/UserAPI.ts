@@ -24,7 +24,6 @@ class UserAPI {
 
     return this.http.put("/profile/avatar",
       {
-        // headers: { "Content-Type": "multipart/form-data" },
         withHeaders: false,
         data: avatarData
       });

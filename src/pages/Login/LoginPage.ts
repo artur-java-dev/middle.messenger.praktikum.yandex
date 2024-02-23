@@ -7,7 +7,6 @@ import { LoginController } from "../../controllers/LoginController";
 import { Pathname } from "../../navigation/Router";
 import { SpecialChecks } from "../../utils/validators-func";
 import { Components, CompositeBlock } from "../../view-base/CompositeBlock";
-// import template from "./tmpl.hbs?raw";
 
 
 class LoginPage extends CompositeBlock {
@@ -58,7 +57,6 @@ class LoginPage extends CompositeBlock {
 
   protected override template() {
 
-    // return template;
     return `
     <form class="login-form">
     {{{ title }}}
